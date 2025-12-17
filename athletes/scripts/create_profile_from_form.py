@@ -222,14 +222,17 @@ def create_profile_from_form(athlete_id: str, form_data: Dict) -> Dict:
     # Parse B-priority events
     b_events = parse_b_priority_events(form_data.get('b_priority_events', ''))
     
-    # Calculate age from birthday if provided
-    age = form_data.get('age')
-    if not age and form_data.get('birthday'):
+    # Calculate age from birthday (primary source)
+    age = None
+    if form_data.get('birthday'):
         try:
             birth_date = datetime.strptime(form_data['birthday'], '%Y-%m-%d')
             age = (datetime.now() - birth_date).days // 365
         except:
             pass
+    # Fallback to age field if birthday not provided (for backwards compatibility)
+    if not age and form_data.get('age'):
+        age = int(form_data['age'])
     
     # Generate profile
     profile = {
