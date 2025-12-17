@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gravel God Training Plan Questionnaire</title>
+    <title>Gravel God Coaching Intake - Athlete OS</title>
     
     <!-- Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -18,6 +18,7 @@
             --gg-muted: #777777;
             --gg-soft: #f5f5f5;
             --gg-success: #4caf50;
+            --gg-warning: #ff9800;
         }
 
         * {
@@ -27,7 +28,7 @@
         body {
             margin: 32px auto 64px auto;
             padding: 0 20px;
-            max-width: 800px;
+            max-width: 900px;
             background: var(--gg-bg);
             color: var(--gg-fg);
             font-family: "Sometype Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
@@ -43,13 +44,79 @@
             text-transform: uppercase;
             letter-spacing: 0.16em;
             margin-top: 0;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
 
         .intro {
             color: var(--gg-muted);
-            margin-bottom: 32px;
+            margin-bottom: 24px;
             font-size: 14px;
+        }
+
+        .time-estimate {
+            padding: 12px;
+            background: var(--gg-soft);
+            border: 1px solid var(--gg-border);
+            margin-bottom: 24px;
+            font-size: 13px;
+        }
+
+        .progress-container {
+            margin-bottom: 32px;
+            padding: 16px;
+            background: var(--gg-soft);
+            border: 1px solid var(--gg-border);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 24px;
+            background: var(--gg-bg);
+            border: 2px solid var(--gg-border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gg-fg);
+            transition: width 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gg-bg);
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .progress-text {
+            margin-top: 8px;
+            font-size: 12px;
+            text-align: center;
+        }
+
+        .save-resume {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+            padding: 12px;
+            background: var(--gg-soft);
+            border: 1px solid var(--gg-border);
+        }
+
+        .save-resume button {
+            flex: 1;
+            padding: 8px 16px;
+            background: var(--gg-bg);
+            border: 1px solid var(--gg-border);
+            font-family: inherit;
+            font-size: 13px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .save-resume button:hover {
+            background: var(--gg-soft);
         }
 
         .survey-form {
@@ -57,8 +124,8 @@
         }
 
         .form-section {
-            margin-bottom: 2.5rem;
-            padding: 16px;
+            margin-bottom: 3rem;
+            padding: 20px;
             background: var(--gg-soft);
             border: 1px solid var(--gg-border);
         }
@@ -71,6 +138,24 @@
             border-bottom: 2px solid var(--gg-border);
             text-transform: uppercase;
             letter-spacing: 0.1em;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .form-section h2::after {
+            content: "−";
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .form-section.collapsed h2::after {
+            content: "+";
+        }
+
+        .form-section.collapsed .section-content {
+            display: none;
         }
 
         .question-group {
@@ -96,6 +181,7 @@
         input[type="email"],
         input[type="number"],
         input[type="date"],
+        input[type="time"],
         select,
         textarea {
             width: 100%;
@@ -151,6 +237,39 @@
             margin: 0;
         }
 
+        .rating-scale {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 0.8rem;
+            gap: 8px;
+        }
+
+        .rating-scale input[type="radio"] {
+            display: none;
+        }
+
+        .rating-scale label {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid var(--gg-border);
+            background: var(--gg-soft);
+            text-align: center;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-size: 13px;
+        }
+
+        .rating-scale label:hover {
+            background: #e8e8e8;
+        }
+
+        .rating-scale input[type="radio"]:checked + label {
+            background: var(--gg-fg);
+            color: var(--gg-bg);
+            font-weight: 600;
+        }
+
         .day-schedule {
             display: grid;
             grid-template-columns: 100px 1fr 1fr 1fr;
@@ -175,6 +294,17 @@
         .day-schedule input[type="checkbox"] {
             width: auto;
             margin-right: 8px;
+        }
+
+        .conditional-field {
+            display: none;
+            margin-top: 1rem;
+            padding-left: 1rem;
+            border-left: 3px solid var(--gg-border);
+        }
+
+        .conditional-field.show {
+            display: block;
         }
 
         .honeypot {
@@ -253,6 +383,10 @@
             color: #d32f2f;
         }
 
+        .field-valid {
+            border-color: var(--gg-success) !important;
+        }
+
         @media (max-width: 600px) {
             .day-schedule {
                 grid-template-columns: 1fr;
@@ -261,258 +395,922 @@
             .day-schedule > * {
                 margin-bottom: 8px;
             }
+
+            .rating-scale {
+                flex-wrap: wrap;
+            }
+            
+            .rating-scale label {
+                min-width: 60px;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>Gravel God Training Plan</h1>
-    <p class="intro">Personalized coaching at scale. Fill out this form to get your custom training plan.</p>
+    <h1>Gravel God Coaching Intake</h1>
+    <p class="intro">Comprehensive coaching intake form. This takes approximately 25 minutes to complete. Your responses help us create a personalized training plan tailored to your goals, schedule, and constraints.</p>
+    
+    <div class="time-estimate">
+        <strong>Estimated time:</strong> 25 minutes | <strong>Progress:</strong> <span id="progressPercent">0</span>% complete
+    </div>
+
+    <div class="progress-container">
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill" style="width: 0%">0%</div>
+        </div>
+        <div class="progress-text" id="progressText">Getting started...</div>
+    </div>
+
+    <div class="save-resume">
+        <button type="button" id="saveBtn">💾 Save Progress</button>
+        <button type="button" id="resumeBtn" style="display: none;">📂 Resume Saved Form</button>
+    </div>
     
     <form id="athleteForm" class="survey-form">
         <!-- Honeypot field for bot detection -->
         <input type="text" name="website" class="honeypot" tabindex="-1" autocomplete="off">
         
-        <!-- SECTION 1: BASIC INFO -->
-        <div class="form-section">
-            <h2>Basic Information</h2>
-            
-            <div class="question-group">
-                <label class="question-label" for="name">
-                    Full Name <span class="required">*</span>
-                </label>
-                <input type="text" id="name" name="name" required>
-            </div>
-            
-            <div class="question-group">
-                <label class="question-label" for="email">
-                    Email Address <span class="required">*</span>
-                </label>
-                <input type="email" id="email" name="email" required>
-            </div>
-            
-            <div class="question-group">
-                <label class="question-label" for="age">Age</label>
-                <input type="number" id="age" name="age" min="18" max="99">
-            </div>
-            
-            <div class="question-group">
-                <label class="question-label" for="primary_goal">
-                    Primary Goal <span class="required">*</span>
-                </label>
-                <select id="primary_goal" name="primary_goal" required>
-                    <option value="">Select...</option>
-                    <option value="specific_race">Complete first gravel century</option>
-                    <option value="specific_race">Top 25% finish</option>
-                    <option value="specific_race">Podium</option>
-                    <option value="specific_race">Win</option>
-                    <option value="general_fitness">General fitness</option>
-                    <option value="base_building">Base building</option>
-                    <option value="return_from_injury">Return from injury</option>
-                </select>
-            </div>
-        </div>
-        
-        <!-- SECTION 2: TRAINING HISTORY -->
-        <div class="form-section">
-            <h2>Training History</h2>
-            
-            <div class="question-group">
-                <label class="question-label" for="years_cycling">Years Cycling</label>
-                <select id="years_cycling" name="years_cycling">
-                    <option value="">Select...</option>
-                    <option value="0-2">0-2 years</option>
-                    <option value="3-5">3-5 years</option>
-                    <option value="6-10">6-10 years</option>
-                    <option value="10+">10+ years</option>
-                </select>
-            </div>
-            
-            <div class="question-group">
-                <label class="question-label" for="years_structured">Years of Structured Training</label>
-                <input type="number" id="years_structured" name="years_structured" min="0" max="50">
-            </div>
-            
-            <div class="question-group">
-                <label class="question-label" for="current_ftp">Current FTP (watts) - Optional</label>
-                <input type="number" id="current_ftp" name="current_ftp" min="0">
-            </div>
-            
-            <div class="question-group">
-                <label class="question-label" for="weekly_volume">Typical Weekly Volume (Last 3 Months)</label>
-                <select id="weekly_volume" name="weekly_volume">
-                    <option value="">Select...</option>
-                    <option value="0-2">0-2 hours</option>
-                    <option value="3-5">3-5 hours</option>
-                    <option value="6-8">6-8 hours</option>
-                    <option value="9-12">9-12 hours</option>
-                    <option value="13-15">13-15 hours</option>
-                    <option value="16-20">16-20 hours</option>
-                    <option value="21+">21+ hours</option>
-                </select>
-            </div>
-        </div>
-        
-        <!-- SECTION 3: AVAILABLE TRAINING HOURS -->
-        <div class="form-section">
-            <h2>Weekly Schedule</h2>
-            <p class="question-help">For each day, indicate when you can train:</p>
-            
-            <div id="daySchedules"></div>
-        </div>
-        
-        <!-- SECTION 4: EQUIPMENT -->
-        <div class="form-section">
-            <h2>Equipment Access</h2>
-            
-            <div class="checkbox-group">
-                <div class="checkbox-option">
-                    <input type="checkbox" id="smart_trainer" name="equipment" value="smart_trainer">
-                    <label for="smart_trainer">Smart Trainer</label>
+        <!-- SECTION 1: BASIC INFORMATION -->
+        <div class="form-section" data-section="1">
+            <h2 onclick="toggleSection(this)">Basic Information</h2>
+            <div class="section-content">
+                <div class="question-group">
+                    <label class="question-label" for="name">
+                        Full Name <span class="required">*</span>
+                    </label>
+                    <input type="text" id="name" name="name" required>
                 </div>
-                <div class="checkbox-option">
-                    <input type="checkbox" id="dumb_trainer_pm" name="equipment" value="dumb_trainer_pm">
-                    <label for="dumb_trainer_pm">Dumb Trainer + Power Meter</label>
+                
+                <div class="question-group">
+                    <label class="question-label" for="email">
+                        Email Address <span class="required">*</span>
+                    </label>
+                    <input type="email" id="email" name="email" required>
                 </div>
-                <div class="checkbox-option">
-                    <input type="checkbox" id="outdoor_pm" name="equipment" value="outdoor_pm">
-                    <label for="outdoor_pm">Outdoor Only + Power Meter</label>
+                
+                <div class="question-group">
+                    <label class="question-label" for="phone">Phone Number</label>
+                    <input type="text" id="phone" name="phone" placeholder="(555) 123-4567">
                 </div>
-                <div class="checkbox-option">
-                    <input type="checkbox" id="no_pm" name="equipment" value="no_pm">
-                    <label for="no_pm">No Power Meter</label>
+                
+                <div class="question-group">
+                    <label class="question-label" for="birthday">Birthday</label>
+                    <input type="date" id="birthday" name="birthday">
                 </div>
-                <div class="checkbox-option">
-                    <input type="checkbox" id="gym_membership" name="equipment" value="gym_membership">
-                    <label for="gym_membership">Gym Membership</label>
-                </div>
-                <div class="checkbox-option">
-                    <input type="checkbox" id="home_gym" name="equipment" value="home_gym">
-                    <label for="home_gym">Home Gym (DB/KB)</label>
-                </div>
-                <div class="checkbox-option">
-                    <input type="checkbox" id="pull_up_bar" name="equipment" value="pull_up_bar">
-                    <label for="pull_up_bar">Pull-up Bar</label>
-                </div>
-                <div class="checkbox-option">
-                    <input type="checkbox" id="resistance_bands" name="equipment" value="resistance_bands">
-                    <label for="resistance_bands">Resistance Bands</label>
+                
+                <div class="question-group">
+                    <label class="question-label" for="age">Age</label>
+                    <input type="number" id="age" name="age" min="18" max="99">
                 </div>
             </div>
         </div>
-        
-        <!-- SECTION 5: INJURIES / LIMITATIONS -->
-        <div class="form-section">
-            <h2>Injuries & Limitations</h2>
-            
-            <div class="question-group">
-                <label class="question-label" for="current_injuries">Current Injuries</label>
-                <textarea id="current_injuries" name="current_injuries" rows="3" placeholder="Describe any current injuries..."></textarea>
-            </div>
-            
-            <div class="question-group">
-                <label class="question-label" for="past_injuries">Past Injuries Affecting Movement</label>
-                <textarea id="past_injuries" name="past_injuries" rows="3" placeholder="Describe past injuries that still affect you..."></textarea>
-            </div>
-            
-            <div class="question-group">
-                <label class="question-label">Movement Limitations</label>
-                <div class="checkbox-group">
-                    <div class="checkbox-option">
-                        <input type="checkbox" id="deep_squat_painful" name="limitations" value="deep_squat_painful">
-                        <label for="deep_squat_painful">Deep squat painful</label>
-                    </div>
-                    <div class="checkbox-option">
-                        <input type="checkbox" id="single_leg_balance" name="limitations" value="single_leg_balance">
-                        <label for="single_leg_balance">Single-leg balance difficult</label>
-                    </div>
-                    <div class="checkbox-option">
-                        <input type="checkbox" id="pushups_shoulders" name="limitations" value="pushups_shoulders">
-                        <label for="pushups_shoulders">Push-ups hurt shoulders</label>
-                    </div>
-                    <div class="checkbox-option">
-                        <input type="checkbox" id="hip_mobility" name="limitations" value="hip_mobility">
-                        <label for="hip_mobility">Hip mobility issues</label>
-                    </div>
-                    <div class="checkbox-option">
-                        <input type="checkbox" id="lower_back" name="limitations" value="lower_back">
-                        <label for="lower_back">Lower back sensitivity</label>
+
+        <!-- SECTION 2: RACING GOALS & SUCCESS -->
+        <div class="form-section" data-section="2">
+            <h2 onclick="toggleSection(this)">Racing Goals & Success Metrics</h2>
+            <div class="section-content">
+                <div class="question-group">
+                    <label class="question-label" for="has_racing_goals">
+                        Do you have racing goals? <span class="required">*</span>
+                    </label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="has_goals_yes" name="has_racing_goals" value="yes" required>
+                            <label for="has_goals_yes">Yes</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="has_goals_no" name="has_racing_goals" value="no">
+                            <label for="has_goals_no">No</label>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        
-        <!-- SECTION 6: PREFERENCES -->
-        <div class="form-section">
-            <h2>Preferences</h2>
-            
-            <div class="question-group">
-                <label class="question-label" for="communication_style">Communication Style</label>
-                <select id="communication_style" name="communication_style">
-                    <option value="">Select...</option>
-                    <option value="direct">Direct/no-BS</option>
-                    <option value="encouraging">Encouraging/supportive</option>
-                    <option value="data_driven">Data-driven/analytical</option>
-                    <option value="flexible">Flexible</option>
-                </select>
-            </div>
-            
-            <div class="question-group">
-                <label class="question-label" for="workout_length">Workout Length Preference</label>
-                <select id="workout_length" name="workout_length">
-                    <option value="">Select...</option>
-                    <option value="shorter">Shorter/intense</option>
-                    <option value="moderate">Moderate</option>
-                    <option value="longer">Longer/easier</option>
-                    <option value="no_preference">No preference</option>
-                </select>
-            </div>
-            
-            <div class="question-group">
-                <label class="question-label" for="strength_interest">Strength Training Interest</label>
-                <select id="strength_interest" name="strength_interest">
-                    <option value="">Select...</option>
-                    <option value="not_interested">Not interested</option>
-                    <option value="willing">Willing if necessary</option>
-                    <option value="eager">Eager to include</option>
-                </select>
-            </div>
-        </div>
-        
-        <!-- SECTION 7: RACE INFO -->
-        <div class="form-section" id="raceSection">
-            <h2>Target Race</h2>
-            
-            <div class="question-group">
-                <label class="question-label" for="race_name">Race Name</label>
-                <input type="text" id="race_name" name="race_name" placeholder="e.g., Unbound Gravel 200">
-            </div>
-            
-            <div class="question-group">
-                <label class="question-label" for="race_date">Race Date</label>
-                <input type="date" id="race_date" name="race_date">
-            </div>
-            
-            <div class="question-group">
-                <label class="question-label" for="race_distance">Race Distance</label>
-                <div style="display: flex; gap: 10px;">
-                    <input type="number" id="race_distance" name="race_distance" min="0" style="flex: 1;">
-                    <select id="race_distance_unit" name="race_distance_unit" style="width: 100px;">
-                        <option value="miles">Miles</option>
-                        <option value="km">Km</option>
+
+                <div class="question-group conditional-field" id="races_conditional">
+                    <label class="question-label" for="race_list">
+                        If so, list your race(s): <span class="required">*</span>
+                    </label>
+                    <textarea id="race_list" name="race_list" rows="3" placeholder="e.g., Unbound Gravel 200 (June 7), Mid South (March 15)"></textarea>
+                </div>
+
+                <div class="question-group conditional-field" id="success_conditional">
+                    <label class="question-label" for="success_looks_like">
+                        What does success look like in those races? <span class="required">*</span>
+                    </label>
+                    <textarea id="success_looks_like" name="success_looks_like" rows="3" placeholder="e.g., Top 25% finish, Complete without bonking, Podium in age group"></textarea>
+                </div>
+
+                <div class="question-group">
+                    <label class="question-label" for="obstacles">
+                        What holds you back the most from achieving your goals?
+                    </label>
+                    <textarea id="obstacles" name="obstacles" rows="3" placeholder="e.g., Time management, Lack of consistency, Injury concerns"></textarea>
+                </div>
+
+                <div class="question-group">
+                    <label class="question-label" for="training_goals">
+                        List any training goals you might have (e.g., PR local Strava segment; increase FTP by X watts)
+                    </label>
+                    <textarea id="training_goals" name="training_goals" rows="3" placeholder="e.g., Increase FTP to 300w, PR local climb segment, Complete 200-mile ride"></textarea>
+                </div>
+
+                <div class="question-group">
+                    <label class="question-label" for="goals_anything_else">
+                        Anything else I should know about your goals? Now is your chance!
+                    </label>
+                    <textarea id="goals_anything_else" name="goals_anything_else" rows="3"></textarea>
+                </div>
+
+                <div class="question-group">
+                    <label class="question-label" for="primary_goal">
+                        I'm training for... <span class="required">*</span>
+                    </label>
+                    <select id="primary_goal" name="primary_goal" required>
+                        <option value="">Select...</option>
+                        <option value="specific_race">Specific race(s)</option>
+                        <option value="general_fitness">General fitness</option>
+                        <option value="base_building">Base building</option>
+                        <option value="off_season">Off-season maintenance</option>
+                        <option value="return_from_injury">Return from injury</option>
+                        <option value="performance_improvement">Performance improvement</option>
                     </select>
                 </div>
             </div>
         </div>
+
+        <!-- SECTION 3: TRAINING HISTORY & ASSESSMENT -->
+        <div class="form-section" data-section="3">
+            <h2 onclick="toggleSection(this)">Training History & Assessment</h2>
+            <div class="section-content">
+                <div class="question-group">
+                    <label class="question-label" for="training_summary">
+                        Summarize your training history <span class="required">*</span>
+                    </label>
+                    <textarea id="training_summary" name="training_summary" rows="4" required placeholder="e.g., 5 years road cycling, 2 years gravel racing, 3 years structured training with coach"></textarea>
+                </div>
+
+                <div class="question-group">
+                    <label class="question-label" for="years_cycling">Years Cycling</label>
+                    <select id="years_cycling" name="years_cycling">
+                        <option value="">Select...</option>
+                        <option value="0-2">0-2 years</option>
+                        <option value="3-5">3-5 years</option>
+                        <option value="6-10">6-10 years</option>
+                        <option value="10+">10+ years</option>
+                    </select>
+                </div>
+
+                <div class="question-group">
+                    <label class="question-label" for="years_structured">Years of Structured Training</label>
+                    <input type="number" id="years_structured" name="years_structured" min="0" max="50">
+                </div>
+
+                <div class="question-group">
+                    <label class="question-label" for="primary_sport_level">
+                        Rate your level in your primary sport <span class="required">*</span>
+                    </label>
+                    <div class="rating-scale">
+                        <input type="radio" id="level-1" name="primary_sport_level" value="1" required>
+                        <label for="level-1">1</label>
+                        <input type="radio" id="level-2" name="primary_sport_level" value="2">
+                        <label for="level-2">2</label>
+                        <input type="radio" id="level-3" name="primary_sport_level" value="3">
+                        <label for="level-3">3</label>
+                        <input type="radio" id="level-4" name="primary_sport_level" value="4">
+                        <label for="level-4">4</label>
+                        <input type="radio" id="level-5" name="primary_sport_level" value="5">
+                        <label for="level-5">5</label>
+                    </div>
+                    <div class="question-help">1 = Beginner, 3 = Intermediate, 5 = Advanced/Elite</div>
+                </div>
+
+                <div class="question-group">
+                    <label class="question-label" for="strengths">
+                        List your strengths
+                    </label>
+                    <textarea id="strengths" name="strengths" rows="3" placeholder="e.g., Climbing, Mental toughness, Consistency, Technical skills"></textarea>
+                </div>
+
+                <div class="question-group">
+                    <label class="question-label" for="weaknesses">
+                        List your weaknesses
+                    </label>
+                    <textarea id="weaknesses" name="weaknesses" rows="3" placeholder="e.g., Sprinting, Time management, Recovery, Technical descents"></textarea>
+                </div>
+
+                <div class="question-group">
+                    <label class="question-label" for="current_ftp">Current FTP (watts) - Optional</label>
+                    <input type="number" id="current_ftp" name="current_ftp" min="0">
+                </div>
+
+                <div class="question-group">
+                    <label class="question-label" for="weekly_volume">How Many Hours a Week Do You Train (On Average)?</label>
+                    <select id="weekly_volume" name="weekly_volume">
+                        <option value="">Select...</option>
+                        <option value="0-2">0-2 hours</option>
+                        <option value="3-5">3-5 hours</option>
+                        <option value="6-8">6-8 hours</option>
+                        <option value="9-12">9-12 hours</option>
+                        <option value="13-15">13-15 hours</option>
+                        <option value="16-20">16-20 hours</option>
+                        <option value="21+">21+ hours</option>
+                    </select>
+                </div>
+
+                <div class="question-group">
+                    <label class="question-label" for="races_last_year">How many times did you race last year?</label>
+                    <input type="number" id="races_last_year" name="races_last_year" min="0">
+                </div>
+
+                <div class="question-group">
+                    <label class="question-label" for="weather_limits">
+                        Does Weather Limit Your Training?
+                    </label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="weather_yes" name="weather_limits" value="yes">
+                            <label for="weather_yes">Yes</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="weather_no" name="weather_limits" value="no">
+                            <label for="weather_no">No</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-group conditional-field" id="weather_desc_conditional">
+                    <label class="question-label" for="weather_description">If Yes, please describe</label>
+                    <textarea id="weather_description" name="weather_description" rows="2" placeholder="e.g., Heat affects performance significantly, avoid training in extreme cold"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 4: STRENGTH & MOBILITY -->
+        <div class="form-section" data-section="4">
+            <h2 onclick="toggleSection(this)">Strength & Mobility</h2>
+            <div class="section-content">
+                <div class="question-group">
+                    <label class="question-label" for="strength_trains">
+                        Do You Strength Train?
+                    </label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="strength_yes" name="strength_trains" value="yes">
+                            <label for="strength_yes">Yes</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="strength_no" name="strength_trains" value="no">
+                            <label for="strength_no">No</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-group conditional-field" id="strength_routine_conditional">
+                    <label class="question-label" for="strength_routine">If yes, describe your routine</label>
+                    <textarea id="strength_routine" name="strength_routine" rows="3" placeholder="e.g., 2x/week gym - squats, deadlifts, core work"></textarea>
+                </div>
+
+                <div class="question-group">
+                    <label class="question-label" for="mobility_rating">
+                        Rate Your Mobility <span class="required">*</span>
+                    </label>
+                    <div class="rating-scale">
+                        <input type="radio" id="mob-1" name="mobility_rating" value="1" required>
+                        <label for="mob-1">1</label>
+                        <input type="radio" id="mob-2" name="mobility_rating" value="2">
+                        <label for="mob-2">2</label>
+                        <input type="radio" id="mob-3" name="mobility_rating" value="3">
+                        <label for="mob-3">3</label>
+                        <input type="radio" id="mob-4" name="mobility_rating" value="4">
+                        <label for="mob-4">4</label>
+                        <input type="radio" id="mob-5" name="mobility_rating" value="5">
+                        <label for="mob-5">5</label>
+                    </div>
+                    <div class="question-help">1 = Very limited, 3 = Average, 5 = Excellent</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 5: TRAINING LOG & DEVICES -->
+        <div class="form-section" data-section="5">
+            <h2 onclick="toggleSection(this)">Training Log & Devices</h2>
+            <div class="section-content">
+                <div class="question-group">
+                    <label class="question-label" for="keeps_log">
+                        Do you keep a training log?
+                    </label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="log_yes" name="keeps_log" value="yes">
+                            <label for="log_yes">Yes</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="log_no" name="keeps_log" value="no">
+                            <label for="log_no">No</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-group">
+                    <label class="question-label">What devices do you use?</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="device_garmin" name="devices" value="garmin">
+                            <label for="device_garmin">Garmin</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="device_wahoo" name="devices" value="wahoo">
+                            <label for="device_wahoo">Wahoo</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="device_power_meter" name="devices" value="power_meter">
+                            <label for="device_power_meter">Power Meter</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="device_hr_monitor" name="devices" value="hr_monitor">
+                            <label for="device_hr_monitor">Heart Rate Monitor</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="device_smart_trainer" name="devices" value="smart_trainer">
+                            <label for="device_smart_trainer">Smart Trainer</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="device_strava" name="devices" value="strava">
+                            <label for="device_strava">Strava</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="device_trainingpeaks" name="devices" value="trainingpeaks">
+                            <label for="device_trainingpeaks">TrainingPeaks</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="device_other" name="devices" value="other">
+                            <label for="device_other">Other</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 6: WEEKLY SCHEDULE -->
+        <div class="form-section" data-section="6">
+            <h2 onclick="toggleSection(this)">Weekly Schedule</h2>
+            <div class="section-content">
+                <p class="question-help">For each day, indicate when you can train:</p>
+                <div id="daySchedules"></div>
+            </div>
+        </div>
+
+        <!-- SECTION 7: WORK & LIFE BALANCE -->
+        <div class="form-section" data-section="7">
+            <h2 onclick="toggleSection(this)">Work & Life Balance</h2>
+            <div class="section-content">
+                <div class="question-group">
+                    <label class="question-label" for="works">
+                        Do You Work?
+                    </label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="work_yes" name="works" value="yes">
+                            <label for="work_yes">Yes</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="work_no" name="works" value="no">
+                            <label for="work_no">No</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-group conditional-field" id="work_hours_conditional">
+                    <label class="question-label" for="work_hours">If yes, how many hours per week?</label>
+                    <input type="number" id="work_hours" name="work_hours" min="0" max="80">
+                </div>
+
+                <div class="question-group conditional-field" id="work_stress_conditional">
+                    <label class="question-label" for="job_stress">
+                        Rate Your Job's Stress Level
+                    </label>
+                    <div class="rating-scale">
+                        <input type="radio" id="stress-1" name="job_stress" value="1">
+                        <label for="stress-1">1</label>
+                        <input type="radio" id="stress-2" name="job_stress" value="2">
+                        <label for="stress-2">2</label>
+                        <input type="radio" id="stress-3" name="job_stress" value="3">
+                        <label for="stress-3">3</label>
+                        <input type="radio" id="stress-4" name="job_stress" value="4">
+                        <label for="stress-4">4</label>
+                        <input type="radio" id="stress-5" name="job_stress" value="5">
+                        <label for="stress-5">5</label>
+                    </div>
+                    <div class="question-help">1 = Low stress, 3 = Moderate, 5 = Very high stress</div>
+                </div>
+
+                <div class="question-group">
+                    <label class="question-label">Preferred Day(s) Off</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="off_monday" name="preferred_off_days" value="monday">
+                            <label for="off_monday">Monday</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="off_tuesday" name="preferred_off_days" value="tuesday">
+                            <label for="off_tuesday">Tuesday</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="off_wednesday" name="preferred_off_days" value="wednesday">
+                            <label for="off_wednesday">Wednesday</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="off_thursday" name="preferred_off_days" value="thursday">
+                            <label for="off_thursday">Thursday</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="off_friday" name="preferred_off_days" value="friday">
+                            <label for="off_friday">Friday</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="off_saturday" name="preferred_off_days" value="saturday">
+                            <label for="off_saturday">Saturday</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="off_sunday" name="preferred_off_days" value="sunday">
+                            <label for="off_sunday">Sunday</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-group">
+                    <label class="question-label" for="preferred_long_day">Preferred Long Day</label>
+                    <select id="preferred_long_day" name="preferred_long_day">
+                        <option value="">Select...</option>
+                        <option value="monday">Monday</option>
+                        <option value="tuesday">Tuesday</option>
+                        <option value="wednesday">Wednesday</option>
+                        <option value="thursday">Thursday</option>
+                        <option value="friday">Friday</option>
+                        <option value="saturday">Saturday</option>
+                        <option value="sunday">Sunday</option>
+                    </select>
+                </div>
+
+                <div class="question-group">
+                    <label class="question-label" for="wake_time">What is your typical wake time?</label>
+                    <input type="time" id="wake_time" name="wake_time">
+                </div>
+
+                <div class="question-group">
+                    <label class="question-label" for="bed_time">What is your typical bed time?</label>
+                    <input type="time" id="bed_time" name="bed_time">
+                </div>
+
+                <div class="question-group">
+                    <label class="question-label" for="sleep_hours">How many hours of sleep do you average per night?</label>
+                    <input type="number" id="sleep_hours" name="sleep_hours" min="4" max="12" step="0.5">
+                </div>
+
+                <div class="question-group">
+                    <label class="question-label" for="relationships">Relationships</label>
+                    <textarea id="relationships" name="relationships" rows="2" placeholder="e.g., Married, 2 kids (ages 3, 5)"></textarea>
+                </div>
+
+                <div class="question-group">
+                    <label class="question-label" for="time_commitments">Other time commitments we should know about?</label>
+                    <textarea id="time_commitments" name="time_commitments" rows="2" placeholder="e.g., Kids' sports 3x/week, Volunteer work, Travel for work"></textarea>
+                </div>
+
+                <div class="question-group">
+                    <label class="question-label" for="time_management_challenge">
+                        Is Time Management a challenge for you?
+                    </label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="tm_yes" name="time_management_challenge" value="yes">
+                            <label for="tm_yes">Yes</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="tm_no" name="time_management_challenge" value="no">
+                            <label for="tm_no">No</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 8: EQUIPMENT ACCESS -->
+        <div class="form-section" data-section="8">
+            <h2 onclick="toggleSection(this)">Equipment Access</h2>
+            <div class="section-content">
+                <div class="question-group">
+                    <label class="question-label">Equipment Access</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="smart_trainer" name="equipment" value="smart_trainer">
+                            <label for="smart_trainer">Smart Trainer</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="dumb_trainer_pm" name="equipment" value="dumb_trainer_pm">
+                            <label for="dumb_trainer_pm">Dumb Trainer + Power Meter</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="outdoor_pm" name="equipment" value="outdoor_pm">
+                            <label for="outdoor_pm">Outdoor Only + Power Meter</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="no_pm" name="equipment" value="no_pm">
+                            <label for="no_pm">No Power Meter</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="gym_membership" name="equipment" value="gym_membership">
+                            <label for="gym_membership">Gym Membership</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="home_gym" name="equipment" value="home_gym">
+                            <label for="home_gym">Home Gym (DB/KB)</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="pull_up_bar" name="equipment" value="pull_up_bar">
+                            <label for="pull_up_bar">Pull-up Bar</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="resistance_bands" name="equipment" value="resistance_bands">
+                            <label for="resistance_bands">Resistance Bands</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 9: HEALTH & MEDICATIONS -->
+        <div class="form-section" data-section="9">
+            <h2 onclick="toggleSection(this)">Health & Medications</h2>
+            <div class="section-content">
+                <div class="question-group">
+                    <label class="question-label" for="medications">
+                        Please list any medications, drugs, or nutritional supplements you're currently taking
+                    </label>
+                    <textarea id="medications" name="medications" rows="3" placeholder="e.g., Multivitamin, Fish oil, Prescription medications"></textarea>
+                </div>
+
+                <div class="question-group">
+                    <label class="question-label">Check all that apply to you:</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="health_hbp" name="health_conditions" value="high_blood_pressure">
+                            <label for="health_hbp">High Blood Pressure</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="health_diabetes" name="health_conditions" value="diabetes">
+                            <label for="health_diabetes">Diabetes</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="health_asthma" name="health_conditions" value="asthma">
+                            <label for="health_asthma">Asthma</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="health_heart" name="health_conditions" value="heart_condition">
+                            <label for="health_heart">Heart Condition</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="health_arthritis" name="health_conditions" value="arthritis">
+                            <label for="health_arthritis">Arthritis</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="health_none" name="health_conditions" value="none">
+                            <label for="health_none">None of the above</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-group">
+                    <label class="question-label" for="health_anything_else">
+                        Anything else related to your health we should be aware of?
+                    </label>
+                    <textarea id="health_anything_else" name="health_anything_else" rows="3" placeholder="e.g., Exercise-induced asthma, Previous heart surgery"></textarea>
+                </div>
+
+                <div class="question-group">
+                    <label class="question-label" for="current_injuries">Current Injuries</label>
+                    <textarea id="current_injuries" name="current_injuries" rows="3" placeholder="Describe any current injuries..."></textarea>
+                </div>
+
+                <div class="question-group">
+                    <label class="question-label" for="past_injuries">Past Injuries Affecting Movement</label>
+                    <textarea id="past_injuries" name="past_injuries" rows="3" placeholder="Describe past injuries that still affect you..."></textarea>
+                </div>
+
+                <div class="question-group">
+                    <label class="question-label">Movement Limitations</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="deep_squat_painful" name="limitations" value="deep_squat_painful">
+                            <label for="deep_squat_painful">Deep squat painful</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="single_leg_balance" name="limitations" value="single_leg_balance">
+                            <label for="single_leg_balance">Single-leg balance difficult</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="pushups_shoulders" name="limitations" value="pushups_shoulders">
+                            <label for="pushups_shoulders">Push-ups hurt shoulders</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="hip_mobility" name="limitations" value="hip_mobility">
+                            <label for="hip_mobility">Hip mobility issues</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="lower_back" name="limitations" value="lower_back">
+                            <label for="lower_back">Lower back sensitivity</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 10: NUTRITION -->
+        <div class="form-section" data-section="10">
+            <h2 onclick="toggleSection(this)">Nutrition</h2>
+            <div class="section-content">
+                <div class="question-group">
+                    <label class="question-label">Do you follow any specific diet styles?</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="diet_none" name="diet_styles" value="none">
+                            <label for="diet_none">No specific diet</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="diet_vegetarian" name="diet_styles" value="vegetarian">
+                            <label for="diet_vegetarian">Vegetarian</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="diet_vegan" name="diet_styles" value="vegan">
+                            <label for="diet_vegan">Vegan</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="diet_keto" name="diet_styles" value="keto">
+                            <label for="diet_keto">Keto</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="diet_paleo" name="diet_styles" value="paleo">
+                            <label for="diet_paleo">Paleo</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="diet_mediterranean" name="diet_styles" value="mediterranean">
+                            <label for="diet_mediterranean">Mediterranean</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="diet_other" name="diet_styles" value="other">
+                            <label for="diet_other">Other</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-group">
+                    <label class="question-label" for="fluid_intake">
+                        Rate your fluid intake
+                    </label>
+                    <div class="rating-scale">
+                        <input type="radio" id="fluid-1" name="fluid_intake" value="1">
+                        <label for="fluid-1">1</label>
+                        <input type="radio" id="fluid-2" name="fluid_intake" value="2">
+                        <label for="fluid-2">2</label>
+                        <input type="radio" id="fluid-3" name="fluid_intake" value="3">
+                        <label for="fluid-3">3</label>
+                        <input type="radio" id="fluid-4" name="fluid_intake" value="4">
+                        <label for="fluid-4">4</label>
+                        <input type="radio" id="fluid-5" name="fluid_intake" value="5">
+                        <label for="fluid-5">5</label>
+                    </div>
+                    <div class="question-help">1 = Poor, 3 = Adequate, 5 = Excellent</div>
+                </div>
+
+                <div class="question-group">
+                    <label class="question-label" for="caffeine_intake">Caffeine intake</label>
+                    <select id="caffeine_intake" name="caffeine_intake">
+                        <option value="">Select...</option>
+                        <option value="none">None</option>
+                        <option value="1-2">1-2 cups/day</option>
+                        <option value="3-4">3-4 cups/day</option>
+                        <option value="5+">5+ cups/day</option>
+                    </select>
+                </div>
+
+                <div class="question-group">
+                    <label class="question-label" for="alcohol_intake">Alcohol intake</label>
+                    <select id="alcohol_intake" name="alcohol_intake">
+                        <option value="">Select...</option>
+                        <option value="none">None</option>
+                        <option value="1-2">1-2 drinks/week</option>
+                        <option value="3-5">3-5 drinks/week</option>
+                        <option value="daily">Daily</option>
+                    </select>
+                </div>
+
+                <div class="question-group">
+                    <label class="question-label" for="dietary_restrictions">Any dietary restrictions? Describe.</label>
+                    <textarea id="dietary_restrictions" name="dietary_restrictions" rows="2" placeholder="e.g., Gluten-free, Lactose intolerant, Food allergies"></textarea>
+                </div>
+
+                <div class="question-group">
+                    <label class="question-label" for="fueling_strategy">What's your fueling strategy when you train?</label>
+                    <textarea id="fueling_strategy" name="fueling_strategy" rows="3" placeholder="e.g., Gels + sports drink for rides >90min, Water only for short rides"></textarea>
+                </div>
+
+                <div class="question-group">
+                    <label class="question-label" for="post_workout_fuel">
+                        Do you eat something after hard workouts? If yes, what?
+                    </label>
+                    <textarea id="post_workout_fuel" name="post_workout_fuel" rows="2" placeholder="e.g., Protein shake within 30min, Full meal within 2 hours"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 11: BIKE FIT & PAIN -->
+        <div class="form-section" data-section="11">
+            <h2 onclick="toggleSection(this)">Bike Fit & Pain</h2>
+            <div class="section-content">
+                <div class="question-group">
+                    <label class="question-label" for="last_bike_fit">When was your last bike fit?</label>
+                    <input type="text" id="last_bike_fit" name="last_bike_fit" placeholder="e.g., 2023-08-15 or 'Never'">
+                </div>
+
+                <div class="question-group">
+                    <label class="question-label" for="bike_pain">
+                        Do you get pain on the bike?
+                    </label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="pain_yes" name="bike_pain" value="yes">
+                            <label for="pain_yes">Yes</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="pain_no" name="bike_pain" value="no">
+                            <label for="pain_no">No</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-group conditional-field" id="pain_desc_conditional">
+                    <label class="question-label" for="pain_description">If yes, describe the pain</label>
+                    <textarea id="pain_description" name="pain_description" rows="3" placeholder="e.g., Occasional lower back pain on 3+ hour rides, Knee pain when climbing"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 12: SOCIAL TRAINING -->
+        <div class="form-section" data-section="12">
+            <h2 onclick="toggleSection(this)">Social Training</h2>
+            <div class="section-content">
+                <div class="question-group">
+                    <label class="question-label" for="group_rides_per_week">How many times per week do you ride with others?</label>
+                    <input type="number" id="group_rides_per_week" name="group_rides_per_week" min="0" max="7">
+                </div>
+
+                <div class="question-group">
+                    <label class="question-label" for="group_ride_importance">
+                        How important are group rides to you?
+                    </label>
+                    <div class="rating-scale">
+                        <input type="radio" id="group-1" name="group_ride_importance" value="1">
+                        <label for="group-1">1</label>
+                        <input type="radio" id="group-2" name="group_ride_importance" value="2">
+                        <label for="group-2">2</label>
+                        <input type="radio" id="group-3" name="group_ride_importance" value="3">
+                        <label for="group-3">3</label>
+                        <input type="radio" id="group-4" name="group_ride_importance" value="4">
+                        <label for="group-4">4</label>
+                        <input type="radio" id="group-5" name="group_ride_importance" value="5">
+                        <label for="group-5">5</label>
+                    </div>
+                    <div class="question-help">1 = Not important, 3 = Somewhat important, 5 = Very important</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 13: COACHING HISTORY -->
+        <div class="form-section" data-section="13">
+            <h2 onclick="toggleSection(this)">Coaching History</h2>
+            <div class="section-content">
+                <div class="question-group">
+                    <label class="question-label" for="previous_coach">
+                        Have you worked with a coach before?
+                    </label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="coach_yes" name="previous_coach" value="yes">
+                            <label for="coach_yes">Yes</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="coach_no" name="previous_coach" value="no">
+                            <label for="coach_no">No</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-group conditional-field" id="coach_experience_conditional">
+                    <label class="question-label" for="coach_experience">If yes, what did you like or dislike about the experience?</label>
+                    <textarea id="coach_experience" name="coach_experience" rows="3" placeholder="e.g., Liked structured plans, disliked lack of flexibility when life got busy"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 14: PREFERENCES -->
+        <div class="form-section" data-section="14">
+            <h2 onclick="toggleSection(this)">Preferences</h2>
+            <div class="section-content">
+                <div class="question-group">
+                    <label class="question-label" for="communication_style">Communication Style</label>
+                    <select id="communication_style" name="communication_style">
+                        <option value="">Select...</option>
+                        <option value="direct">Direct/no-BS</option>
+                        <option value="encouraging">Encouraging/supportive</option>
+                        <option value="data_driven">Data-driven/analytical</option>
+                        <option value="flexible">Flexible</option>
+                    </select>
+                </div>
+
+                <div class="question-group">
+                    <label class="question-label" for="workout_length">Workout Length Preference</label>
+                    <select id="workout_length" name="workout_length">
+                        <option value="">Select...</option>
+                        <option value="shorter">Shorter/intense</option>
+                        <option value="moderate">Moderate</option>
+                        <option value="longer">Longer/easier</option>
+                        <option value="no_preference">No preference</option>
+                    </select>
+                </div>
+
+                <div class="question-group">
+                    <label class="question-label" for="strength_interest">Strength Training Interest</label>
+                    <select id="strength_interest" name="strength_interest">
+                        <option value="">Select...</option>
+                        <option value="not_interested">Not interested</option>
+                        <option value="willing">Willing if necessary</option>
+                        <option value="eager">Eager to include</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 15: TARGET RACE -->
+        <div class="form-section" data-section="15">
+            <h2 onclick="toggleSection(this)">Target Race</h2>
+            <div class="section-content">
+                <div class="question-group">
+                    <label class="question-label" for="race_name">Race Name</label>
+                    <input type="text" id="race_name" name="race_name" placeholder="e.g., Unbound Gravel 200">
+                </div>
+
+                <div class="question-group">
+                    <label class="question-label" for="race_date">Race Date</label>
+                    <input type="date" id="race_date" name="race_date">
+                </div>
+
+                <div class="question-group">
+                    <label class="question-label" for="race_distance">Race Distance</label>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="number" id="race_distance" name="race_distance" min="0" style="flex: 1;">
+                        <select id="race_distance_unit" name="race_distance_unit" style="width: 100px;">
+                            <option value="miles">Miles</option>
+                            <option value="km">Km</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="question-group">
+                    <label class="question-label" for="b_priority_events">Enter your 2-4 'B' priority Events</label>
+                    <textarea id="b_priority_events" name="b_priority_events" rows="3" placeholder="e.g., Local gravel series (4 races), Century ride in fall"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 16: PERSONAL CONTEXT -->
+        <div class="form-section" data-section="16">
+            <h2 onclick="toggleSection(this)">Personal Context</h2>
+            <div class="section-content">
+                <div class="question-group">
+                    <label class="question-label" for="important_people">The most important people in my life are...</label>
+                    <textarea id="important_people" name="important_people" rows="2" placeholder="e.g., Wife Sarah, kids Emma and Jack"></textarea>
+                </div>
+
+                <div class="question-group">
+                    <label class="question-label" for="anything_else">Anything else you want to tell me before we get rolling?</label>
+                    <textarea id="anything_else" name="anything_else" rows="3"></textarea>
+                </div>
+
+                <div class="question-group">
+                    <label class="question-label" for="life_affecting_training">Anything else I should know about your life that will/could affect your training?</label>
+                    <textarea id="life_affecting_training" name="life_affecting_training" rows="3" placeholder="e.g., Work travel 1 week/month - need portable training options"></textarea>
+                </div>
+            </div>
+        </div>
         
-        <button type="submit" class="submit-button" id="submitBtn">Generate My Training Plan</button>
+        <button type="submit" class="submit-button" id="submitBtn">Submit Coaching Intake</button>
         
         <div class="loading" id="loading">
-            Creating your personalized plan... This may take a few minutes.
+            Creating your personalized coaching plan... This may take a few minutes.
         </div>
         
         <div class="error-message" id="error"></div>
         <div class="success-message" id="success">
-            Plan generated! Check your email for access link.
+            Intake submitted! We'll review your responses and generate your personalized plan. Check your email for next steps.
         </div>
     </form>
     
@@ -567,6 +1365,186 @@
                 durationSelect.disabled = !e.target.checked;
             });
         });
+
+        // Toggle section collapse
+        function toggleSection(header) {
+            const section = header.closest('.form-section');
+            section.classList.toggle('collapsed');
+            updateProgress();
+        }
+
+        // Conditional field logic
+        function setupConditionalFields() {
+            // Racing goals conditional
+            document.querySelectorAll('input[name="has_racing_goals"]').forEach(radio => {
+                radio.addEventListener('change', (e) => {
+                    const show = e.target.value === 'yes';
+                    document.getElementById('races_conditional').classList.toggle('show', show);
+                    document.getElementById('success_conditional').classList.toggle('show', show);
+                    const raceInput = document.getElementById('race_list');
+                    const successInput = document.getElementById('success_looks_like');
+                    if (show) {
+                        raceInput.setAttribute('required', 'required');
+                        successInput.setAttribute('required', 'required');
+                    } else {
+                        raceInput.removeAttribute('required');
+                        successInput.removeAttribute('required');
+                    }
+                });
+            });
+
+            // Weather conditional
+            document.querySelectorAll('input[name="weather_limits"]').forEach(radio => {
+                radio.addEventListener('change', (e) => {
+                    document.getElementById('weather_desc_conditional').classList.toggle('show', e.target.value === 'yes');
+                });
+            });
+
+            // Strength routine conditional
+            document.querySelectorAll('input[name="strength_trains"]').forEach(radio => {
+                radio.addEventListener('change', (e) => {
+                    document.getElementById('strength_routine_conditional').classList.toggle('show', e.target.value === 'yes');
+                });
+            });
+
+            // Work hours/stress conditional
+            document.querySelectorAll('input[name="works"]').forEach(radio => {
+                radio.addEventListener('change', (e) => {
+                    const show = e.target.value === 'yes';
+                    document.getElementById('work_hours_conditional').classList.toggle('show', show);
+                    document.getElementById('work_stress_conditional').classList.toggle('show', show);
+                });
+            });
+
+            // Pain description conditional
+            document.querySelectorAll('input[name="bike_pain"]').forEach(radio => {
+                radio.addEventListener('change', (e) => {
+                    document.getElementById('pain_desc_conditional').classList.toggle('show', e.target.value === 'yes');
+                });
+            });
+
+            // Coach experience conditional
+            document.querySelectorAll('input[name="previous_coach"]').forEach(radio => {
+                radio.addEventListener('change', (e) => {
+                    document.getElementById('coach_experience_conditional').classList.toggle('show', e.target.value === 'yes');
+                });
+            });
+        }
+
+        // Progress tracking
+        function updateProgress() {
+            const form = document.getElementById('athleteForm');
+            const allInputs = form.querySelectorAll('input[required], select[required], textarea[required]');
+            const filledInputs = Array.from(allInputs).filter(input => {
+                if (input.type === 'checkbox' || input.type === 'radio') {
+                    return form.querySelector(`input[name="${input.name}"]:checked`);
+                }
+                return input.value.trim() !== '';
+            });
+            
+            const progress = allInputs.length > 0 ? (filledInputs.length / allInputs.length) * 100 : 0;
+            const progressFill = document.getElementById('progressFill');
+            const progressPercent = document.getElementById('progressPercent');
+            
+            progressFill.style.width = progress + '%';
+            progressFill.textContent = Math.round(progress) + '%';
+            progressPercent.textContent = Math.round(progress);
+            
+            // Update progress text
+            const progressText = document.getElementById('progressText');
+            if (progress === 0) {
+                progressText.textContent = 'Getting started...';
+            } else if (progress < 25) {
+                progressText.textContent = 'Just beginning...';
+            } else if (progress < 50) {
+                progressText.textContent = 'Making good progress...';
+            } else if (progress < 75) {
+                progressText.textContent = 'More than halfway there!';
+            } else if (progress < 100) {
+                progressText.textContent = 'Almost done!';
+            } else {
+                progressText.textContent = 'Complete! Ready to submit.';
+            }
+        }
+
+        // Save to localStorage
+        function saveProgress() {
+            const form = document.getElementById('athleteForm');
+            const formData = new FormData(form);
+            const data = {};
+            for (let [key, value] of formData.entries()) {
+                if (data[key]) {
+                    if (Array.isArray(data[key])) {
+                        data[key].push(value);
+                    } else {
+                        data[key] = [data[key], value];
+                    }
+                } else {
+                    data[key] = value;
+                }
+            }
+            localStorage.setItem('athleteIntakeForm', JSON.stringify(data));
+            alert('Progress saved! You can resume later.');
+        }
+
+        // Resume from localStorage
+        function resumeProgress() {
+            const saved = localStorage.getItem('athleteIntakeForm');
+            if (!saved) {
+                alert('No saved progress found.');
+                return;
+            }
+            
+            const data = JSON.parse(saved);
+            const form = document.getElementById('athleteForm');
+            
+            // Populate form fields
+            for (let [key, value] of Object.entries(data)) {
+                const input = form.querySelector(`[name="${key}"]`);
+                if (!input) continue;
+                
+                if (input.type === 'checkbox' || input.type === 'radio') {
+                    if (Array.isArray(value)) {
+                        value.forEach(v => {
+                            const option = form.querySelector(`[name="${key}"][value="${v}"]`);
+                            if (option) option.checked = true;
+                        });
+                    } else {
+                        const option = form.querySelector(`[name="${key}"][value="${value}"]`);
+                        if (option) option.checked = true;
+                    }
+                } else {
+                    input.value = Array.isArray(value) ? value[0] : value;
+                }
+            }
+            
+            // Trigger conditional fields
+            setupConditionalFields();
+            document.querySelectorAll('input[type="radio"]:checked, input[type="checkbox"]:checked').forEach(input => {
+                input.dispatchEvent(new Event('change'));
+            });
+            
+            updateProgress();
+            document.getElementById('resumeBtn').style.display = 'none';
+            alert('Form restored! Continue where you left off.');
+        }
+
+        // Initialize
+        setupConditionalFields();
+        updateProgress();
+        
+        // Update progress on input
+        document.getElementById('athleteForm').addEventListener('input', updateProgress);
+        document.getElementById('athleteForm').addEventListener('change', updateProgress);
+        
+        // Save/Resume buttons
+        document.getElementById('saveBtn').addEventListener('click', saveProgress);
+        document.getElementById('resumeBtn').addEventListener('click', resumeProgress);
+        
+        // Check for saved progress on load
+        if (localStorage.getItem('athleteIntakeForm')) {
+            document.getElementById('resumeBtn').style.display = 'block';
+        }
         
         // Form submission
         document.getElementById('athleteForm').addEventListener('submit', async (e) => {
@@ -596,7 +1574,6 @@
             const data = {};
             for (let [key, value] of formData.entries()) {
                 if (data[key]) {
-                    // Handle multiple values (checkboxes)
                     if (Array.isArray(data[key])) {
                         data[key].push(value);
                     } else {
@@ -626,9 +1603,13 @@
                     throw new Error('Submission failed');
                 }
                 
+                // Clear saved progress
+                localStorage.removeItem('athleteIntakeForm');
+                
                 loading.classList.remove('show');
                 success.classList.add('show');
                 e.target.reset();
+                updateProgress();
                 
             } catch (err) {
                 loading.classList.remove('show');
