@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gravel God Training Plan Questionnaire</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Space Mono', monospace;
+            background: #f5f1e8; /* Cream */
+            color: #2c2416; /* Dark brown */
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            border: 4px solid #2c2416;
+            box-shadow: 8px 8px 0 #2c2416;
+            padding: 40px;
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            color: #2c2416;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .subtitle {
+            color: #4a7c59; /* Turquoise */
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+        
+        .form-section {
+            margin-bottom: 40px;
+            padding: 20px;
+            background: #f9f7f3;
+            border: 3px solid #2c2416;
+        }
+        
+        .form-section h2 {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            color: #d4a574; /* Brown */
+            text-transform: uppercase;
+            border-bottom: 3px solid #2c2416;
+            padding-bottom: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #2c2416;
+            font-size: 0.95em;
+        }
+        
+        input[type="text"],
+        input[type="email"],
+        input[type="number"],
+        input[type="date"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 3px solid #2c2416;
+            background: #fff;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.9em;
+            box-shadow: 3px 3px 0 #2c2416;
+            transition: all 0.2s;
+        }
+        
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            box-shadow: 5px 5px 0 #4a7c59;
+            transform: translate(-2px, -2px);
+        }
+        
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background: #fff;
+            border: 2px solid #2c2416;
+        }
+        
+        .checkbox-item input[type="checkbox"] {
+            width: auto;
+            margin-right: 10px;
+            transform: scale(1.3);
+        }
+        
+        .day-schedule {
+            display: grid;
+            grid-template-columns: 120px 1fr 1fr 1fr;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: #fff;
+            border: 2px solid #2c2416;
+        }
+        
+        .day-label {
+            font-weight: 700;
+            color: #4a7c59;
+        }
+        
+        .honeypot {
+            position: absolute;
+            left: -9999px;
+            opacity: 0;
+        }
+        
+        .submit-btn {
+            background: #f7d94c; /* Yellow */
+            color: #2c2416;
+            border: 4px solid #2c2416;
+            padding: 20px 40px;
+            font-size: 1.2em;
+            font-weight: 700;
+            font-family: 'Space Mono', monospace;
+            text-transform: uppercase;
+            cursor: pointer;
+            box-shadow: 6px 6px 0 #2c2416;
+            transition: all 0.2s;
+            width: 100%;
+            margin-top: 30px;
+        }
+        
+        .submit-btn:hover {
+            transform: translate(-3px, -3px);
+            box-shadow: 9px 9px 0 #2c2416;
+        }
+        
+        .submit-btn:active {
+            transform: translate(0, 0);
+            box-shadow: 3px 3px 0 #2c2416;
+        }
+        
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            background: #4a7c59;
+            color: #fff;
+            border: 3px solid #2c2416;
+            margin-top: 20px;
+        }
+        
+        .error {
+            display: none;
+            padding: 15px;
+            background: #ff6b6b;
+            color: #fff;
+            border: 3px solid #2c2416;
+            margin-top: 20px;
+        }
+        
+        .success {
+            display: none;
+            padding: 15px;
+            background: #4a7c59;
+            color: #fff;
+            border: 3px solid #2c2416;
+            margin-top: 20px;
+        }
+        
+        .required {
+            color: #ff6b6b;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .day-schedule {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Gravel God Training Plan</h1>
+        <p class="subtitle">Personalized coaching at scale. Fill out this form to get your custom training plan.</p>
+        
+        <form id="athleteForm">
+            <!-- Honeypot field for bot detection -->
+            <input type="text" name="website" class="honeypot" tabindex="-1" autocomplete="off">
+            
+            <!-- SECTION 1: BASIC INFO -->
+            <div class="form-section">
+                <h2>Basic Information</h2>
+                
+                <div class="form-group">
+                    <label for="name">Full Name <span class="required">*</span></label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email Address <span class="required">*</span></label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="age">Age</label>
+                    <input type="number" id="age" name="age" min="18" max="99">
+                </div>
+                
+                <div class="form-group">
+                    <label for="primary_goal">Primary Goal <span class="required">*</span></label>
+                    <select id="primary_goal" name="primary_goal" required>
+                        <option value="">Select...</option>
+                        <option value="specific_race">Complete first gravel century</option>
+                        <option value="specific_race">Top 25% finish</option>
+                        <option value="specific_race">Podium</option>
+                        <option value="specific_race">Win</option>
+                        <option value="general_fitness">General fitness</option>
+                        <option value="base_building">Base building</option>
+                        <option value="return_from_injury">Return from injury</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- SECTION 2: TRAINING HISTORY -->
+            <div class="form-section">
+                <h2>Training History</h2>
+                
+                <div class="form-group">
+                    <label for="years_cycling">Years Cycling</label>
+                    <select id="years_cycling" name="years_cycling">
+                        <option value="">Select...</option>
+                        <option value="0-2">0-2 years</option>
+                        <option value="3-5">3-5 years</option>
+                        <option value="6-10">6-10 years</option>
+                        <option value="10+">10+ years</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="years_structured">Years of Structured Training</label>
+                    <input type="number" id="years_structured" name="years_structured" min="0" max="50">
+                </div>
+                
+                <div class="form-group">
+                    <label for="current_ftp">Current FTP (watts) - Optional</label>
+                    <input type="number" id="current_ftp" name="current_ftp" min="0">
+                </div>
+                
+                <div class="form-group">
+                    <label for="weekly_volume">Typical Weekly Volume (Last 3 Months)</label>
+                    <select id="weekly_volume" name="weekly_volume">
+                        <option value="">Select...</option>
+                        <option value="0-2">0-2 hours</option>
+                        <option value="3-5">3-5 hours</option>
+                        <option value="6-8">6-8 hours</option>
+                        <option value="9-12">9-12 hours</option>
+                        <option value="13-15">13-15 hours</option>
+                        <option value="16-20">16-20 hours</option>
+                        <option value="21+">21+ hours</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- SECTION 3: AVAILABLE TRAINING HOURS -->
+            <div class="form-section">
+                <h2>Weekly Schedule</h2>
+                <p>For each day, indicate when you can train:</p>
+                
+                <div id="daySchedules"></div>
+            </div>
+            
+            <!-- SECTION 4: EQUIPMENT -->
+            <div class="form-section">
+                <h2>Equipment Access</h2>
+                
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="smart_trainer" name="equipment" value="smart_trainer">
+                        <label for="smart_trainer">Smart Trainer</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="dumb_trainer_pm" name="equipment" value="dumb_trainer_pm">
+                        <label for="dumb_trainer_pm">Dumb Trainer + Power Meter</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="outdoor_pm" name="equipment" value="outdoor_pm">
+                        <label for="outdoor_pm">Outdoor Only + Power Meter</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="no_pm" name="equipment" value="no_pm">
+                        <label for="no_pm">No Power Meter</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="gym_membership" name="equipment" value="gym_membership">
+                        <label for="gym_membership">Gym Membership</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="home_gym" name="equipment" value="home_gym">
+                        <label for="home_gym">Home Gym (DB/KB)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="pull_up_bar" name="equipment" value="pull_up_bar">
+                        <label for="pull_up_bar">Pull-up Bar</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="resistance_bands" name="equipment" value="resistance_bands">
+                        <label for="resistance_bands">Resistance Bands</label>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- SECTION 5: INJURIES / LIMITATIONS -->
+            <div class="form-section">
+                <h2>Injuries & Limitations</h2>
+                
+                <div class="form-group">
+                    <label for="current_injuries">Current Injuries</label>
+                    <textarea id="current_injuries" name="current_injuries" rows="3" placeholder="Describe any current injuries..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="past_injuries">Past Injuries Affecting Movement</label>
+                    <textarea id="past_injuries" name="past_injuries" rows="3" placeholder="Describe past injuries that still affect you..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>Movement Limitations</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="deep_squat_painful" name="limitations" value="deep_squat_painful">
+                            <label for="deep_squat_painful">Deep squat painful</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="single_leg_balance" name="limitations" value="single_leg_balance">
+                            <label for="single_leg_balance">Single-leg balance difficult</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="pushups_shoulders" name="limitations" value="pushups_shoulders">
+                            <label for="pushups_shoulders">Push-ups hurt shoulders</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="hip_mobility" name="limitations" value="hip_mobility">
+                            <label for="hip_mobility">Hip mobility issues</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="lower_back" name="limitations" value="lower_back">
+                            <label for="lower_back">Lower back sensitivity</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- SECTION 6: PREFERENCES -->
+            <div class="form-section">
+                <h2>Preferences</h2>
+                
+                <div class="form-group">
+                    <label for="communication_style">Communication Style</label>
+                    <select id="communication_style" name="communication_style">
+                        <option value="">Select...</option>
+                        <option value="direct">Direct/no-BS</option>
+                        <option value="encouraging">Encouraging/supportive</option>
+                        <option value="data_driven">Data-driven/analytical</option>
+                        <option value="flexible">Flexible</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="workout_length">Workout Length Preference</label>
+                    <select id="workout_length" name="workout_length">
+                        <option value="">Select...</option>
+                        <option value="shorter">Shorter/intense</option>
+                        <option value="moderate">Moderate</option>
+                        <option value="longer">Longer/easier</option>
+                        <option value="no_preference">No preference</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="strength_interest">Strength Training Interest</label>
+                    <select id="strength_interest" name="strength_interest">
+                        <option value="">Select...</option>
+                        <option value="not_interested">Not interested</option>
+                        <option value="willing">Willing if necessary</option>
+                        <option value="eager">Eager to include</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- SECTION 7: RACE INFO -->
+            <div class="form-section" id="raceSection">
+                <h2>Target Race</h2>
+                
+                <div class="form-group">
+                    <label for="race_name">Race Name</label>
+                    <input type="text" id="race_name" name="race_name" placeholder="e.g., Unbound Gravel 200">
+                </div>
+                
+                <div class="form-group">
+                    <label for="race_date">Race Date</label>
+                    <input type="date" id="race_date" name="race_date">
+                </div>
+                
+                <div class="form-group">
+                    <label for="race_distance">Race Distance</label>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="number" id="race_distance" name="race_distance" min="0" style="flex: 1;">
+                        <select id="race_distance_unit" name="race_distance_unit" style="width: 100px;">
+                            <option value="miles">Miles</option>
+                            <option value="km">Km</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <button type="submit" class="submit-btn" id="submitBtn">Generate My Training Plan</button>
+            
+            <div class="loading" id="loading">
+                Creating your personalized plan... This may take a few minutes.
+            </div>
+            
+            <div class="error" id="error"></div>
+            <div class="success" id="success">
+                Plan generated! Check your email for access link.
+            </div>
+        </form>
+    </div>
+    
+    <script>
+        // Generate day schedule inputs
+        const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+        const daySchedulesContainer = document.getElementById('daySchedules');
+        
+        days.forEach(day => {
+            const dayDiv = document.createElement('div');
+            dayDiv.className = 'day-schedule';
+            dayDiv.innerHTML = `
+                <div class="day-label">${day}</div>
+                <div>
+                    <input type="checkbox" id="${day.toLowerCase()}_available" name="${day.toLowerCase()}_available">
+                    <label for="${day.toLowerCase()}_available" style="display: inline; font-weight: normal;">Can train</label>
+                </div>
+                <div>
+                    <select id="${day.toLowerCase()}_time" name="${day.toLowerCase()}_time" disabled>
+                        <option value="">Time...</option>
+                        <option value="early_morning">Early morning</option>
+                        <option value="morning">Morning</option>
+                        <option value="midday">Midday</option>
+                        <option value="afternoon">Afternoon</option>
+                        <option value="evening">Evening</option>
+                        <option value="flexible">Flexible</option>
+                    </select>
+                </div>
+                <div>
+                    <select id="${day.toLowerCase()}_duration" name="${day.toLowerCase()}_duration" disabled>
+                        <option value="">Duration...</option>
+                        <option value="30">30 min</option>
+                        <option value="45">45 min</option>
+                        <option value="60">1 hr</option>
+                        <option value="90">1.5 hr</option>
+                        <option value="120">2 hr</option>
+                        <option value="150">2.5 hr</option>
+                        <option value="180">3 hr</option>
+                        <option value="240">4 hr+</option>
+                    </select>
+                </div>
+            `;
+            daySchedulesContainer.appendChild(dayDiv);
+            
+            // Enable time/duration when "can train" is checked
+            const checkbox = dayDiv.querySelector(`input[type="checkbox"]`);
+            const timeSelect = dayDiv.querySelector('select:first-of-type');
+            const durationSelect = dayDiv.querySelector('select:last-of-type');
+            
+            checkbox.addEventListener('change', (e) => {
+                timeSelect.disabled = !e.target.checked;
+                durationSelect.disabled = !e.target.checked;
+            });
+        });
+        
+        // Form submission
+        document.getElementById('athleteForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Honeypot check
+            if (document.querySelector('input[name="website"]').value) {
+                console.log('Bot detected');
+                return;
+            }
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const loading = document.getElementById('loading');
+            const error = document.getElementById('error');
+            const success = document.getElementById('success');
+            
+            // Hide previous messages
+            error.style.display = 'none';
+            success.style.display = 'none';
+            
+            // Show loading
+            submitBtn.disabled = true;
+            loading.style.display = 'block';
+            
+            // Collect form data
+            const formData = new FormData(e.target);
+            const data = {};
+            for (let [key, value] of formData.entries()) {
+                if (data[key]) {
+                    // Handle multiple values (checkboxes)
+                    if (Array.isArray(data[key])) {
+                        data[key].push(value);
+                    } else {
+                        data[key] = [data[key], value];
+                    }
+                } else {
+                    data[key] = value;
+                }
+            }
+            
+            try {
+                // TODO: Replace with actual webhook endpoint
+                const webhookUrl = 'https://your-webhook-endpoint.com/athlete-intake';
+                
+                const response = await fetch(webhookUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: data.email,
+                        data: data
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Submission failed');
+                }
+                
+                loading.style.display = 'none';
+                success.style.display = 'block';
+                e.target.reset();
+                
+            } catch (err) {
+                loading.style.display = 'none';
+                error.style.display = 'block';
+                error.textContent = 'Something went wrong. Please try again or contact support.';
+                submitBtn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>
+

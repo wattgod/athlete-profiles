@@ -1,0 +1,112 @@
+name: Athlete Intake
+
+on:
+  repository_dispatch:
+    types: [athlete-intake]
+  workflow_dispatch:
+    inputs:
+      email:
+        description: 'Athlete email'
+        required: true
+      athlete_id:
+        description: 'Athlete ID'
+        required: true
+
+jobs:
+  generate-plan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyyaml
+      
+      - name: Extract payload
+        id: payload
+        run: |
+          if [ "${{ github.event_name }}" == "repository_dispatch" ]; then
+            echo "email=${{ github.event.client_payload.email }}" >> $GITHUB_OUTPUT
+            echo "athlete_id=${{ github.event.client_payload.athlete_id }}" >> $GITHUB_OUTPUT
+            echo "data=${{ github.event.client_payload.data }}" >> $GITHUB_OUTPUT
+          else
+            echo "email=${{ github.event.inputs.email }}" >> $GITHUB_OUTPUT
+            echo "athlete_id=${{ github.event.inputs.athlete_id }}" >> $GITHUB_OUTPUT
+            echo "data={}" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Validate submission
+        run: |
+          python athletes/scripts/validate_submission.py \
+            --email "${{ steps.payload.outputs.email }}" \
+            --data "${{ steps.payload.outputs.data }}"
+      
+      - name: Create athlete profile
+        run: |
+          python athletes/scripts/create_profile_from_form.py \
+            --athlete-id "${{ steps.payload.outputs.athlete_id }}" \
+            --data "${{ steps.payload.outputs.data }}"
+      
+      - name: Generate athlete plan
+        run: |
+          cd athletes/scripts
+          athlete_id="${{ steps.payload.outputs.athlete_id }}"
+          
+          python validate_profile.py "$athlete_id" || exit 1
+          python derive_classifications.py "$athlete_id" || exit 1
+          python build_weekly_structure.py "$athlete_id" || exit 1
+          python generate_athlete_plan.py "$athlete_id" || exit 1
+          python generate_athlete_guide.py "$athlete_id" || exit 1
+      
+      - name: Commit generated plan
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add athletes/${{ steps.payload.outputs.athlete_id }}/plans/
+          git commit -m "Add plan for ${{ steps.payload.outputs.athlete_id }}" || exit 0
+          git push || exit 0
+      
+      - name: Send email notification
+        if: success()
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: Your Gravel God Training Plan is Ready
+          to: ${{ steps.payload.outputs.email }}
+          from: Gravel God Cycling
+          body: |
+            Your personalized training plan has been generated!
+            
+            Access your plan here:
+            https://github.com/${{ github.repository }}/tree/main/athletes/${{ steps.payload.outputs.athlete_id }}/plans
+            
+            If you have any questions, reply to this email.
+      
+      - name: Notify on failure
+        if: failure()
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: Training Plan Generation Failed
+          to: ${{ steps.payload.outputs.email }}
+          from: Gravel God Cycling
+          body: |
+            We encountered an issue generating your training plan.
+            
+            Please try submitting the form again, or contact support if the problem persists.
+
