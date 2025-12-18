@@ -1,0 +1,20 @@
+{
+  "name": "Manual Test",
+  "email": "matti@gravelgod.com",
+  "coaching_tier": "mid",
+  "birthday": "1986-01-15",
+  "height_ft": "5",
+  "height_in": "10",
+  "weight_lbs": "165",
+  "sex": "male",
+  "primary_goal": "specific_race",
+  "has_race_goal": "yes",
+  "a_event_1_name": "Unbound 200",
+  "a_event_1_date": "2026-06-07",
+  "a_event_1_distance": "200",
+  "a_event_1_goal": "compete",
+  "years_cycling": "5",
+  "weekly_hours": "10",
+  "ftp": "250",
+  "strength_equipment": ["bodyweight", "dumbbells"]
+}
