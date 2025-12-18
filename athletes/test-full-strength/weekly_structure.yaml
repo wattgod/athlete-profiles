@@ -1,0 +1,44 @@
+description: Custom weekly structure for ayahuasca tier
+days:
+  monday:
+    am: null
+    pm: null
+    is_key_day: false
+    notes: ''
+    max_duration: 0
+  tuesday:
+    am: null
+    pm: null
+    is_key_day: false
+    notes: ''
+    max_duration: 0
+  wednesday:
+    am: null
+    pm: null
+    is_key_day: false
+    notes: ''
+    max_duration: 0
+  thursday:
+    am: null
+    pm: null
+    is_key_day: false
+    notes: ''
+    max_duration: 0
+  friday:
+    am: null
+    pm: null
+    is_key_day: false
+    notes: ''
+    max_duration: 0
+  saturday:
+    am: null
+    pm: null
+    is_key_day: false
+    notes: ''
+    max_duration: 0
+  sunday:
+    am: null
+    pm: null
+    is_key_day: false
+    notes: ''
+    max_duration: 0
