@@ -102,7 +102,7 @@ jobs:
           git push || echo "Nothing to push"
       
       - name: Send success email
-        if: success() && secrets.EMAIL_USERNAME != ''
+        if: success()
         continue-on-error: true
         uses: dawidd6/action-send-mail@v3
         with:
@@ -134,7 +134,7 @@ jobs:
             Gravel God Cycling
       
       - name: Send failure notification
-        if: failure() && secrets.EMAIL_USERNAME != ''
+        if: failure()
         continue-on-error: true
         uses: dawidd6/action-send-mail@v3
         with:
@@ -159,7 +159,7 @@ jobs:
             — Gravel God Cycling
       
       - name: Notify admin on failure
-        if: failure() && secrets.ADMIN_EMAIL != ''
+        if: failure()
         continue-on-error: true
         uses: dawidd6/action-send-mail@v3
         with:
