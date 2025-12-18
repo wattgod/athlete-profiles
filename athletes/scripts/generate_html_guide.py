@@ -405,6 +405,353 @@ HTML_TEMPLATE = '''<!DOCTYPE html>
                 grid-template-columns: 1fr 1fr;
             }}
         }}
+
+        /* RACE TIMELINE */
+        .race-timeline {{
+            position: relative;
+            padding: 20px 0;
+            margin: 24px 0;
+        }}
+
+        .timeline-track {{
+            position: relative;
+            height: 60px;
+            background: linear-gradient(to right, #f0f0f0 0%, #e0e0e0 100%);
+            border: 2px solid var(--gg-border);
+            margin-bottom: 20px;
+        }}
+
+        .timeline-labels {{
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--gg-muted);
+            margin-bottom: 8px;
+        }}
+
+        .timeline-event {{
+            position: absolute;
+            top: -8px;
+            transform: translateX(-50%);
+            text-align: center;
+        }}
+
+        .timeline-event .marker {{
+            width: 24px;
+            height: 24px;
+            border: 3px solid #000;
+            border-radius: 50%;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+            margin: 0 auto 4px auto;
+        }}
+
+        .timeline-event.a-event .marker {{
+            background: #000;
+            color: #fff;
+            width: 32px;
+            height: 32px;
+            font-size: 14px;
+        }}
+
+        .timeline-event.b-event .marker {{
+            background: #666;
+            color: #fff;
+        }}
+
+        .timeline-event.c-event .marker {{
+            background: #fff;
+            color: #000;
+        }}
+
+        .timeline-event .event-name {{
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            max-width: 80px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }}
+
+        .timeline-event .event-date {{
+            font-size: 9px;
+            color: var(--gg-muted);
+        }}
+
+        .event-legend {{
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+            margin-top: 16px;
+            font-size: 11px;
+        }}
+
+        .event-legend span {{
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }}
+
+        .legend-dot {{
+            width: 12px;
+            height: 12px;
+            border: 2px solid #000;
+            border-radius: 50%;
+        }}
+
+        .legend-dot.a {{ background: #000; }}
+        .legend-dot.b {{ background: #666; }}
+        .legend-dot.c {{ background: #fff; }}
+
+        /* GOALS */
+        .goal-card {{
+            border: 2px solid var(--gg-border);
+            padding: 16px 20px;
+            margin: 12px 0;
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+        }}
+
+        .goal-icon {{
+            font-size: 24px;
+            flex-shrink: 0;
+        }}
+
+        .goal-content h4 {{
+            margin: 0 0 4px 0;
+        }}
+
+        .goal-content p {{
+            margin: 0;
+            color: var(--gg-muted);
+            font-size: 13px;
+        }}
+
+        /* PHILOSOPHY */
+        .philosophy-framework {{
+            border: 2px solid var(--gg-border);
+            padding: 24px;
+            margin: 20px 0;
+            background: var(--gg-soft);
+        }}
+
+        .philosophy-diagram {{
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin: 20px 0;
+        }}
+
+        .philosophy-bar {{
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }}
+
+        .bar-easy {{
+            background: #e0e0e0;
+            border: 2px solid #000;
+        }}
+
+        .bar-hard {{
+            background: #000;
+            color: #fff;
+        }}
+
+        /* BLINDSPOTS */
+        .blindspot {{
+            border: 2px solid var(--gg-border);
+            border-left-width: 8px;
+            padding: 16px 20px;
+            margin: 16px 0;
+            background: #fff;
+        }}
+
+        .blindspot.high {{
+            border-left-color: #000;
+            background: #f5f5f5;
+        }}
+
+        .blindspot.medium {{
+            border-left-color: #666;
+        }}
+
+        .blindspot.low {{
+            border-left-color: #ccc;
+        }}
+
+        .blindspot-header {{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }}
+
+        .blindspot-header h4 {{
+            margin: 0;
+        }}
+
+        .blindspot-severity {{
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 2px 8px;
+            border: 1px solid currentColor;
+        }}
+
+        /* ATP TABLE */
+        .atp-container {{
+            margin: 24px 0;
+        }}
+
+        .atp-week {{
+            border: 2px solid var(--gg-border);
+            margin-bottom: -2px;
+        }}
+
+        .atp-week-header {{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            background: var(--gg-soft);
+            cursor: pointer;
+            user-select: none;
+        }}
+
+        .atp-week-header:hover {{
+            background: #e8e8e8;
+        }}
+
+        .atp-week-title {{
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }}
+
+        .atp-week-num {{
+            font-weight: 700;
+            font-size: 14px;
+        }}
+
+        .atp-week-phase {{
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 2px 8px;
+            background: #000;
+            color: #fff;
+        }}
+
+        .atp-week-phase.base {{ background: #888; }}
+        .atp-week-phase.build {{ background: #444; }}
+        .atp-week-phase.peak {{ background: #000; }}
+        .atp-week-phase.taper {{ background: #aaa; }}
+
+        .atp-week-meta {{
+            display: flex;
+            gap: 16px;
+            font-size: 11px;
+            color: var(--gg-muted);
+        }}
+
+        .atp-week-toggle {{
+            font-size: 18px;
+            font-weight: 700;
+            transition: transform 0.2s;
+        }}
+
+        .atp-week.open .atp-week-toggle {{
+            transform: rotate(45deg);
+        }}
+
+        .atp-week-content {{
+            display: none;
+            padding: 16px 20px;
+            border-top: 1px solid var(--gg-border);
+        }}
+
+        .atp-week.open .atp-week-content {{
+            display: block;
+        }}
+
+        .atp-workouts {{
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+            margin: 16px 0;
+        }}
+
+        .atp-day {{
+            border: 1px solid var(--gg-border);
+            padding: 8px;
+            font-size: 11px;
+            min-height: 80px;
+        }}
+
+        .atp-day-name {{
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 10px;
+            letter-spacing: 0.05em;
+            margin-bottom: 6px;
+            padding-bottom: 4px;
+            border-bottom: 1px solid #ddd;
+        }}
+
+        .atp-day.key-day {{
+            background: #f0f0f0;
+        }}
+
+        .atp-day.key-day .atp-day-name {{
+            background: #000;
+            color: #fff;
+            margin: -8px -8px 6px -8px;
+            padding: 4px 8px;
+        }}
+
+        .atp-workout-item {{
+            margin: 4px 0;
+            font-size: 10px;
+        }}
+
+        .atp-workout-item.strength {{
+            color: #666;
+            font-style: italic;
+        }}
+
+        .atp-focus {{
+            margin-top: 16px;
+            padding-top: 12px;
+            border-top: 1px dashed var(--gg-border);
+            font-size: 13px;
+        }}
+
+        .atp-focus strong {{
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 0.05em;
+        }}
+
+        @media (max-width: 768px) {{
+            .atp-workouts {{
+                grid-template-columns: 1fr;
+            }}
+        }}
     </style>
 </head>
 <body>
@@ -542,6 +889,11 @@ class GuideGenerator:
         
         # Sections
         sections.append(self._generate_quick_reference())
+        sections.append(self._generate_race_timeline())
+        sections.append(self._generate_your_goals())
+        sections.append(self._generate_training_philosophy())
+        sections.append(self._generate_blindspots())
+        sections.append(self._generate_atp_table())
         sections.append(self._generate_your_weekly_schedule())
         sections.append(self._generate_phase_progression())
         sections.append(self._generate_training_fundamentals())
@@ -595,6 +947,11 @@ class GuideGenerator:
     def _generate_toc(self) -> str:
         toc_items = [
             ("quick-reference", "Quick Reference"),
+            ("race-timeline", "Your Race Calendar"),
+            ("your-goals", "Your Goals"),
+            ("training-philosophy", "Your Training Philosophy"),
+            ("blindspots", "Your Blindspots"),
+            ("atp", "24-Week Training Plan"),
             ("your-schedule", "Your Weekly Schedule"),
             ("phase-progression", "Phase Progression"),
             ("training-fundamentals", "Training Fundamentals"),
@@ -677,6 +1034,660 @@ class GuideGenerator:
     </div>
 </section>
 '''
+    
+    def _generate_race_timeline(self) -> str:
+        """Generate visual race timeline showing A/B/C events."""
+        target_race = self.profile.get('target_race', {})
+        a_events = self.profile.get('a_events', [])
+        b_events = self.profile.get('b_events', [])
+        c_events = self.profile.get('c_events', [])
+        
+        # If no structured events, use target_race as A event
+        if not a_events and target_race.get('name'):
+            a_events = [{
+                'name': target_race.get('name', 'A Race'),
+                'date': target_race.get('date', ''),
+                'distance': target_race.get('distance', ''),
+                'goal': target_race.get('goal_type', 'compete')
+            }]
+        
+        # Build event list with dates
+        all_events = []
+        for e in a_events:
+            all_events.append({**e, 'priority': 'A', 'class': 'a-event'})
+        for e in b_events:
+            all_events.append({**e, 'priority': 'B', 'class': 'b-event'})
+        for e in c_events:
+            all_events.append({**e, 'priority': 'C', 'class': 'c-event'})
+        
+        # Sort by date
+        def parse_date(d):
+            try:
+                return datetime.strptime(d.get('date', '2099-12-31'), '%Y-%m-%d')
+            except:
+                return datetime(2099, 12, 31)
+        
+        all_events.sort(key=parse_date)
+        
+        # Calculate timeline positions
+        if all_events:
+            dates = [parse_date(e) for e in all_events]
+            min_date = min(dates)
+            max_date = max(dates)
+            total_days = (max_date - min_date).days or 1
+            
+            event_markers = []
+            for e in all_events:
+                d = parse_date(e)
+                position = ((d - min_date).days / total_days) * 90 + 5  # 5-95% range
+                event_markers.append(f'''
+                    <div class="timeline-event {e['class']}" style="left: {position}%;">
+                        <div class="marker">{e['priority']}</div>
+                        <div class="event-name">{e.get('name', 'Race')[:15]}</div>
+                        <div class="event-date">{e.get('date', '')}</div>
+                    </div>
+                ''')
+            
+            markers_html = "\n".join(event_markers)
+            start_label = min_date.strftime('%b %Y')
+            end_label = max_date.strftime('%b %Y')
+        else:
+            markers_html = '<p style="text-align: center; padding: 20px;">No race events defined</p>'
+            start_label = "Start"
+            end_label = "Race Day"
+        
+        # Event details table
+        event_rows = []
+        for e in all_events:
+            goal_badge = f'<span style="background:#000;color:#fff;padding:2px 6px;font-size:10px;">{e.get("goal", "").upper()}</span>' if e.get('goal') else ''
+            event_rows.append(f'''
+                <tr>
+                    <td><strong>{e['priority']}</strong></td>
+                    <td>{e.get('name', 'TBD')}</td>
+                    <td>{e.get('date', 'TBD')}</td>
+                    <td>{e.get('distance', '')} {e.get('distance_unit', '')}</td>
+                    <td>{goal_badge}</td>
+                </tr>
+            ''')
+        
+        events_table = "\n".join(event_rows) if event_rows else '<tr><td colspan="5">No events defined</td></tr>'
+        
+        return f'''
+<section id="race-timeline">
+    <h2>2 · Your Race Calendar</h2>
+    
+    <p>Your season at a glance. A events are your primary targets. B events are important but not peak priorities. C events are training races or for fun.</p>
+    
+    <div class="race-timeline">
+        <div class="timeline-labels">
+            <span>{start_label}</span>
+            <span>{end_label}</span>
+        </div>
+        <div class="timeline-track">
+{markers_html}
+        </div>
+        <div class="event-legend">
+            <span><div class="legend-dot a"></div> A Event (Peak)</span>
+            <span><div class="legend-dot b"></div> B Event (Important)</span>
+            <span><div class="legend-dot c"></div> C Event (Training)</span>
+        </div>
+    </div>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Priority</th>
+                <th>Event</th>
+                <th>Date</th>
+                <th>Distance</th>
+                <th>Goal</th>
+            </tr>
+        </thead>
+        <tbody>
+{events_table}
+        </tbody>
+    </table>
+    
+    <div class="callout info">
+        <h4>The Universal Race Framework</h4>
+        <p><strong>A Events (1-2/year):</strong> You peak for these. Full taper. Best form. Everything else serves these races.</p>
+        <p><strong>B Events (3-5/year):</strong> Important, but you don't compromise A event prep. Shorter taper, maybe not fully peaked.</p>
+        <p><strong>C Events (unlimited):</strong> Training opportunities. Show up undertrained on purpose. Use them to practice race execution, test equipment, build experience.</p>
+    </div>
+</section>
+'''
+    
+    def _generate_your_goals(self) -> str:
+        """Generate section showing athlete's stated goals."""
+        target_race = self.profile.get('target_race', {})
+        primary_goal = self.profile.get('primary_goal', 'specific_race')
+        goal_type = target_race.get('goal_type', 'compete')
+        
+        # Additional goals from profile
+        other_goals = self.profile.get('other_goals', [])
+        
+        # Infer goals from profile data
+        inferred_goals = []
+        
+        # Time goal
+        target_time = target_race.get('target_time')
+        if target_time:
+            inferred_goals.append({
+                'icon': '⏱',
+                'title': f'Finish in {target_time}',
+                'desc': 'Time-based goal for your A event'
+            })
+        
+        # Goal type
+        goal_descriptions = {
+            'finish': ('🏁', 'Complete the Distance', 'Cross that finish line. Everything else is gravy.'),
+            'compete': ('🎯', 'Race Competitively', 'Finish in the top half of your age group. Proper racing.'),
+            'podium': ('🏆', 'Podium Finish', 'Top 3 in age group. Elite performance.'),
+            'pr': ('📈', 'Personal Record', 'Beat your previous best time or performance.')
+        }
+        
+        if goal_type in goal_descriptions:
+            icon, title, desc = goal_descriptions[goal_type]
+            inferred_goals.append({'icon': icon, 'title': title, 'desc': desc})
+        
+        # FTP goal
+        ftp = self.profile.get('fitness_markers', {}).get('ftp_watts')
+        weight = self.profile.get('fitness_markers', {}).get('weight_kg')
+        if ftp and weight:
+            current_wpkg = ftp / weight
+            target_wpkg = current_wpkg * 1.1  # 10% improvement
+            inferred_goals.append({
+                'icon': '⚡',
+                'title': f'Improve W/kg from {current_wpkg:.1f} → {target_wpkg:.1f}',
+                'desc': 'Realistic fitness progression over the plan'
+            })
+        
+        # Strength goal
+        strength_bg = self.profile.get('training_history', {}).get('strength_background', '')
+        if strength_bg in ['none', 'beginner']:
+            inferred_goals.append({
+                'icon': '💪',
+                'title': 'Build Strength Foundation',
+                'desc': 'Establish consistent strength habit and movement competency'
+            })
+        elif strength_bg == 'intermediate':
+            inferred_goals.append({
+                'icon': '💪',
+                'title': 'Develop Cycling-Specific Power',
+                'desc': 'Convert gym strength into on-bike performance'
+            })
+        
+        # Build goal cards
+        goal_cards = []
+        for g in inferred_goals:
+            goal_cards.append(f'''
+            <div class="goal-card">
+                <div class="goal-icon">{g['icon']}</div>
+                <div class="goal-content">
+                    <h4>{g['title']}</h4>
+                    <p>{g['desc']}</p>
+                </div>
+            </div>
+            ''')
+        
+        goals_html = "\n".join(goal_cards) if goal_cards else '<p>No specific goals defined.</p>'
+        
+        return f'''
+<section id="your-goals">
+    <h2>3 · Your Goals</h2>
+    
+    <p>Based on your intake, here's what you're training for:</p>
+    
+{goals_html}
+    
+    <div class="callout tip">
+        <h4>Goal Hierarchy</h4>
+        <p>When goals conflict, prioritize in this order:</p>
+        <ol>
+            <li><strong>Health</strong> — No goal is worth injury</li>
+            <li><strong>Consistency</strong> — Showing up beats heroics</li>
+            <li><strong>A Event Performance</strong> — The main target</li>
+            <li><strong>Secondary Goals</strong> — Nice to have</li>
+        </ol>
+    </div>
+</section>
+'''
+    
+    def _generate_training_philosophy(self) -> str:
+        """Generate training philosophy explanation based on tier."""
+        tier = self.derived.get('tier', 'compete').lower()
+        
+        # Philosophy varies by tier
+        philosophies = {
+            'ayahuasca': {
+                'name': 'Minimum Effective Dose',
+                'easy_pct': 85,
+                'hard_pct': 15,
+                'desc': 'Maximum results from minimum time investment. Every workout counts.',
+                'principles': [
+                    'Quality over quantity — no junk miles',
+                    'Two key sessions per week, everything else easy',
+                    'Strength training is mandatory, not optional',
+                    'Recovery is the priority between sessions'
+                ]
+            },
+            'finisher': {
+                'name': 'Polarized Foundation',
+                'easy_pct': 80,
+                'hard_pct': 20,
+                'desc': 'Build aerobic base with strategic intensity. Classic endurance approach.',
+                'principles': [
+                    '80% easy / 20% hard intensity distribution',
+                    'Long rides build the engine',
+                    'Two quality sessions per week',
+                    'Strength supports, doesn\'t replace, bike work'
+                ]
+            },
+            'compete': {
+                'name': 'Polarized Performance',
+                'easy_pct': 80,
+                'hard_pct': 20,
+                'desc': 'Proven approach for competitive endurance athletes. Easy truly easy, hard truly hard.',
+                'principles': [
+                    'Strict 80/20 polarized distribution',
+                    'Three key sessions in peak weeks',
+                    'Race-specific intervals in Build phase',
+                    'Integrated strength for power and resilience'
+                ]
+            },
+            'podium': {
+                'name': 'Elite Periodization',
+                'easy_pct': 75,
+                'hard_pct': 25,
+                'desc': 'High-volume foundation with aggressive intensity blocks. For serious competitors.',
+                'principles': [
+                    'Higher training load requires precise recovery',
+                    'Block periodization for specific adaptations',
+                    'Race simulation and heat/altitude prep',
+                    'Strength maintains power-to-weight'
+                ]
+            }
+        }
+        
+        p = philosophies.get(tier, philosophies['compete'])
+        
+        easy_width = p['easy_pct'] * 3  # Scale for visual
+        hard_width = p['hard_pct'] * 3
+        
+        return f'''
+<section id="training-philosophy">
+    <h2>4 · Your Training Philosophy</h2>
+    
+    <p>Your plan follows <strong>{p['name']}</strong> — the approach best suited to your tier ({tier.upper()}) and goals.</p>
+    
+    <div class="philosophy-framework">
+        <h3 style="margin-top: 0;">Intensity Distribution</h3>
+        
+        <div class="philosophy-diagram">
+            <div class="philosophy-bar bar-easy" style="width: {easy_width}px;">EASY {p['easy_pct']}%</div>
+            <div class="philosophy-bar bar-hard" style="width: {hard_width}px;">HARD {p['hard_pct']}%</div>
+        </div>
+        
+        <p style="text-align: center; font-size: 13px; color: var(--gg-muted);">{p['desc']}</p>
+    </div>
+    
+    <h3>Core Principles</h3>
+    <ol>
+        {"".join([f"<li>{principle}</li>" for principle in p['principles']])}
+    </ol>
+    
+    <h3>Why This Works</h3>
+    
+    <p><strong>The science:</strong> Decades of research on elite endurance athletes consistently shows that ~80% easy / ~20% hard produces better results than "moderate" training (threshold grinding). The easy work builds aerobic capacity without accumulating fatigue. The hard work drives specific adaptations.</p>
+    
+    <p><strong>The mistake most people make:</strong> Going too hard on easy days (turning Z2 into Z3) and not hard enough on hard days (surviving intervals instead of executing them). This creates a "grey zone" that's too hard to recover from but not hard enough to adapt to.</p>
+    
+    <div class="callout alert">
+        <h4>The Hard Truth</h4>
+        <p>Easy days should feel embarrassingly easy. If you're proud of how hard you went on an "easy" day, you did it wrong. Save that energy for the sessions that matter.</p>
+    </div>
+</section>
+'''
+    
+    def _generate_blindspots(self) -> str:
+        """Generate personalized blindspots based on profile analysis."""
+        blindspots = []
+        
+        # Analyze profile for potential blindspots
+        
+        # 1. Recovery capacity
+        sleep_quality = self.profile.get('health_factors', {}).get('sleep_quality', '')
+        sleep_hours = self.profile.get('health_factors', {}).get('sleep_hours_avg', 7)
+        if sleep_quality in ['poor', 'fair'] or (isinstance(sleep_hours, (int, float)) and sleep_hours < 7):
+            blindspots.append({
+                'severity': 'high',
+                'title': 'Recovery Deficit',
+                'issue': f'You reported {sleep_quality} sleep quality and ~{sleep_hours} hours/night.',
+                'risk': 'Poor sleep limits adaptation and increases injury risk. You\'ll accumulate fatigue faster than you recover from it.',
+                'action': 'Prioritize sleep above all else. Consider reducing training volume by 10-15% until sleep improves. No amount of training overcomes poor recovery.'
+            })
+        
+        # 2. Stress load
+        stress_level = self.profile.get('health_factors', {}).get('stress_level', '')
+        if stress_level in ['high', 'very_high']:
+            blindspots.append({
+                'severity': 'high',
+                'title': 'Life Stress Overload',
+                'issue': f'You reported {stress_level.replace("_", " ")} stress levels.',
+                'risk': 'Training is a stressor. Life stress + training stress = total stress. High total stress leads to overtraining, illness, and burnout.',
+                'action': 'Monitor HRV and resting heart rate closely. Be willing to skip hard sessions during stressful weeks. The plan adapts to you, not vice versa.'
+            })
+        
+        # 3. Strength background
+        strength_bg = self.profile.get('training_history', {}).get('strength_background', '')
+        if strength_bg in ['none', 'beginner']:
+            blindspots.append({
+                'severity': 'medium',
+                'title': 'Movement Quality Gap',
+                'issue': f'You\'re new to structured strength training ({strength_bg}).',
+                'risk': 'Poor movement patterns lead to injury, especially under fatigue. Strength exercises performed incorrectly do more harm than good.',
+                'action': 'Watch EVERY video demo before attempting exercises. Start lighter than you think necessary. Master movement before adding load. If something hurts, stop.'
+            })
+        
+        # 4. Injury history
+        injuries = self.profile.get('injury_history', {}).get('current_injuries', [])
+        past_injuries = self.profile.get('injury_history', {}).get('past_injuries', [])
+        if injuries or past_injuries:
+            injury_areas = set()
+            for inj in injuries + past_injuries:
+                if isinstance(inj, dict):
+                    injury_areas.add(inj.get('area', 'unknown'))
+                elif isinstance(inj, str):
+                    injury_areas.add(inj)
+            
+            if injury_areas:
+                blindspots.append({
+                    'severity': 'high' if injuries else 'medium',
+                    'title': 'Injury Management Required',
+                    'issue': f'History of issues with: {", ".join(injury_areas)}.',
+                    'risk': 'Past injuries often become recurring injuries. The tissue is weaker and the movement pattern may be compromised.',
+                    'action': 'Modified exercises are provided in your plan. If pain returns, stop immediately and consult a professional. Prevention >>> treatment.'
+                })
+        
+        # 5. Limited equipment
+        equipment_tier = self.derived.get('equipment_tier', '')
+        if equipment_tier == 'minimal':
+            blindspots.append({
+                'severity': 'low',
+                'title': 'Equipment Limitations',
+                'issue': 'You have minimal strength equipment available.',
+                'risk': 'Some exercises will require substitutions. Progression may plateau earlier without heavier loads.',
+                'action': 'Bodyweight progressions can take you far. Consider adding a single kettlebell or adjustable dumbbells for more options. Resistance bands are cheap and versatile.'
+            })
+        
+        # 6. Schedule constraints
+        weekly_avail = self.profile.get('weekly_availability', {})
+        total_hours = weekly_avail.get('total_hours_available', 0)
+        if isinstance(total_hours, (int, float)) and total_hours < 8:
+            blindspots.append({
+                'severity': 'medium',
+                'title': 'Time-Crunched Reality',
+                'issue': f'You have ~{total_hours} hours/week available for training.',
+                'risk': 'Limited time means every session must count. There\'s less margin for error or missed workouts.',
+                'action': 'Prioritize ruthlessly. Never skip a key session. Be willing to shorten easy rides. Indoor training is your friend for time efficiency.'
+            })
+        
+        # 7. Age considerations
+        age = self._calculate_age()
+        if age and age >= 45:
+            blindspots.append({
+                'severity': 'medium',
+                'title': 'Masters Recovery Window',
+                'issue': f'At {age}, recovery physiology has changed.',
+                'risk': 'What worked at 25 doesn\'t work at 45+. Ignoring this leads to persistent fatigue, illness, and injury.',
+                'action': 'Extra rest day every 2-3 weeks. Sleep becomes even more critical. Strength training is mandatory for maintaining fast-twitch fibers.'
+            })
+        
+        # 8. Nutrition/fueling
+        # Check if they mentioned GI issues or haven't trained gut
+        
+        # Build blindspot cards
+        if not blindspots:
+            blindspots.append({
+                'severity': 'low',
+                'title': 'No Major Blindspots Identified',
+                'issue': 'Your profile doesn\'t reveal obvious risk factors.',
+                'risk': 'This doesn\'t mean you\'re invincible. Stay vigilant for the unexpected.',
+                'action': 'Monitor your body\'s signals. If something feels off, investigate before it becomes a problem.'
+            })
+        
+        blindspot_cards = []
+        for bs in blindspots:
+            blindspot_cards.append(f'''
+            <div class="blindspot {bs['severity']}">
+                <div class="blindspot-header">
+                    <h4>{bs['title']}</h4>
+                    <span class="blindspot-severity">{bs['severity']}</span>
+                </div>
+                <p><strong>What we noticed:</strong> {bs['issue']}</p>
+                <p><strong>The risk:</strong> {bs['risk']}</p>
+                <p><strong>Your action:</strong> {bs['action']}</p>
+            </div>
+            ''')
+        
+        return f'''
+<section id="blindspots">
+    <h2>5 · Your Blindspots</h2>
+    
+    <p>Based on your intake, these are potential risks to be aware of. Forewarned is forearmed.</p>
+    
+{"".join(blindspot_cards)}
+    
+    <div class="callout info">
+        <h4>Why This Section Exists</h4>
+        <p>Everyone has blindspots. The difference between successful athletes and injured/burned-out ones is often awareness of their vulnerabilities, not raw talent or work ethic.</p>
+        <p>Review this section monthly. Your blindspots can change as life circumstances shift.</p>
+    </div>
+</section>
+'''
+    
+    def _generate_atp_table(self) -> str:
+        """Generate interactive Annual Training Plan table."""
+        plan_weeks = self.derived.get('plan_weeks', 12)
+        
+        # Determine phases based on plan length
+        if plan_weeks >= 20:
+            phase_ranges = [
+                (1, 4, 'Base', 'base'),
+                (5, 12, 'Build', 'build'),
+                (13, 18, 'Peak', 'peak'),
+                (19, plan_weeks, 'Taper', 'taper')
+            ]
+        elif plan_weeks >= 12:
+            phase_ranges = [
+                (1, 3, 'Base', 'base'),
+                (4, 7, 'Build', 'build'),
+                (8, 10, 'Peak', 'peak'),
+                (11, plan_weeks, 'Taper', 'taper')
+            ]
+        else:
+            phase_ranges = [
+                (1, 2, 'Base', 'base'),
+                (3, 5, 'Build', 'build'),
+                (6, plan_weeks - 1, 'Peak', 'peak'),
+                (plan_weeks, plan_weeks, 'Taper', 'taper')
+            ]
+        
+        def get_phase(week):
+            for start, end, name, cls in phase_ranges:
+                if start <= week <= end:
+                    return name, cls
+            return 'Build', 'build'
+        
+        # Week descriptions
+        week_focuses = {
+            'Base': [
+                'Building aerobic foundation. Long Z2 rides establish mitochondrial density.',
+                'Movement quality in strength. Learn the patterns before adding load.',
+                'Establishing rhythm and consistency. Show up, do the work.',
+                'Progressive volume increase. Each week slightly more than the last.'
+            ],
+            'Build': [
+                'Adding race-specific intensity. G-Spot intervals introduce discomfort.',
+                'Strength shifts to heavier loads. Building max strength.',
+                'Volume peaks. This is the hardest training block.',
+                'Recovery week every 3-4 weeks. Absorb the training.',
+                'Race simulation workouts. Practice execution under fatigue.',
+                'Final volume push before taper begins.'
+            ],
+            'Peak': [
+                'Highest intensity, slightly reduced volume.',
+                'Race pace work. Dialing in the exact effort you\'ll use.',
+                'Strength shifts to power. Fast, explosive movements.',
+                'Last hard weeks. Trust the fitness you\'ve built.'
+            ],
+            'Taper': [
+                'Volume drops significantly. Intensity stays sharp.',
+                'Strength maintains, doesn\'t build. Don\'t lose adaptations.',
+                'Freshening up. The hay is in the barn.',
+                'Race week. Execute the plan.'
+            ]
+        }
+        
+        # Build week rows
+        week_rows = []
+        for week in range(1, plan_weeks + 1):
+            phase_name, phase_class = get_phase(week)
+            
+            # Get focus text
+            phase_week_num = week - [r[0] for r in phase_ranges if r[2] == phase_name][0]
+            focuses = week_focuses.get(phase_name, [])
+            focus_text = focuses[phase_week_num % len(focuses)] if focuses else 'Progressive training.'
+            
+            # Determine if recovery week (every 4th week typically)
+            is_recovery = week % 4 == 0 and phase_name not in ['Taper']
+            volume_label = 'Recovery' if is_recovery else ['Low', 'Medium', 'High', 'Peak'][min(3, (week % 4))]
+            
+            # Generate day structure
+            days_html = self._generate_atp_week_days(week, phase_name)
+            
+            week_rows.append(f'''
+            <div class="atp-week" data-week="{week}">
+                <div class="atp-week-header" onclick="this.parentElement.classList.toggle('open')">
+                    <div class="atp-week-title">
+                        <span class="atp-week-num">Week {week}</span>
+                        <span class="atp-week-phase {phase_class}">{phase_name}</span>
+                    </div>
+                    <div class="atp-week-meta">
+                        <span>{volume_label}</span>
+                    </div>
+                    <span class="atp-week-toggle">+</span>
+                </div>
+                <div class="atp-week-content">
+{days_html}
+                    <div class="atp-focus">
+                        <strong>Focus:</strong> {focus_text}
+                    </div>
+                </div>
+            </div>
+            ''')
+        
+        return f'''
+<section id="atp">
+    <h2>6 · {plan_weeks}-Week Training Plan</h2>
+    
+    <p>Click any week to expand and see the workout structure. This is your high-level roadmap.</p>
+    
+    <div class="atp-container">
+{"".join(week_rows)}
+    </div>
+    
+    <div class="callout tip">
+        <h4>How to Read This</h4>
+        <ul>
+            <li><strong>Phase badges</strong> show where you are in periodization</li>
+            <li><strong>Volume labels</strong> indicate training load (Recovery weeks every ~4 weeks)</li>
+            <li><strong>KEY days</strong> are your priority sessions — never skip these</li>
+            <li>Actual workouts are in your ZWO files and calendar</li>
+        </ul>
+    </div>
+</section>
+
+<script>
+// Auto-open current week based on plan start date
+document.addEventListener('DOMContentLoaded', function() {{
+    // Could calculate current week and auto-open it
+    // For now, leave all collapsed
+}});
+</script>
+'''
+    
+    def _generate_atp_week_days(self, week: int, phase: str) -> str:
+        """Generate the day-by-day structure for an ATP week."""
+        
+        # Use weekly structure if available
+        if self.weekly_structure:
+            days = self.weekly_structure.get('days', {})
+            day_order = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
+            
+            day_cells = []
+            for day_name in day_order:
+                schedule = days.get(day_name, {})
+                am = schedule.get('am')
+                pm = schedule.get('pm')
+                is_key = schedule.get('is_key_day', False)
+                
+                workouts = []
+                if am:
+                    workout_class = 'strength' if am == 'strength' else ''
+                    workouts.append(f'<div class="atp-workout-item {workout_class}">{am.replace("_", " ").title()}</div>')
+                if pm:
+                    workout_class = 'strength' if pm == 'strength' else ''
+                    workouts.append(f'<div class="atp-workout-item {workout_class}">{pm.replace("_", " ").title()} (PM)</div>')
+                
+                if not workouts:
+                    workouts.append('<div class="atp-workout-item">Rest</div>')
+                
+                key_class = 'key-day' if is_key else ''
+                
+                day_cells.append(f'''
+                    <div class="atp-day {key_class}">
+                        <div class="atp-day-name">{day_name[:3].upper()}</div>
+                        {"".join(workouts)}
+                    </div>
+                ''')
+            
+            return f'''
+                    <div class="atp-workouts">
+{"".join(day_cells)}
+                    </div>
+            '''
+        
+        # Fallback: generic structure based on phase
+        generic_days = {
+            'Base': ['Rest', 'Easy Ride', 'Strength', 'Tempo', 'Strength', 'Long Ride', 'Easy Ride'],
+            'Build': ['Strength', 'Intervals', 'Easy Ride', 'Strength', 'Easy Ride', 'Long Ride', 'Recovery'],
+            'Peak': ['Strength', 'VO2 Intervals', 'Easy Ride', 'Race Pace', 'Rest', 'Long Ride', 'Easy Ride'],
+            'Taper': ['Strength', 'Openers', 'Rest', 'Easy Ride', 'Rest', 'Race/Easy', 'Rest']
+        }
+        
+        day_names = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN']
+        workouts = generic_days.get(phase, generic_days['Build'])
+        key_days = [1, 3, 5] if phase in ['Build', 'Peak'] else [3, 5]
+        
+        day_cells = []
+        for i, (name, workout) in enumerate(zip(day_names, workouts)):
+            is_key = i in key_days and workout not in ['Rest', 'Recovery', 'Easy Ride']
+            key_class = 'key-day' if is_key else ''
+            workout_class = 'strength' if 'Strength' in workout else ''
+            
+            day_cells.append(f'''
+                <div class="atp-day {key_class}">
+                    <div class="atp-day-name">{name}</div>
+                    <div class="atp-workout-item {workout_class}">{workout}</div>
+                </div>
+            ''')
+        
+        return f'''
+                    <div class="atp-workouts">
+{"".join(day_cells)}
+                    </div>
+        '''
     
     def _generate_your_weekly_schedule(self) -> str:
         if not self.weekly_structure:
