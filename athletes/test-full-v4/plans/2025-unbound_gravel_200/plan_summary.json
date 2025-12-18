@@ -1,0 +1,30 @@
+{
+  "race": "Unbound Gravel 200",
+  "tier": "Compete",
+  "plan_weeks": 24,
+  "race_date": "2026-06-07",
+  "start_date": "2025-12-21",
+  "phase_breakdown": {
+    "base_1": 4,
+    "base_2": 4,
+    "build_1": 5,
+    "build_2": 4,
+    "peak": 2,
+    "taper": 1
+  },
+  "workout_counts": {
+    "cycling": 0,
+    "strength": 20
+  },
+  "strength_customization": {
+    "emphasized_exercises": [
+      "Single-Leg RDL",
+      "Pallof Press",
+      "Side Plank",
+      "Hip Thrust",
+      "Farmer Carry",
+      "Dead Bug"
+    ],
+    "notes": "200 miles demands hip endurance and core stability for 10+ hours in the saddle. Single-leg work prevents imbalances. Avoid heavy bilateral squats that create unnecessary fatigue."
+  }
+}
