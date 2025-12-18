@@ -1443,8 +1443,87 @@ class GuideGenerator:
                 'action': 'Extra rest day every 2-3 weeks. Sleep becomes even more critical. Strength training is mandatory for maintaining fast-twitch fibers.'
             })
         
-        # 8. Nutrition/fueling
-        # Check if they mentioned GI issues or haven't trained gut
+        # 8. Underfueling risk
+        nutrition = self.profile.get('nutrition', {})
+        daily_carbs = nutrition.get('daily_carbs_g_per_kg', 0)
+        fueling_during = nutrition.get('fuels_during_rides', '')
+        eating_disorder_history = nutrition.get('eating_disorder_history', False)
+        weight_loss_goal = self.profile.get('weight_loss_goal', False)
+        
+        # Check multiple underfueling signals
+        underfueling_signals = []
+        if isinstance(daily_carbs, (int, float)) and daily_carbs > 0 and daily_carbs < 3:
+            underfueling_signals.append(f'low daily carb intake ({daily_carbs}g/kg)')
+        if fueling_during in ['never', 'rarely']:
+            underfueling_signals.append('rarely fueling during rides')
+        if eating_disorder_history:
+            underfueling_signals.append('history of disordered eating')
+        if weight_loss_goal:
+            underfueling_signals.append('active weight loss goal during training')
+        
+        # Also check training hours vs reported eating
+        cycling_hours = self.profile.get('weekly_availability', {}).get('cycling_hours_target', 0)
+        if isinstance(cycling_hours, (int, float)) and cycling_hours > 10 and not fueling_during:
+            underfueling_signals.append('high training volume without mentioned fueling strategy')
+        
+        if underfueling_signals:
+            blindspots.append({
+                'severity': 'high' if eating_disorder_history or len(underfueling_signals) >= 2 else 'medium',
+                'title': 'Underfueling Risk',
+                'issue': f'Signals detected: {"; ".join(underfueling_signals)}.',
+                'risk': 'Chronic underfueling leads to RED-S (Relative Energy Deficiency in Sport): hormonal disruption, bone loss, immune suppression, declining performance despite hard training. It\'s the silent killer of endurance careers.',
+                'action': 'Fuel FOR the work, not against it. Minimum 3g carbs/kg daily, more on hard days. Eat before/during/after key sessions. Weight loss and peak performance don\'t happen simultaneously.'
+            })
+        
+        # 9. Alcohol consumption
+        alcohol = self.profile.get('lifestyle', {}).get('alcohol_drinks_per_week', 0)
+        if not alcohol:
+            alcohol = nutrition.get('alcohol_drinks_per_week', 0)
+        
+        if isinstance(alcohol, (int, float)):
+            if alcohol >= 14:
+                blindspots.append({
+                    'severity': 'high',
+                    'title': 'Alcohol Impact on Recovery',
+                    'issue': f'You reported ~{int(alcohol)} drinks per week.',
+                    'risk': 'Alcohol directly impairs protein synthesis, disrupts sleep architecture, dehydrates, and blunts growth hormone release. At this level, you\'re significantly compromising adaptation.',
+                    'action': 'Consider cutting to <7 drinks/week during heavy training blocks. Never drink within 3 hours of sleep. Avoid alcohol on nights before key sessions. This single change could be your biggest performance gain.'
+                })
+            elif alcohol >= 7:
+                blindspots.append({
+                    'severity': 'medium',
+                    'title': 'Alcohol Affecting Recovery',
+                    'issue': f'You reported ~{int(alcohol)} drinks per week.',
+                    'risk': 'Even moderate alcohol consumption impairs sleep quality and recovery. One drink after a hard workout can reduce protein synthesis by 24%.',
+                    'action': 'Front-load drinking to early week if social. Keep nights before hard sessions alcohol-free. Consider "dry training blocks" during Build and Peak phases.'
+                })
+        
+        # 10. Caffeine
+        caffeine = self.profile.get('lifestyle', {}).get('caffeine_mg_per_day', 0)
+        if not caffeine:
+            caffeine = nutrition.get('caffeine_mg_per_day', 0)
+        # Also check cups of coffee as proxy
+        coffee_cups = self.profile.get('lifestyle', {}).get('coffee_cups_per_day', 0)
+        if not caffeine and coffee_cups:
+            caffeine = coffee_cups * 95  # ~95mg per cup
+        
+        if isinstance(caffeine, (int, float)):
+            if caffeine >= 500:
+                blindspots.append({
+                    'severity': 'high',
+                    'title': 'Caffeine Dependency',
+                    'issue': f'You\'re consuming ~{int(caffeine)}mg caffeine daily ({int(caffeine/95)} cups of coffee equivalent).',
+                    'risk': 'At this level, caffeine no longer provides performance benefits—you\'re just maintaining baseline. Sleep is likely compromised. You\'ve lost the ability to use caffeine strategically on race day.',
+                    'action': 'Gradually reduce to <300mg/day. Cut off caffeine by 2pm. Consider a 2-week caffeine reset before your A event so race-day caffeine actually works.'
+                })
+            elif caffeine >= 400:
+                blindspots.append({
+                    'severity': 'medium',
+                    'title': 'Caffeine Tolerance',
+                    'issue': f'You\'re at ~{int(caffeine)}mg caffeine daily.',
+                    'risk': 'You\'re near the ceiling where additional caffeine stops helping. Sleep quality may be subtly compromised even if you "fall asleep fine."',
+                    'action': 'Keep afternoon caffeine minimal. Consider reducing intake 4-6 weeks before A event to restore sensitivity for race-day boost.'
+                })
         
         # Build blindspot cards
         if not blindspots:

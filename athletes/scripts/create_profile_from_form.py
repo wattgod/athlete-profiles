@@ -512,11 +512,17 @@ def create_profile_from_form(athlete_id: str, form_data: Dict) -> Dict:
         'nutrition': {
             'diet_styles': convert_diet_styles(form_data),
             'fluid_intake_rating': int(form_data.get('fluid_intake', 3)) if form_data.get('fluid_intake') else None,
-            'caffeine': form_data.get('caffeine_intake', ''),
-            'alcohol': form_data.get('alcohol_intake', ''),
             'restrictions': form_data.get('dietary_restrictions', ''),
             'training_fuel': form_data.get('fueling_strategy', ''),
-            'post_workout': form_data.get('post_workout_fuel', '')
+            'post_workout': form_data.get('post_workout_fuel', ''),
+            'fuels_during_rides': form_data.get('fuels_during_rides', ''),
+            'eating_disorder_history': form_data.get('eating_disorder_history', 'false') in ['past', 'current', True, 'true']
+        },
+        
+        'lifestyle': {
+            'alcohol_drinks_per_week': int(form_data.get('alcohol_drinks_per_week', 0)) if form_data.get('alcohol_drinks_per_week') else 0,
+            'caffeine_mg_per_day': int(form_data.get('caffeine_mg_per_day', 0)) if form_data.get('caffeine_mg_per_day') else 0,
+            'weight_goal': form_data.get('weight_goal', 'maintain')
         },
         
         'bike': {

@@ -222,6 +222,13 @@ lifestyle:
   active_job: false
   commute_bikeable: false
   family_support: fully_supportive  # Options: fully_supportive, neutral, challenging
+  alcohol_drinks_per_week: 10  # Test: moderate-high alcohol
+  caffeine_mg_per_day: 450  # Test: high caffeine
+  weight_goal: maintain
+
+nutrition:
+  fuels_during_rides: rarely  # Test: inconsistent fueling
+  eating_disorder_history: false
 
 # ============================================================================
 # SECTION 8: ADMIN & PREFERENCES

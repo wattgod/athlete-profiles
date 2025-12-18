@@ -428,8 +428,8 @@
         <a href="#section-8" style="color: #000;">Work</a> → 
         <a href="#section-9" style="color: #000;">Health</a> → 
         <a href="#section-10" style="color: #000;">Social</a> → 
-        <a href="#section-11" style="color: #000;">Context</a> → 
-        <a href="#section-12" style="color: #000;">Personal</a> → 
+        <a href="#section-11" style="color: #000;">Lifestyle</a> → 
+        <a href="#section-12" style="color: #000;">Context</a> → 
         <a href="#section-coaching" style="color: #000; font-weight: 600;">Package ✓</a>
     </nav>
     
@@ -1325,6 +1325,156 @@
                 </div>
                 <div class="conditional" id="weatherDetails">
                     <textarea name="weather_details" placeholder="Describe how weather affects your training (e.g., can't ride outside Nov-Mar, indoor only when raining)"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 11: LIFESTYLE & RECOVERY -->
+        <div class="question-group" id="section-11">
+            <h2 style="font-size: 18px; font-weight: 600; margin-bottom: 1.5rem; padding-bottom: 8px; border-bottom: 2px solid var(--gg-border); text-transform: uppercase; letter-spacing: 0.1em;">11. Lifestyle & Recovery</h2>
+            
+            <div class="info-box">
+                <p>These factors significantly impact your training adaptation. Be honest—we're not here to judge, just to give accurate recommendations.</p>
+            </div>
+
+            <div class="question-group">
+                <label class="question-label">
+                    Alcohol Consumption
+                    <span class="label-hint">Average drinks per week (beer, wine, spirits)</span>
+                </label>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" id="alcohol_0" name="alcohol_drinks_per_week" value="0">
+                        <label for="alcohol_0">None</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="alcohol_1_3" name="alcohol_drinks_per_week" value="2">
+                        <label for="alcohol_1_3">1-3 drinks</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="alcohol_4_7" name="alcohol_drinks_per_week" value="5">
+                        <label for="alcohol_4_7">4-7 drinks</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="alcohol_8_14" name="alcohol_drinks_per_week" value="11">
+                        <label for="alcohol_8_14">8-14 drinks</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="alcohol_15" name="alcohol_drinks_per_week" value="18">
+                        <label for="alcohol_15">15+ drinks</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-group">
+                <label class="question-label">
+                    Daily Caffeine Intake
+                    <span class="label-hint">Coffee, energy drinks, pre-workout, etc.</span>
+                </label>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" id="caffeine_0" name="caffeine_mg_per_day" value="0">
+                        <label for="caffeine_0">None / Decaf only</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="caffeine_100" name="caffeine_mg_per_day" value="100">
+                        <label for="caffeine_100">1 cup coffee (~100mg)</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="caffeine_200" name="caffeine_mg_per_day" value="200">
+                        <label for="caffeine_200">2 cups coffee (~200mg)</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="caffeine_300" name="caffeine_mg_per_day" value="300">
+                        <label for="caffeine_300">3 cups coffee (~300mg)</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="caffeine_400" name="caffeine_mg_per_day" value="400">
+                        <label for="caffeine_400">4 cups coffee (~400mg)</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="caffeine_500" name="caffeine_mg_per_day" value="500">
+                        <label for="caffeine_500">5+ cups coffee (500mg+)</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-group">
+                <label class="question-label">
+                    Fueling During Rides
+                    <span class="label-hint">Do you eat/drink carbs during training rides?</span>
+                </label>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" id="fuel_never" name="fuels_during_rides" value="never">
+                        <label for="fuel_never">Never — I train fasted or just water</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="fuel_rarely" name="fuels_during_rides" value="rarely">
+                        <label for="fuel_rarely">Rarely — only on very long rides</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="fuel_sometimes" name="fuels_during_rides" value="sometimes">
+                        <label for="fuel_sometimes">Sometimes — depends on the ride</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="fuel_usually" name="fuels_during_rides" value="usually">
+                        <label for="fuel_usually">Usually — I fuel most rides >90 min</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="fuel_always" name="fuels_during_rides" value="always">
+                        <label for="fuel_always">Always — structured fueling every ride</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-group">
+                <label class="question-label">
+                    Weight Management Goals
+                    <span class="label-hint">Be honest—this affects how we structure nutrition advice</span>
+                </label>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" id="weight_maintain" name="weight_goal" value="maintain">
+                        <label for="weight_maintain">Maintain current weight</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="weight_lose_slow" name="weight_goal" value="lose_slow">
+                        <label for="weight_lose_slow">Lose weight gradually (sustainable)</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="weight_lose_fast" name="weight_goal" value="lose_fast">
+                        <label for="weight_lose_fast">Lose weight aggressively</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="weight_gain" name="weight_goal" value="gain">
+                        <label for="weight_gain">Gain weight/muscle</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-group">
+                <label class="question-label">
+                    Have You Ever Struggled With Disordered Eating?
+                    <span class="label-hint">Restriction, binging, purging, excessive exercise for weight control. Completely confidential.</span>
+                </label>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" id="ed_no" name="eating_disorder_history" value="false">
+                        <label for="ed_no">No</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="ed_past" name="eating_disorder_history" value="past">
+                        <label for="ed_past">Yes, in the past but recovered</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="ed_current" name="eating_disorder_history" value="current">
+                        <label for="ed_current">Yes, currently struggling</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="ed_skip" name="eating_disorder_history" value="prefer_not_say">
+                        <label for="ed_skip">Prefer not to say</label>
+                    </div>
                 </div>
             </div>
         </div>
