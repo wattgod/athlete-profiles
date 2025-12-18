@@ -2964,10 +2964,11 @@ document.addEventListener('DOMContentLoaded', function() {{
     
     <h3>Nutrient Timing</h3>
     
-    <p><strong>When you eat matters as much as what you eat.</strong> Here's how to time your nutrition around training:</p>
+    <p><strong>When you eat matters as much as what you eat.</strong> Aligned with Chapter 8: Fueling & Hydration from your training plan guide.</p>
     
     <div class="callout info">
         <h4>Pre-Workout Nutrition</h4>
+        <p><strong>For Hard Sessions (threshold, VO2max, intervals):</strong></p>
         <table style="margin: 12px 0;">
             <thead>
                 <tr>
@@ -2979,152 +2980,142 @@ document.addEventListener('DOMContentLoaded', function() {{
             </thead>
             <tbody>
                 <tr>
-                    <td><strong>Night Before</strong><br><span style="font-size: 10px; color: #666;">Key session</span></td>
-                    <td>Carb-rich dinner</td>
-                    <td>1-4g carbs/kg</td>
-                    <td>Pasta, rice bowl, potatoes</td>
-                </tr>
-                <tr>
-                    <td><strong>2-3 Hours Before</strong><br><span style="font-size: 10px; color: #666;">Main meal</span></td>
+                    <td><strong>2-3 Hours Before</strong></td>
                     <td>Moderate carbs + light protein</td>
-                    <td>1-4g carbs/kg</td>
-                    <td>Oatmeal + fruit, toast + honey, rice + chicken</td>
+                    <td>1-2g carbs/kg<br>({int(weight_kg * 1)}-{int(weight_kg * 2)}g)</td>
+                    <td>Oatmeal + banana + honey<br>Toast + peanut butter</td>
                 </tr>
                 <tr>
-                    <td><strong>15-30 Min Before</strong><br><span style="font-size: 10px; color: #666;">Quick snack</span></td>
+                    <td><strong>15-30 Min Before</strong><br><span style="font-size: 10px; color: #666;">Optional</span></td>
                     <td>Fast-digesting carbs</td>
-                    <td>0.25-0.5g carbs/kg<br>(~20-30g)</td>
+                    <td>20-30g total</td>
                     <td>Banana, sports drink, energy gel</td>
                 </tr>
             </tbody>
         </table>
-        <p style="font-size: 11px; margin-top: 8px; color: #666;"><strong>Rule:</strong> Larger meals for longer/harder sessions. Skip the 15-min snack if you ate well 2-3 hours prior.</p>
+        <p><strong>For Easy Sessions (Z2 endurance):</strong></p>
+        <ul style="margin: 8px 0;">
+            <li>Eat normally, don't stress timing</li>
+            <li>Can even train fasted if under 90 minutes</li>
+            <li>Flexible approach — no strict rules</li>
+        </ul>
+        <p style="font-size: 11px; margin-top: 8px; color: #666;"><strong>Rule:</strong> Hard sessions need fuel. Easy sessions are flexible.</p>
     </div>
     
     <div class="callout tip">
-        <h4>During Training</h4>
+        <h4>During Training — The 60-80g Per Hour Rule</h4>
+        <p>For any ride <strong>over 90 minutes at moderate-to-high intensity (Z3+)</strong>, you need <strong>60-80g of carbohydrates per hour.</strong></p>
+        <p style="font-size: 12px; color: #666;">Your gut can absorb ~60g glucose/hour. Add fructose (different transporters) to reach 90g. Sweet spot: 70-75g/hour.</p>
+        
         <table style="margin: 12px 0;">
             <thead>
                 <tr>
                     <th>Session Type</th>
                     <th>Duration</th>
                     <th>Carbs/Hour</th>
-                    <th>Timing</th>
+                    <th>When to Start</th>
                     <th>What to Use</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>Easy ride</td>
-                    <td>&lt;90 min</td>
-                    <td>0-30g</td>
-                    <td>Optional</td>
-                    <td>Water is fine</td>
+                    <td>Z2 Endurance</td>
+                    <td>2-4 hours</td>
+                    <td>40-60g</td>
+                    <td>After 60 min</td>
+                    <td>Real food: PB&J, bananas, bars</td>
                 </tr>
                 <tr>
-                    <td>Easy ride</td>
-                    <td>&gt;90 min</td>
-                    <td>30-60g</td>
-                    <td>Every 20-30 min</td>
-                    <td>Sports drink, banana</td>
+                    <td>Tempo/G-Spot</td>
+                    <td>2-3 hours</td>
+                    <td>60-80g</td>
+                    <td>Start at 30-45 min</td>
+                    <td>Mix: liquids + solids</td>
                 </tr>
                 <tr>
-                    <td>Hard/Intervals</td>
-                    <td>&lt;90 min</td>
-                    <td>30-50g total</td>
+                    <td>Threshold/VO2max</td>
+                    <td>60-90 min</td>
+                    <td>Pre-workout sufficient<br>+ 1 gel mid-session</td>
                     <td>Between efforts</td>
-                    <td>Gel, sports drink</td>
+                    <td>Gel or sports drink</td>
                 </tr>
                 <tr>
                     <td>Race/Long hard</td>
                     <td>&gt;90 min</td>
                     <td>60-90g</td>
-                    <td>Every 15-20 min</td>
-                    <td>Mix: drinks + gels/chews</td>
-                </tr>
-                <tr>
-                    <td>Ultra/Long race</td>
-                    <td>&gt;2.5 hrs</td>
-                    <td>90-120g</td>
-                    <td>Every 15-20 min</td>
-                    <td>Variety: drinks, gels, chews, light solids</td>
+                    <td>Start at 30 min</td>
+                    <td>Mix: drinks + gels/chews<br>(2:1 glucose:fructose if &gt;60g)</td>
                 </tr>
             </tbody>
         </table>
-        <p style="font-size: 11px; margin-top: 8px; color: #666;"><strong>Key:</strong> Start fueling at 30 minutes, not 60. Set a timer. For 90g+/hour, use 2:1 glucose:fructose mix.</p>
+        <p style="font-size: 11px; margin-top: 8px; color: #666;"><strong>Critical:</strong> Start fueling at 30 minutes, not 60. By the time you feel hungry, you're already behind. Set a timer.</p>
     </div>
     
     <div class="callout alert">
-        <h4>Post-Workout Recovery Window</h4>
+        <h4>Post-Workout Recovery</h4>
+        <p><strong>Only needed if:</strong> Workout was long (2.5+ hours) AND hard, AND you have another hard session within 24-36 hours.</p>
+        
         <table style="margin: 12px 0;">
             <thead>
                 <tr>
-                    <th>Next Session</th>
                     <th>Timing</th>
-                    <th>Carbs</th>
                     <th>Protein</th>
-                    <th>Ratio</th>
+                    <th>Carbs</th>
                     <th>Examples</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td><strong>&lt;8 hours</strong><br><span style="font-size: 10px; color: #666;">Same day</span></td>
-                    <td>Within 30-60 min</td>
-                    <td>1-1.2g/kg<br>({int(weight_kg * 1.1)}g)</td>
-                    <td>0.3-0.4g/kg<br>({int(weight_kg * 0.35)}g)</td>
-                    <td>3:1 carbs:protein</td>
-                    <td>Recovery shake, chocolate milk, sandwich</td>
+                    <td><strong>Within 30 minutes</strong><br><span style="font-size: 10px; color: #666;">Critical window</span></td>
+                    <td>20-30g</td>
+                    <td>1-1.5g/kg<br>({int(weight_kg * 1)}-{int(weight_kg * 1.5)}g)</td>
+                    <td>Recovery shake, chocolate milk</td>
                 </tr>
                 <tr>
-                    <td><strong>&lt;24 hours</strong><br><span style="font-size: 10px; color: #666;">Next day</span></td>
-                    <td>Within 1-2 hours</td>
-                    <td>1g/kg<br>({int(weight_kg)}g)</td>
-                    <td>0.25g/kg<br>({int(weight_kg * 0.25)}g)</td>
-                    <td>4:1 carbs:protein</td>
-                    <td>Balanced meal: protein + carbs + veggies</td>
-                </tr>
-                <tr>
-                    <td><strong>&gt;24 hours</strong><br><span style="font-size: 10px; color: #666;">Rest day</span></td>
-                    <td>Regular mealtimes</td>
-                    <td>Normal intake</td>
-                    <td>Normal intake</td>
-                    <td>Normal ratio</td>
-                    <td>Regular balanced meals</td>
+                    <td><strong>Within 1-2 hours</strong></td>
+                    <td>Full meal</td>
+                    <td>Full meal</td>
+                    <td>Protein + carbs + vegetables</td>
                 </tr>
             </tbody>
         </table>
-        <p style="font-size: 11px; margin-top: 8px; color: #666;"><strong>Critical:</strong> The 30-60 minute window is when glycogen resynthesis is fastest. Don't skip this if you have another session today.</p>
+        
+        <p><strong>If workout was easy, short, or next hard session is 48+ hours away:</strong></p>
+        <ul style="margin: 8px 0;">
+            <li>Just eat your next meal normally</li>
+            <li>Recovery nutrition is optional</li>
+            <li>Don't overthink it</li>
+        </ul>
+        
+        <p style="font-size: 11px; margin-top: 8px; color: #666;"><strong>Rule:</strong> The more frequently you train hard, the more critical recovery nutrition becomes. If training once per day with easy sessions, skip the fancy protocols and just eat dinner.</p>
     </div>
     
-    <h4>Sample Timing Schedule</h4>
+    <h4>Sample Timing Schedule (Hard Session)</h4>
     
     <div class="timeline">
         <div class="timeline-item">
-            <div class="timeline-time">Night Before Key Session</div>
-            <p><strong>Dinner:</strong> Large carb-rich meal (pasta, rice, potatoes). Target {int(weight_kg * 2)}-{int(weight_kg * 4)}g carbs. Don't skimp.</p>
-        </div>
-        <div class="timeline-item">
             <div class="timeline-time">2-3 Hours Before</div>
-            <p><strong>Pre-workout meal:</strong> {int(weight_kg * 1.5)}-{int(weight_kg * 3)}g carbs + light protein. Oatmeal + fruit, or toast + honey. Easy to digest.</p>
+            <p><strong>Pre-workout meal:</strong> {int(weight_kg * 1)}-{int(weight_kg * 2)}g carbs + light protein. Low fiber, low fat. Oatmeal + banana + honey, or toast + peanut butter.</p>
         </div>
         <div class="timeline-item">
             <div class="timeline-time">15-30 Minutes Before</div>
-            <p><strong>Quick snack (optional):</strong> {int(weight_kg * 0.3)}-{int(weight_kg * 0.5)}g carbs. Banana or gel. Skip if you ate well 2-3 hours prior.</p>
+            <p><strong>Quick snack (optional):</strong> 20-30g fast carbs. Banana or gel. Skip if you ate well 2-3 hours prior.</p>
         </div>
         <div class="timeline-item">
-            <div class="timeline-time">During Session</div>
-            <p><strong>Start at 30 minutes:</strong> {int(weight_kg * 0.8)}-{int(weight_kg * 1.2)}g carbs/hour depending on intensity/duration. Set a timer. Don't wait until hungry.</p>
+            <div class="timeline-time">During Session (if &gt;90 min)</div>
+            <p><strong>Start at 30 minutes:</strong> 60-80g carbs/hour. Set a timer. Mix liquids + solids. Use 2:1 glucose:fructose if exceeding 60g/hour.</p>
         </div>
         <div class="timeline-item">
-            <div class="timeline-time">Within 30-60 Minutes After</div>
-            <p><strong>Recovery nutrition:</strong> {int(weight_kg * 1.1)}g carbs + {int(weight_kg * 0.35)}g protein. Recovery shake, chocolate milk, or meal. Critical if training again today.</p>
+            <div class="timeline-time">Within 30 Minutes After</div>
+            <p><strong>Recovery (if long/hard + training again within 24-36hrs):</strong> 20-30g protein + {int(weight_kg * 1)}-{int(weight_kg * 1.5)}g carbs. Recovery shake or chocolate milk. Window is smaller than you think.</p>
         </div>
         <div class="timeline-item">
-            <div class="timeline-time">1-2 Hours After</div>
+            <div class="timeline-time">Within 1-2 Hours After</div>
             <p><strong>Full meal:</strong> Balanced meal with protein, carbs, vegetables. Continue normal eating pattern throughout the day.</p>
         </div>
     </div>
+    
+    <p style="font-size: 12px; color: #666; margin-top: 16px;"><strong>Note:</strong> For easy sessions (&lt;90 min Z2), timing is flexible. Eat normally, or even train fasted. Recovery nutrition is optional unless you're training twice per day.</p>
     
     <div class="callout tip">
         <h4>Common Timing Mistakes</h4>
