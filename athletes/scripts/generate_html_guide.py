@@ -993,6 +993,116 @@ HTML_TEMPLATE = '''<!DOCTYPE html>
             margin-top: 4px;
         }}
 
+        /* INTERACTIVE SLIDER */
+        .slider-container {{
+            margin: 20px 0;
+            padding: 20px;
+            border: 2px solid var(--gg-border);
+            background: #fff;
+        }}
+
+        .slider-group {{
+            margin: 16px 0;
+        }}
+
+        .slider-label {{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 13px;
+            font-weight: 600;
+        }}
+
+        .slider-value {{
+            font-weight: 700;
+            color: #000;
+        }}
+
+        .slider {{
+            width: 100%;
+            height: 8px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: #ddd;
+            outline: none;
+            border: 2px solid #000;
+        }}
+
+        .slider::-webkit-slider-thumb {{
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #000;
+            cursor: pointer;
+        }}
+
+        .slider::-moz-range-thumb {{
+            width: 20px;
+            height: 20px;
+            background: #000;
+            cursor: pointer;
+            border: none;
+        }}
+
+        /* ZWO PARSER */
+        .zwo-upload {{
+            border: 2px dashed var(--gg-border);
+            padding: 24px;
+            margin: 20px 0;
+            text-align: center;
+            background: #f9f9f9;
+            cursor: pointer;
+            transition: all 0.2s;
+        }}
+
+        .zwo-upload:hover {{
+            background: #f0f0f0;
+            border-color: #000;
+        }}
+
+        .zwo-upload.dragover {{
+            background: #e8e8e8;
+            border-color: #000;
+            border-style: solid;
+        }}
+
+        .zwo-file-input {{
+            display: none;
+        }}
+
+        .zwo-results {{
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            border: 2px solid var(--gg-border);
+            background: #fff;
+        }}
+
+        .zwo-results.show {{
+            display: block;
+        }}
+
+        .zwo-workout-info {{
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #ddd;
+        }}
+
+        .zwo-workout-title {{
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }}
+
+        .zwo-macros {{
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin: 16px 0;
+        }}
+
         @media (max-width: 768px) {{
             .atp-workouts {{
                 grid-template-columns: repeat(2, 1fr);
@@ -1156,7 +1266,6 @@ class GuideGenerator:
         sections.append(self._generate_workout_execution())
         sections.append(self._generate_strength_program())
         sections.append(self._generate_nutrition_section())
-        sections.append(self._generate_fueling_hydration())
         sections.append(self._generate_mental_training())
         sections.append(self._generate_race_tactics())
         sections.append(self._generate_race_week())
@@ -1214,8 +1323,7 @@ class GuideGenerator:
             ("training-zones", "Training Zones"),
             ("workout-execution", "Workout Execution"),
             ("strength-program", "Your Strength Program"),
-            ("nutrition", "Your Nutrition Targets"),
-            ("fueling", "Fueling & Hydration"),
+            ("nutrition", "Nutrition & Fueling"),
             ("mental-training", "Mental Training"),
             ("race-tactics", f"Race Tactics for {self._get_race_name()}"),
             ("race-week", "Race Week Protocol"),
@@ -3204,7 +3312,380 @@ document.addEventListener('DOMContentLoaded', function() {{
         <p><strong>Common mistake:</strong> Eating less to lose weight during hard training blocks.</p>
         <p><strong>Reality:</strong> Underfueling impairs adaptation, increases injury risk, and tanks performance. Eat for the work you're doing. Weight management happens in easy phases, not build phases.</p>
     </div>
+    
+    <h3>Interactive Nutrition Calculator</h3>
+    <p>Adjust these sliders to see how your daily targets change based on different scenarios:</p>
+    
+    <div class="slider-container">
+        <div class="slider-group">
+            <div class="slider-label">
+                <span>Training Hours/Week</span>
+                <span class="slider-value" id="sliderHours">{cycling_hours}</span>
+            </div>
+            <input type="range" class="slider" id="hoursSlider" min="4" max="25" value="{cycling_hours}" step="1" oninput="updateNutritionCalc()">
+        </div>
+        
+        <div class="slider-group">
+            <div class="slider-label">
+                <span>FTP (Watts)</span>
+                <span class="slider-value" id="sliderFTP">{ftp}</span>
+            </div>
+            <input type="range" class="slider" id="ftpSlider" min="150" max="450" value="{ftp}" step="5" oninput="updateNutritionCalc()">
+        </div>
+        
+        <div class="slider-group">
+            <div class="slider-label">
+                <span>Weight (kg)</span>
+                <span class="slider-value" id="sliderWeight">{weight_kg}</span>
+            </div>
+            <input type="range" class="slider" id="weightSlider" min="50" max="100" value="{weight_kg}" step="1" oninput="updateNutritionCalc()">
+        </div>
+        
+        <div class="slider-group">
+            <div class="slider-label">
+                <span>Weight Goal</span>
+                <span class="slider-value" id="sliderGoal">{weight_goal.replace('_', ' ').title()}</span>
+            </div>
+            <select id="goalSelect" style="width: 100%; padding: 8px; border: 2px solid #000; font-family: inherit;" onchange="updateNutritionCalc()">
+                <option value="maintain" {'selected' if weight_goal == 'maintain' else ''}>Maintain</option>
+                <option value="lose_slow" {'selected' if weight_goal == 'lose_slow' else ''}>Lose Weight (Slow)</option>
+                <option value="lose_fast" {'selected' if weight_goal == 'lose_fast' else ''}>Lose Weight (Fast)</option>
+                <option value="gain" {'selected' if weight_goal == 'gain' else ''}>Gain Weight</option>
+            </select>
+        </div>
+        
+        <div class="nutrition-macros" id="calcResults" style="margin-top: 24px;">
+            <!-- Populated by JavaScript -->
+        </div>
+    </div>
+    
+    <h3>Hydration Guidelines</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Scenario</th>
+                <th>Carbs/Hour</th>
+                <th>Fluid/Hour</th>
+                <th>Notes</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>Training &lt;2 hours</td><td>30-45g</td><td>500-750ml</td><td>Water + electrolytes. Start fueling after 60 min if needed.</td></tr>
+            <tr><td>Training 2-4 hours</td><td>45-60g</td><td>500-750ml</td><td>Mix of gels, bars, and real food. Practice your race nutrition.</td></tr>
+            <tr><td>Long ride 4-6 hours</td><td>60-75g</td><td>500-750ml</td><td>Aggressive gut training. Test race-day nutrition strategy.</td></tr>
+            <tr><td>Race day</td><td>60-90g</td><td>500-750ml</td><td>Start fueling in first 30 min. Mix multiple carb sources (glucose + fructose).</td></tr>
+            <tr><td>Hot conditions (&gt;80°F)</td><td>60-90g</td><td>750-1000ml</td><td>Increase sodium to 500-700mg/hour. Pre-cool if possible.</td></tr>
+            <tr><td>Cold conditions (&lt;50°F)</td><td>60-90g</td><td>400-600ml</td><td>Lower fluid needs, but still fuel aggressively. Warm fluids help.</td></tr>
+        </tbody>
+    </table>
+    
+    <div class="callout alert">
+        <h4>When Your Stomach Rebels</h4>
+        <ol>
+            <li>Back off intensity for 5-10 minutes</li>
+            <li>Switch to liquid calories temporarily</li>
+            <li>Small sips, not big gulps</li>
+            <li>Don't panic and stop eating entirely—you'll bonk</li>
+        </ol>
+    </div>
+    
+    <p><strong>Train Your Gut:</strong> Your gut is trainable. If you never eat during training rides, your gut won't tolerate eating during races. Practice fueling on every long ride.</p>
+    
+    <h3>ZWO Workout Nutrition Calculator</h3>
+    <p>Drop a ZWO file here to calculate your daily nutrition needs and timing for that specific workout:</p>
+    
+    <div class="zwo-upload" id="zwoUpload" onclick="document.getElementById('zwoFileInput').click()">
+        <input type="file" id="zwoFileInput" class="zwo-file-input" accept=".zwo" onchange="parseZWOFile(event)">
+        <p style="font-size: 16px; font-weight: 600; margin: 8px 0;">📄 Drop ZWO file here or click to browse</p>
+        <p style="font-size: 12px; color: #666;">Supports .zwo files from TrainingPeaks or Zwift</p>
+    </div>
+    
+    <div class="zwo-results" id="zwoResults">
+        <!-- Populated by JavaScript -->
+    </div>
 </section>
+
+<script>
+// Nutrition Calculator
+function updateNutritionCalc() {{
+    const hours = parseInt(document.getElementById('hoursSlider').value);
+    const ftp = parseInt(document.getElementById('ftpSlider').value);
+    const weight = parseInt(document.getElementById('weightSlider').value);
+    const goal = document.getElementById('goalSelect').value;
+    const age = {age};
+    const sex = '{sex}';
+    const height = {height_cm};
+    
+    // Update display values
+    document.getElementById('sliderHours').textContent = hours;
+    document.getElementById('sliderFTP').textContent = ftp;
+    document.getElementById('sliderWeight').textContent = weight;
+    document.getElementById('sliderGoal').textContent = goal.replace('_', ' ').replace(/\\b\\w/g, l => l.toUpperCase());
+    
+    // Calculate BMR
+    let bmr;
+    if (sex === 'male') {{
+        bmr = (10 * weight) + (6.25 * height) - (5 * age) + 5;
+    }} else {{
+        bmr = (10 * weight) + (6.25 * height) - (5 * age) - 161;
+    }}
+    
+    // Base TDEE (sedentary)
+    const base_tdee = bmr * 1.2;
+    
+    // Training expenditure
+    const avg_daily_hours = hours / 7;
+    const intensity_factor = 0.7;
+    const avg_power = ftp * intensity_factor;
+    const cycling_kcal = (avg_power / 75) * 5 * avg_daily_hours * 60;
+    
+    // Total calories
+    let daily_kcal = base_tdee + cycling_kcal;
+    
+    // Adjust for goal
+    if (goal === 'lose_slow') daily_kcal -= 300;
+    else if (goal === 'lose_fast') daily_kcal -= 500;
+    else if (goal === 'gain') daily_kcal += 300;
+    
+    // Macros
+    let cho_per_kg;
+    if (hours <= 6) cho_per_kg = 4.5;
+    else if (hours <= 10) cho_per_kg = 5.5;
+    else if (hours <= 15) cho_per_kg = 6.5;
+    else cho_per_kg = 7.5;
+    
+    const cho_grams = Math.round(weight * cho_per_kg);
+    const pro_grams = Math.round(weight * 1.8);
+    const min_fat = Math.round(weight * 0.8);
+    const remaining_kcal = daily_kcal - (cho_grams * 4) - (pro_grams * 4);
+    const fat_grams = Math.max(min_fat, Math.round(remaining_kcal / 9));
+    const total_kcal = (cho_grams * 4) + (pro_grams * 4) + (fat_grams * 9);
+    
+    const cho_pct = Math.round(cho_grams * 4 / total_kcal * 100);
+    const pro_pct = Math.round(pro_grams * 4 / total_kcal * 100);
+    const fat_pct = Math.round(fat_grams * 9 / total_kcal * 100);
+    
+    // Update display
+    document.getElementById('calcResults').innerHTML = `
+        <div class="macro-box">
+            <span class="macro-value">${{Math.round(total_kcal)}}</span>
+            <span class="macro-unit">kcal</span>
+            <div class="macro-label">Total Calories</div>
+        </div>
+        <div class="macro-box">
+            <span class="macro-value">${{cho_grams}}</span>
+            <span class="macro-unit">g (${{cho_pct}}%)</span>
+            <div class="macro-label">Carbs</div>
+        </div>
+        <div class="macro-box">
+            <span class="macro-value">${{pro_grams}}</span>
+            <span class="macro-unit">g (${{pro_pct}}%)</span>
+            <div class="macro-label">Protein</div>
+        </div>
+        <div class="macro-box">
+            <span class="macro-value">${{fat_grams}}</span>
+            <span class="macro-unit">g (${{fat_pct}}%)</span>
+            <div class="macro-label">Fat</div>
+        </div>
+    `;
+}}
+
+// ZWO File Parser
+function parseZWOFile(event) {{
+    const file = event.target.files[0];
+    if (!file) return;
+    
+    const reader = new FileReader();
+    reader.onload = function(e) {{
+        const text = e.target.result;
+        const parser = new DOMParser();
+        const xml = parser.parseFromString(text, 'text/xml');
+        
+        // Extract workout data
+        const workout = xml.querySelector('workout');
+        const name = workout?.querySelector('name')?.textContent || 'Unknown Workout';
+        const description = workout?.querySelector('description')?.textContent || '';
+        
+        // Parse duration from workout segments
+        let totalDuration = 0;
+        const segments = workout?.querySelectorAll('SteadyState, IntervalT, Ramp, FreeRide');
+        segments?.forEach(seg => {{
+            const duration = parseFloat(seg.getAttribute('Duration')) || 0;
+            totalDuration += duration;
+        }});
+        
+        const durationHours = totalDuration / 60;
+        const durationMin = Math.round(totalDuration);
+        
+        // Estimate intensity from workout type
+        const ftp = parseInt(document.getElementById('ftpSlider')?.value || {ftp});
+        let intensity = 'moderate';
+        let avgPower = ftp * 0.7; // Default
+        let carbsPerHour = 60;
+        
+        if (name.toLowerCase().includes('vo2') || name.toLowerCase().includes('sprint')) {{
+            intensity = 'high';
+            avgPower = ftp * 1.1;
+            carbsPerHour = 80;
+        }} else if (name.toLowerCase().includes('threshold') || name.toLowerCase().includes('tempo')) {{
+            intensity = 'moderate-high';
+            avgPower = ftp * 0.9;
+            carbsPerHour = 70;
+        }} else if (name.toLowerCase().includes('endurance') || name.toLowerCase().includes('z2')) {{
+            intensity = 'low';
+            avgPower = ftp * 0.65;
+            carbsPerHour = 40;
+        }}
+        
+        // Calculate energy expenditure
+        const weight = parseInt(document.getElementById('weightSlider')?.value || {weight_kg});
+        const cycling_kcal = (avgPower / 75) * 5 * durationHours * 60;
+        
+        // Calculate daily needs
+        const age = {age};
+        const height = {height_cm};
+        const sex = '{sex}';
+        let bmr;
+        if (sex === 'male') {{
+            bmr = (10 * weight) + (6.25 * height) - (5 * age) + 5;
+        }} else {{
+            bmr = (10 * weight) + (6.25 * height) - (5 * age) - 161;
+        }}
+        const base_tdee = bmr * 1.2;
+        const daily_kcal = base_tdee + cycling_kcal;
+        
+        // Macros for this day
+        const cho_grams = Math.round(weight * 6); // Hard day
+        const pro_grams = Math.round(weight * 1.8);
+        const fat_grams = Math.round((daily_kcal - (cho_grams * 4) - (pro_grams * 4)) / 9);
+        
+        // During workout fueling
+        let duringCarbs = 0;
+        let duringTiming = 'Not needed';
+        if (durationMin > 90 && intensity !== 'low') {{
+            duringCarbs = Math.round(carbsPerHour * durationHours);
+            duringTiming = `Start at 30 min, then every 15-20 min`;
+        }} else if (durationMin > 90) {{
+            duringCarbs = Math.round(50 * durationHours);
+            duringTiming = `Start at 60 min, then every 20-30 min`;
+        }} else if (durationMin > 60 && intensity === 'high') {{
+            duringCarbs = 30;
+            duringTiming = `One gel mid-session`;
+        }}
+        
+        // Pre-workout
+        const preCarbs = intensity === 'high' ? Math.round(weight * 1.5) : Math.round(weight * 1);
+        const preTiming = intensity === 'high' ? '2-3 hours before' : 'Optional';
+        
+        // Post-workout
+        const needsRecovery = durationMin >= 150 && intensity !== 'low';
+        const postCarbs = needsRecovery ? Math.round(weight * 1.2) : 0;
+        const postProtein = needsRecovery ? 25 : 0;
+        
+        // Display results
+        document.getElementById('zwoResults').innerHTML = `
+            <div class="zwo-workout-info">
+                <div class="zwo-workout-title">${{name}}</div>
+                <p><strong>Duration:</strong> ${{durationMin}} minutes (${{durationHours.toFixed(1)}} hours)</p>
+                <p><strong>Estimated Intensity:</strong> ${{intensity}}</p>
+                <p><strong>Estimated Avg Power:</strong> ${{Math.round(avgPower)}}W (${{(avgPower/weight).toFixed(2)}} W/kg)</p>
+            </div>
+            
+            <h4 style="margin-top: 20px;">Daily Nutrition Targets for This Day</h4>
+            <div class="zwo-macros">
+                <div class="macro-box">
+                    <span class="macro-value">${{Math.round(daily_kcal)}}</span>
+                    <span class="macro-unit">kcal</span>
+                    <div class="macro-label">Total Calories</div>
+                </div>
+                <div class="macro-box">
+                    <span class="macro-value">${{cho_grams}}</span>
+                    <span class="macro-unit">g</span>
+                    <div class="macro-label">Carbs</div>
+                </div>
+                <div class="macro-box">
+                    <span class="macro-value">${{pro_grams}}</span>
+                    <span class="macro-unit">g</span>
+                    <div class="macro-label">Protein</div>
+                </div>
+                <div class="macro-box">
+                    <span class="macro-value">${{fat_grams}}</span>
+                    <span class="macro-unit">g</span>
+                    <div class="macro-label">Fat</div>
+                </div>
+            </div>
+            
+            <h4 style="margin-top: 20px;">Fueling Timeline</h4>
+            <table style="margin: 12px 0;">
+                <thead>
+                    <tr>
+                        <th>Timing</th>
+                        <th>Carbs</th>
+                        <th>Protein</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Pre-Workout</strong></td>
+                        <td>${{preCarbs}}g</td>
+                        <td>—</td>
+                        <td>${{preTiming}}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>During Workout</strong></td>
+                        <td>${{duringCarbs}}g</td>
+                        <td>—</td>
+                        <td>${{duringTiming}}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Post-Workout</strong></td>
+                        <td>${{postCarbs}}g</td>
+                        <td>${{postProtein}}g</td>
+                        <td>${{needsRecovery ? 'Within 30 min (if training again within 24-36hrs)' : 'Optional — just eat next meal'}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        `;
+        document.getElementById('zwoResults').classList.add('show');
+    }};
+    
+    reader.readAsText(file);
+}}
+
+// Drag and drop
+const uploadArea = document.getElementById('zwoUpload');
+['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {{
+    uploadArea.addEventListener(eventName, preventDefaults, false);
+}});
+
+function preventDefaults(e) {{
+    e.preventDefault();
+    e.stopPropagation();
+}}
+
+['dragenter', 'dragover'].forEach(eventName => {{
+    uploadArea.addEventListener(eventName, () => uploadArea.classList.add('dragover'), false);
+}});
+
+['dragleave', 'drop'].forEach(eventName => {{
+    uploadArea.addEventListener(eventName, () => uploadArea.classList.remove('dragover'), false);
+}});
+
+uploadArea.addEventListener('drop', (e) => {{
+    const dt = e.dataTransfer;
+    const files = dt.files;
+    if (files.length > 0 && files[0].name.endsWith('.zwo')) {{
+        document.getElementById('zwoFileInput').files = files;
+        parseZWOFile({{target: {{files: files}}}});
+    }}
+}}, false);
+
+// Initialize calculator on load
+document.addEventListener('DOMContentLoaded', function() {{
+    updateNutritionCalc();
+}});
+</script>
 '''
     
     def _generate_footer(self) -> str:
