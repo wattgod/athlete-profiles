@@ -1,0 +1,44 @@
+description: Custom weekly structure for compete tier
+days:
+  monday:
+    am: easy_ride
+    pm: null
+    is_key_day: false
+    notes: Easy ride or recovery
+    max_duration: 90
+  tuesday:
+    am: null
+    pm: intervals
+    is_key_day: true
+    notes: Key session - intervals PM
+    max_duration: 90
+  wednesday:
+    am: easy_ride
+    pm: null
+    is_key_day: false
+    notes: Easy ride or recovery
+    max_duration: 60
+  thursday:
+    am: null
+    pm: intervals
+    is_key_day: true
+    notes: Key session - intervals PM
+    max_duration: 90
+  friday:
+    am: easy_ride
+    pm: null
+    is_key_day: false
+    notes: Easy ride or recovery
+    max_duration: 45
+  saturday:
+    am: long_ride
+    pm: null
+    is_key_day: true
+    notes: Key session - long ride
+    max_duration: 300
+  sunday:
+    am: strength
+    pm: null
+    is_key_day: false
+    notes: Strength session
+    max_duration: 180

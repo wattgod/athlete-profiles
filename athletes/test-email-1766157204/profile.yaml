@@ -1,0 +1,219 @@
+name: Manual Test
+email: test@example.com
+phone: ''
+athlete_id: test-email-1766157204
+birthday: '1986-01-15'
+primary_goal: specific_race
+target_race:
+  name: Unbound 200
+  race_id: unbound_gravel_200
+  date: '2026-06-07'
+  distance_miles: 200.0
+  goal_type: compete
+  goal: compete
+a_events:
+- name: Unbound 200
+  date: '2026-06-07'
+  distance_miles: 200.0
+  goal: compete
+  priority: A
+b_events: []
+c_events: []
+secondary_races: []
+racing:
+  has_goals: false
+  race_list: ''
+  success_metrics: ''
+  obstacles: ''
+  training_goals: ''
+  goals_notes: ''
+training_history:
+  summary: ''
+  years_cycling: '5'
+  years_structured: 0
+  strength_background: intermediate
+  highest_weekly_hours: 2
+  current_weekly_hours: 0
+  primary_sport_level: 3
+  strengths: ''
+  weaknesses: ''
+  races_last_year: null
+  weather_limits: false
+  weather_description: ''
+fitness_markers:
+  ftp_watts: null
+  ftp_date: null
+  weight_kg: null
+  w_kg: null
+  resting_hr: null
+  max_hr: null
+recent_training:
+  last_12_weeks: consistent
+  current_phase: base
+  coming_off_injury: false
+  days_since_last_ride: null
+weekly_availability:
+  total_hours_available: 14
+  cycling_hours_target: 12
+  strength_sessions_max: 2
+preferred_days:
+  monday:
+    availability: available
+    time_slots:
+    - am
+    max_duration_min: 90
+    is_key_day_ok: false
+  tuesday:
+    availability: available
+    time_slots:
+    - pm
+    max_duration_min: 90
+    is_key_day_ok: true
+  wednesday:
+    availability: limited
+    time_slots:
+    - am
+    max_duration_min: 60
+    is_key_day_ok: false
+  thursday:
+    availability: available
+    time_slots:
+    - pm
+    max_duration_min: 90
+    is_key_day_ok: true
+  friday:
+    availability: limited
+    time_slots:
+    - am
+    max_duration_min: 45
+    is_key_day_ok: false
+  saturday:
+    availability: available
+    time_slots:
+    - am
+    max_duration_min: 300
+    is_key_day_ok: true
+  sunday:
+    availability: available
+    time_slots:
+    - am
+    max_duration_min: 180
+    is_key_day_ok: false
+schedule_constraints:
+  work_schedule: flexible
+  travel_frequency: none
+  family_commitments: ''
+  seasonal_changes: ''
+  preferred_off_days: []
+  preferred_long_day: ''
+cycling_equipment:
+  smart_trainer: false
+  power_meter_bike: false
+  hr_monitor: false
+  indoor_setup: none
+strength_equipment: []
+training_environment:
+  primary_location: home
+  gym_type: none
+  outdoor_riding_access: good
+  indoor_riding_tolerance: tolerate_it
+injury_history:
+  current_injuries: []
+  past_injuries: []
+movement_limitations:
+  deep_squat: null
+  single_leg_balance: null
+  push_up_position: null
+  hip_hinge: null
+  notes: ''
+health_factors:
+  age: 39
+  sleep_quality: good
+  sleep_hours_avg: 7
+  wake_time: ''
+  bed_time: ''
+  stress_level: moderate
+  recovery_capacity: normal
+  medical_conditions: ''
+  medications: ''
+  health_notes: ''
+strength:
+  currently_training: false
+  routine: ''
+  mobility_rating: 3
+devices:
+  training_log: false
+  devices: []
+work:
+  employed: false
+  hours_per_week: null
+  stress_level: null
+life_balance:
+  relationships: ''
+  time_commitments: ''
+  time_management_challenge: false
+nutrition:
+  diet_styles: []
+  fluid_intake_rating: null
+  restrictions: ''
+  training_fuel: ''
+  post_workout: ''
+  fuels_during_rides: ''
+  eating_disorder_history: false
+lifestyle:
+  alcohol_drinks_per_week: 0
+  caffeine_mg_per_day: 0
+  weight_goal: maintain
+bike:
+  last_fit: ''
+  pain: false
+  pain_description: ''
+social:
+  group_rides_per_week: 0
+  group_ride_importance: null
+coaching:
+  previous_coach: false
+  experience: ''
+personal:
+  important_people: ''
+  anything_else: ''
+  life_affecting_training: ''
+methodology_preferences:
+  polarized: 3
+  pyramidal: 3
+  threshold_focused: 3
+  hiit_focused: 3
+  high_volume: 3
+  time_crunched: 3
+  preferred_approach: polarized
+  past_success_with: ''
+  past_failure_with: ''
+workout_preferences:
+  longest_indoor_tolerable: 90
+  preferred_interval_style: mixed
+  music_or_entertainment: preferred
+  group_rides_available: false
+  outdoor_interval_friendly: false
+strength_preferences:
+  experience_level: intermediate
+  comfort_with_barbell: low
+  comfort_with_kettlebells: moderate
+  preferred_session_length: 45
+  time_of_day: separate_day
+coaching_style:
+  communication_frequency: weekly
+  feedback_detail: moderate
+  accountability_need: moderate
+  autonomy_preference: general_guidance
+  communication_style: flexible
+platforms:
+  primary: trainingpeaks
+  secondary: ''
+  calendar_integration: google
+communication:
+  preferred_method: email
+  timezone: America/New_York
+  best_time_to_reach: ''
+plan_start:
+  preferred_start: '2025-12-19'
+  current_commitments: ''
