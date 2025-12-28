@@ -117,7 +117,11 @@ jobs:
           fi
           
           echo "Form data saved to /tmp/form_data.json"
-          cat /tmp/form_data.json | head -c 500
+          echo "=== First 500 chars of form data ==="
+          cat /tmp/form_data.json | head -c 500 || echo "Error reading form_data.json"
+          echo ""
+          echo "=== Checking if form_data.json is valid JSON ==="
+          python3 -m json.tool /tmp/form_data.json > /dev/null && echo "✅ Valid JSON" || echo "❌ Invalid JSON"
       
       - name: Create athlete directory
         run: |
@@ -128,9 +132,15 @@ jobs:
       - name: Create athlete profile from form
         working-directory: athlete-profiles
         run: |
+          echo "=== Creating profile for athlete: ${{ steps.payload.outputs.athlete_id }} ==="
+          echo "=== Input file: athletes/${{ steps.payload.outputs.athlete_id }}/form_data.json ==="
+          ls -la "athletes/${{ steps.payload.outputs.athlete_id }}/" || echo "Directory not found"
           python athletes/scripts/create_profile_from_form.py \
             --athlete-id "${{ steps.payload.outputs.athlete_id }}" \
-            --input-file "athletes/${{ steps.payload.outputs.athlete_id }}/form_data.json"
+            --input-file "athletes/${{ steps.payload.outputs.athlete_id }}/form_data.json" || {
+              echo "❌ Profile creation failed"
+              exit 1
+            }
       
       - name: Validate profile
         working-directory: athlete-profiles
