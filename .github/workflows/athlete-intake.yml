@@ -228,6 +228,26 @@ jobs:
             echo "⚠️ Profile not found, skipping guide generation"
           fi
       
+      - name: Generate HTML guide
+        working-directory: athlete-profiles
+        continue-on-error: true
+        run: |
+          if [ -f "athletes/${{ steps.payload.outputs.athlete_id }}/profile.yaml" ]; then
+            python athletes/scripts/generate_html_guide.py "${{ steps.payload.outputs.athlete_id }}" || echo "⚠️ HTML guide generation failed, but profile is valid"
+          else
+            echo "⚠️ Profile not found, skipping HTML guide generation"
+          fi
+      
+      - name: Generate dashboard
+        working-directory: athlete-profiles
+        continue-on-error: true
+        run: |
+          if [ -f "athletes/${{ steps.payload.outputs.athlete_id }}/profile.yaml" ]; then
+            python athletes/scripts/generate_dashboard.py "${{ steps.payload.outputs.athlete_id }}" || echo "⚠️ Dashboard generation failed, but profile is valid"
+          else
+            echo "⚠️ Profile not found, skipping dashboard generation"
+          fi
+      
       - name: List generated files
         working-directory: athlete-profiles
         run: |
