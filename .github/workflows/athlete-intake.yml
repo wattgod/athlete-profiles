@@ -248,21 +248,12 @@ jobs:
           git diff --staged --quiet || git commit -m "Add intake for ${athlete_id}"
           git push || echo "Nothing to push"
       
-      - name: Check email and send to athlete
-        if: success()
-        continue-on-error: true
-        run: |
-          EMAIL="${{ steps.payload.outputs.email }}"
-          if [ -z "$EMAIL" ] || [ "$EMAIL" == "" ] || [ "$EMAIL" == "null" ]; then
-            echo "⚠️ Email is empty, skipping email send"
-            exit 0
-          fi
-          echo "✅ Email found: $EMAIL, proceeding with email send"
-      
       - name: Send success email to athlete
-        if: success() && steps.payload.outputs.has_email == 'true'
+        if: success() && steps.payload.outputs.has_email == 'true' && steps.payload.outputs.email != '' && steps.payload.outputs.email != 'null'
         continue-on-error: true
         uses: dawidd6/action-send-mail@v3
+        env:
+          ATHLETE_EMAIL: ${{ steps.payload.outputs.email }}
         with:
           server_address: smtp.gmail.com
           server_port: 465
@@ -270,7 +261,7 @@ jobs:
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
           subject: "Welcome to Gravel God Coaching - ${{ steps.payload.outputs.name || 'Athlete' }}"
-          to: ${{ steps.payload.outputs.email }}
+          to: ${{ env.ATHLETE_EMAIL != '' && env.ATHLETE_EMAIL || steps.payload.outputs.email }}
           from: Gravel God Cycling <${{ secrets.EMAIL_USERNAME }}>
           body: |
             Hi ${{ steps.payload.outputs.name }},
