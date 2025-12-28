@@ -249,7 +249,7 @@ jobs:
           git push || echo "Nothing to push"
       
       - name: Send success email to athlete
-        if: success() && steps.payload.outputs.has_email == 'true'
+        if: success() && steps.payload.outputs.has_email == 'true' && steps.payload.outputs.email != '' && steps.payload.outputs.email != 'null' && steps.payload.outputs.email != 'undefined'
         continue-on-error: true
         uses: dawidd6/action-send-mail@v3
         with:
