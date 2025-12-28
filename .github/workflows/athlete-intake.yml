@@ -47,19 +47,35 @@ jobs:
         id: payload
         run: |
           if [ "${{ github.event_name }}" == "repository_dispatch" ]; then
+            echo "=== Full client_payload structure ==="
+            echo '${{ toJson(github.event.client_payload) }}' | jq . || echo '${{ toJson(github.event.client_payload) }}'
+            
             EMAIL="${{ github.event.client_payload.email }}"
             ATHLETE_ID="${{ github.event.client_payload.athlete_id }}"
             TIER="${{ github.event.client_payload.coaching_tier }}"
             NAME="${{ github.event.client_payload.name }}"
             
-            echo "=== Extracted Payload ==="
-            echo "Email: $EMAIL"
-            echo "Athlete ID: $ATHLETE_ID"
-            echo "Tier: $TIER"
-            echo "Name: $NAME"
+            echo ""
+            echo "=== Extracted Values ==="
+            echo "Email: '$EMAIL'"
+            echo "Athlete ID: '$ATHLETE_ID'"
+            echo "Tier: '$TIER'"
+            echo "Name: '$NAME'"
+            
+            # Check if email is in the data object instead
+            if [ -z "$EMAIL" ]; then
+              echo "⚠️ Email not in client_payload.email, checking client_payload.data.email"
+              EMAIL_FROM_DATA=$(echo '${{ toJson(github.event.client_payload.data) }}' | jq -r '.email // empty' 2>/dev/null || echo "")
+              if [ -n "$EMAIL_FROM_DATA" ]; then
+                EMAIL="$EMAIL_FROM_DATA"
+                echo "✅ Found email in data: $EMAIL"
+              fi
+            fi
             
             if [ -z "$EMAIL" ]; then
-              echo "❌ ERROR: Email is empty!"
+              echo "❌ ERROR: Email is empty after all checks!"
+              echo "Available keys in client_payload:"
+              echo '${{ toJson(github.event.client_payload) }}' | jq 'keys' || echo "Could not parse JSON"
               exit 1
             fi
             
