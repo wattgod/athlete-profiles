@@ -126,6 +126,34 @@
             margin-bottom: 16px;
         }
 
+        /* AGF DECISION BOX */
+        .agf-decision {
+            border: 3px solid var(--border);
+            padding: 24px;
+            background: var(--soft);
+            font-family: "Sometype Mono", monospace;
+        }
+
+        .agf-tree {
+            font-size: 12px;
+            line-height: 1.8;
+            font-family: "Sometype Mono", monospace;
+        }
+
+        .agf-tree-item {
+            margin: 4px 0;
+        }
+
+        .agf-tree-key {
+            font-weight: 700;
+            color: var(--muted);
+        }
+
+        .agf-stale {
+            color: var(--warning);
+            font-weight: 700;
+        }
+
         /* CAPACITY CHECK */
         .capacity-check {
             border: 3px solid var(--border);
@@ -302,8 +330,8 @@
         </div>
     </div>
 
-    <!-- PRIORITY SECTION: Race Countdown + Risk Factors -->
-    <div class="priority-grid">
+    <!-- PRIORITY SECTION: Race Countdown + Risk Factors + AGF Decision -->
+    <div class="priority-grid" style="grid-template-columns: 1fr 1fr 1fr;">
         <!-- RACE COUNTDOWN -->
         <div class="race-countdown">
             <div class="card-header">RACE COUNTDOWN</div>
@@ -364,11 +392,58 @@
 <div style="font-size: 11px; margin-top: 4px; color: var(--muted);">Knee limits deep squat depth, otherwise good mobility</div>
 <div style="margin-top: 8px;"><span class="badge">TRAVEL: OCCASIONAL</span></div>
 <div style="margin-top: 8px; font-size: 11px; color: var(--muted);">FAMILY: Weekend mornings sometimes limited</div>
-<div style="margin-top: 8px;"><span class="badge">HIGH ALCOHOL (10/WEEK)</span></div>
-<div style="margin-top: 8px;"><span class="badge">HIGH CAFFEINE (450MG/DAY)</span></div>
-<div style="margin-top: 8px;"><span class="badge badge-warning">INCONSISTENT FUELING</span></div>
+
+            <div style="margin-top: 8px; padding: 8px; border: 2px solid var(--border); background: var(--soft);">
+                <div><span class="badge badge-warning">HIGH ALCOHOL (10/WEEK)</span></div>
+                <div style="font-size: 11px; margin-top: 4px; color: var(--muted);">
+                    <strong>Action:</strong> Reduce to &lt;7/week during training blocks. Avoid alcohol 3h before sleep.
+                </div>
+            </div>
+        
+
+            <div style="margin-top: 8px; padding: 8px; border: 2px solid var(--border); background: var(--soft);">
+                <div><span class="badge">HIGH CAFFEINE (450MG/DAY)</span></div>
+                <div style="font-size: 11px; margin-top: 4px; color: var(--muted);">
+                    <strong>Action:</strong> Cycle off periodically. Use strategically on race/key days only.
+                </div>
+            </div>
+        
+
+            <div style="margin-top: 8px; padding: 8px; border: 2px solid var(--warning); background: #fff5f5;">
+                <div><span class="badge badge-warning">INCONSISTENT FUELING</span></div>
+                <div style="font-size: 11px; margin-top: 4px; color: var(--muted);">
+                    <strong>Action:</strong> Establish fueling protocol: 60-90g carbs/hour on rides &gt;90min. Practice in training.
+                </div>
+            </div>
+        
 <div style="margin-top: 8px;"><span class="badge">EQUIPMENT TIER: MODERATE</span></div>
 <div style="margin-top: 8px; font-size: 11px; color: var(--muted);">Tolerates indoor (max 120 min)</div>
+        </div>
+
+        <!-- AGF DECISION -->
+        <div class="agf-decision">
+            <div class="card-header">AGF DECISION</div>
+            <div class="agf-tree">
+                <div class="agf-tree-item">
+                    <span class="agf-tree-key">Ability:</span> INTERMEDIATE
+                </div>
+                <div class="agf-tree-item">
+                    <span class="agf-tree-key">Volume:</span> COMPETE<br>
+                    <span style="font-size: 10px; color: var(--muted); margin-left: 12px;">(12h available, 12h current, can sustain 18h)</span>
+                </div>
+                <div class="agf-tree-item">
+                    <span class="agf-tree-key">System:</span> POLARIZED → BLOCK (transition)
+                </div>
+                <div class="agf-tree-item">
+                    <span class="agf-tree-key">Limiter:</span> DURABILITY (fueling)
+                </div>
+                <div class="agf-tree-item">
+                    <span class="agf-tree-key">Phase:</span> BASE 2
+                </div>
+                <div class="agf-tree-item">
+                    <span class="agf-tree-key">Risk:</span> MODERATE
+                </div>
+            </div>
         </div>
     </div>
 
@@ -409,7 +484,7 @@
             <div class="card-content">
                 <div class="kv-row">
                     <span class="kv-key">FTP</span>
-                    <span class="kv-value">280 W</span>
+                    <span class="kv-value agf-stale">280 W (58w old)</span>
                 </div>
                 <div class="kv-row">
                     <span class="kv-key">W/KG</span>
@@ -417,7 +492,7 @@
                 </div>
                 <div class="kv-row">
                     <span class="kv-key">FTP Date</span>
-                    <span class="kv-value">Nov 15, 2024</span>
+                    <span class="kv-value agf-stale">Nov 15, 2024</span>
                 </div>
                 <div class="kv-row">
                     <span class="kv-key">Weight</span>
@@ -426,6 +501,38 @@
                 <div class="kv-row">
                     <span class="kv-key">Resting HR</span>
                     <span class="kv-value">48 BPM</span>
+                </div>
+                <div class="kv-row">
+                    <span class="kv-key">Max HR</span>
+                    <span class="kv-value">185 BPM</span>
+                </div>
+                <div style="margin-top: 8px; padding: 8px; border: 2px solid var(--warning); background: #fff5f5; font-size: 11px; text-transform: uppercase;"><strong>⚠️ FTP STALE:</strong> Retest needed (>8 weeks old)</div>
+            </div>
+        </div>
+
+        <!-- RECOVERY CAPACITY -->
+        <div class="card">
+            <div class="card-header">RECOVERY CAPACITY</div>
+            <div class="card-content">
+                <div class="kv-row">
+                    <span class="kv-key">Sleep Quality</span>
+                    <span class="kv-value">GOOD</span>
+                </div>
+                <div class="kv-row">
+                    <span class="kv-key">Sleep Hours</span>
+                    <span class="kv-value">7 H/NIGHT</span>
+                </div>
+                <div class="kv-row">
+                    <span class="kv-key">Recovery Pattern</span>
+                    <span class="kv-value">NORMAL</span>
+                </div>
+                <div class="kv-row">
+                    <span class="kv-key">Stress Level</span>
+                    <span class="kv-value">MODERATE</span>
+                </div>
+                <div class="kv-row">
+                    <span class="kv-key">Autoregulation</span>
+                    <span class="kv-value">RECOMMENDED</span>
                 </div>
             </div>
         </div>
@@ -570,10 +677,21 @@
         
             </div>
         </div>
+
+        <!-- COACHING PRIORITIES -->
+        <div class="card card-full">
+            <div class="card-header">COACHING PRIORITIES (WEEKS 1-4)</div>
+            <div class="card-content">
+                <div style="margin: 8px 0; padding: 8px; border-left: 3px solid var(--border);">1. Retest FTP (current test is 58 weeks old)</div>
+<div style="margin: 8px 0; padding: 8px; border-left: 3px solid var(--border);">2. Establish fueling protocol (inconsistent flagged)</div>
+<div style="margin: 8px 0; padding: 8px; border-left: 3px solid var(--border);">3. Address alcohol impact on recovery (currently 10/week)</div>
+<div style="margin: 8px 0; padding: 8px; border-left: 3px solid var(--border);">4. Verify exercise substitutions working (2 exclusions)</div>
+            </div>
+        </div>
     </div>
 
     <div style="text-align: center; margin-top: 48px; padding-top: 24px; border-top: 3px solid var(--border); font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted);">
-        GENERATED DECEMBER 27, 2025 AT 23:28
+        GENERATED DECEMBER 27, 2025 AT 23:58
     </div>
 </body>
 </html>

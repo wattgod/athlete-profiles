@@ -65,6 +65,158 @@ def format_value(value, default="—") -> str:
     return str(value)
 
 
+def classify_rider_ability(profile: Dict, fitness: Dict) -> str:
+    """Classify rider ability: Beginner / Intermediate / Advanced / Masters."""
+    years_cycling = profile.get("training_history", {}).get("years_cycling", "0-2")
+    years_structured = profile.get("training_history", {}).get("years_structured", 0)
+    w_kg = fitness.get("w_kg", 0)
+    consistency = profile.get("recent_training", {}).get("last_12_weeks", "none")
+    age = profile.get("health_factors", {}).get("age", 0)
+    
+    # Masters classification (age-based)
+    if age >= 40:
+        if years_structured >= 5 and w_kg >= 3.5:
+            return "MASTERS ADVANCED"
+        elif years_structured >= 2:
+            return "MASTERS INTERMEDIATE"
+        else:
+            return "MASTERS BEGINNER"
+    
+    # Ability based on experience and fitness
+    if years_cycling in ["10+", "6-10"] and years_structured >= 5 and w_kg >= 4.0:
+        return "ADVANCED"
+    elif years_structured >= 3 and w_kg >= 3.5:
+        return "INTERMEDIATE"
+    elif years_structured >= 1 or consistency == "consistent":
+        return "INTERMEDIATE"
+    else:
+        return "BEGINNER"
+
+
+def get_tier_reasoning(profile: Dict, derived: Dict) -> str:
+    """Generate reasoning for tier assignment."""
+    hours = profile.get("weekly_availability", {}).get("cycling_hours_target", 0)
+    hours_current = profile.get("training_history", {}).get("current_weekly_hours", 0)
+    hours_peak = profile.get("training_history", {}).get("highest_weekly_hours", 0)
+    goal = profile.get("target_race", {}).get("goal_type", "finish")
+    tier = derived.get("tier", "compete")
+    
+    reasoning = f"{hours}h available"
+    if hours_current > 0:
+        reasoning += f", {hours_current}h current"
+    if hours_peak > 0:
+        reasoning += f", can sustain {hours_peak}h"
+    
+    if goal != "finish" and tier in ["ayahuasca", "finisher"]:
+        reasoning += f" (goal mismatch: {goal} with {tier} tier)"
+    
+    return reasoning
+
+
+def recommend_training_system(profile: Dict, derived: Dict) -> str:
+    """Recommend training system based on tier, experience, preferences."""
+    tier = derived.get("tier", "compete")
+    years_structured = profile.get("training_history", {}).get("years_structured", 0)
+    preferred = profile.get("methodology_preferences", {}).get("preferred_approach", "")
+    
+    # System recommendation logic
+    if tier == "podium" and years_structured >= 5:
+        return "BLOCK PERIODIZATION"
+    elif tier in ["compete", "podium"] and years_structured >= 3:
+        if "polarized" in preferred.lower():
+            return "POLARIZED → BLOCK (transition)"
+        return "POLARIZED"
+    elif tier == "finisher":
+        return "POLARIZED"
+    else:
+        return "POLARIZED (foundation)"
+
+
+def identify_limiter(profile: Dict, fitness: Dict, nutrition: Dict, recent_training: Dict) -> str:
+    """Identify primary limiter holding athlete back."""
+    limiters = []
+    
+    # Durability limiter
+    if nutrition.get("fuels_during_rides") == "rarely":
+        limiters.append("DURABILITY (fueling)")
+    if not fitness.get("ftp_watts"):
+        limiters.append("DURABILITY (no long ride data)")
+    
+    # Power limiter
+    w_kg = fitness.get("w_kg", 0)
+    if w_kg < 3.0:
+        limiters.append("POWER (low W/kg)")
+    
+    # Recovery limiter
+    sleep = profile.get("health_factors", {}).get("sleep_quality", "")
+    if sleep == "poor":
+        limiters.append("RECOVERY (sleep)")
+    
+    alcohol = profile.get("lifestyle", {}).get("alcohol_drinks_per_week", 0)
+    if alcohol > 10:
+        limiters.append("RECOVERY (alcohol)")
+    
+    # Consistency limiter
+    consistency = recent_training.get("last_12_weeks", "")
+    if consistency == "sporadic":
+        limiters.append("CONSISTENCY")
+    
+    if limiters:
+        return limiters[0]  # Primary limiter
+    return "NONE IDENTIFIED"
+
+
+def calculate_ftp_age_weeks(ftp_date: Optional[str]) -> Optional[int]:
+    """Calculate age of FTP test in weeks."""
+    if not ftp_date:
+        return None
+    try:
+        test_date = datetime.strptime(ftp_date, "%Y-%m-%d").date()
+        today = date.today()
+        days = (today - test_date).days
+        return days // 7
+    except:
+        return None
+
+
+def generate_coaching_priorities(profile: Dict, fitness: Dict, derived: Dict, health: Dict, nutrition: Dict, lifestyle: Dict) -> List[str]:
+    """Generate coaching priorities for next 4 weeks."""
+    priorities = []
+    
+    # FTP retest
+    ftp_age = calculate_ftp_age_weeks(fitness.get("ftp_date"))
+    if ftp_age and ftp_age > 8:
+        priorities.append(f"Retest FTP (current test is {ftp_age} weeks old)")
+    elif not fitness.get("ftp_watts"):
+        priorities.append("Establish FTP baseline (no current test)")
+    
+    # Fueling
+    if nutrition.get("fuels_during_rides") == "rarely":
+        priorities.append("Establish fueling protocol (inconsistent flagged)")
+    
+    # Long ride
+    if not fitness.get("ftp_watts"):  # Proxy for no long ride data
+        priorities.append("Build long ride duration (currently unknown max)")
+    
+    # Alcohol
+    alcohol = lifestyle.get("alcohol_drinks_per_week", 0)
+    if alcohol > 7:
+        priorities.append(f"Address alcohol impact on recovery (currently {alcohol}/week)")
+    
+    # Sleep
+    sleep_quality = health.get("sleep_quality", "")
+    sleep_hours = health.get("sleep_hours_avg", 0)
+    if sleep_quality == "poor" or (sleep_hours and sleep_hours < 7):
+        priorities.append(f"Optimize sleep (quality: {sleep_quality}, hours: {sleep_hours})")
+    
+    # Exercise exclusions
+    exclusions = derived.get("exercise_exclusions", [])
+    if exclusions:
+        priorities.append(f"Verify exercise substitutions working ({len(exclusions)} exclusions)")
+    
+    return priorities[:5]  # Top 5 priorities
+
+
 def get_risk_level(injuries: List, health: Dict, limitations: Dict, schedule: Dict, lifestyle: Dict, nutrition: Dict) -> str:
     """Determine risk level for athlete."""
     if injuries and any(i.get('severity') in ['moderate', 'significant'] for i in injuries):
@@ -150,6 +302,20 @@ def generate_dashboard(athlete_id: str) -> Path:
     hours_available = weekly_availability.get('total_hours_available', 0)
     hours_current = training_history.get('current_weekly_hours', 0)
     hours_peak = training_history.get('highest_weekly_hours', 0)
+    
+    # AGF Decision outputs
+    rider_ability = classify_rider_ability(profile, fitness)
+    tier_reasoning = get_tier_reasoning(profile, derived)
+    training_system = recommend_training_system(profile, derived)
+    limiter = identify_limiter(profile, fitness, nutrition, recent_training)
+    starting_phase = derived.get('starting_phase', 'base_1')
+    
+    # Data freshness
+    ftp_age_weeks = calculate_ftp_age_weeks(fitness.get('ftp_date'))
+    ftp_stale = ftp_age_weeks and ftp_age_weeks > 8
+    
+    # Coaching priorities
+    coaching_priorities = generate_coaching_priorities(profile, fitness, derived, health, nutrition, lifestyle)
     
     # Generate HTML
     html = f'''<!DOCTYPE html>
@@ -278,6 +444,34 @@ def generate_dashboard(athlete_id: str) -> Path:
             text-transform: uppercase;
             letter-spacing: 0.1em;
             margin-bottom: 16px;
+        }}
+
+        /* AGF DECISION BOX */
+        .agf-decision {{
+            border: 3px solid var(--border);
+            padding: 24px;
+            background: var(--soft);
+            font-family: "Sometype Mono", monospace;
+        }}
+
+        .agf-tree {{
+            font-size: 12px;
+            line-height: 1.8;
+            font-family: "Sometype Mono", monospace;
+        }}
+
+        .agf-tree-item {{
+            margin: 4px 0;
+        }}
+
+        .agf-tree-key {{
+            font-weight: 700;
+            color: var(--muted);
+        }}
+
+        .agf-stale {{
+            color: var(--warning);
+            font-weight: 700;
         }}
 
         /* CAPACITY CHECK */
@@ -456,8 +650,8 @@ def generate_dashboard(athlete_id: str) -> Path:
         </div>
     </div>
 
-    <!-- PRIORITY SECTION: Race Countdown + Risk Factors -->
-    <div class="priority-grid">
+    <!-- PRIORITY SECTION: Race Countdown + Risk Factors + AGF Decision -->
+    <div class="priority-grid" style="grid-template-columns: 1fr 1fr 1fr;">
         <!-- RACE COUNTDOWN -->
         <div class="race-countdown">
             <div class="card-header">RACE COUNTDOWN</div>
@@ -493,6 +687,32 @@ def generate_dashboard(athlete_id: str) -> Path:
             <div class="risk-level">RISK: {risk_level}</div>
             
             {format_risk_factors(current_injuries, health, limitations, past_injuries, exercise_exclusions, schedule_constraints, training_env, lifestyle, nutrition, equipment_tier, workout_prefs, profile)}
+        </div>
+
+        <!-- AGF DECISION -->
+        <div class="agf-decision">
+            <div class="card-header">AGF DECISION</div>
+            <div class="agf-tree">
+                <div class="agf-tree-item">
+                    <span class="agf-tree-key">Ability:</span> {rider_ability}
+                </div>
+                <div class="agf-tree-item">
+                    <span class="agf-tree-key">Volume:</span> {derived.get('tier', 'N/A').upper()}<br>
+                    <span style="font-size: 10px; color: var(--muted); margin-left: 12px;">({tier_reasoning})</span>
+                </div>
+                <div class="agf-tree-item">
+                    <span class="agf-tree-key">System:</span> {training_system}
+                </div>
+                <div class="agf-tree-item">
+                    <span class="agf-tree-key">Limiter:</span> {limiter}
+                </div>
+                <div class="agf-tree-item">
+                    <span class="agf-tree-key">Phase:</span> {starting_phase.upper().replace('_', ' ')}
+                </div>
+                <div class="agf-tree-item">
+                    <span class="agf-tree-key">Risk:</span> {risk_level}
+                </div>
+            </div>
         </div>
     </div>
 
@@ -533,7 +753,7 @@ def generate_dashboard(athlete_id: str) -> Path:
             <div class="card-content">
                 <div class="kv-row">
                     <span class="kv-key">FTP</span>
-                    <span class="kv-value">{format_value(fitness.get('ftp_watts'))} W</span>
+                    <span class="kv-value {f'agf-stale' if ftp_stale else ''}">{format_value(fitness.get('ftp_watts'))} W{f' ({ftp_age_weeks}w old)' if ftp_age_weeks else ''}</span>
                 </div>
                 <div class="kv-row">
                     <span class="kv-key">W/KG</span>
@@ -541,7 +761,7 @@ def generate_dashboard(athlete_id: str) -> Path:
                 </div>
                 <div class="kv-row">
                     <span class="kv-key">FTP Date</span>
-                    <span class="kv-value">{format_date(fitness.get('ftp_date'))}</span>
+                    <span class="kv-value {f'agf-stale' if ftp_stale else ''}">{format_date(fitness.get('ftp_date'))}</span>
                 </div>
                 <div class="kv-row">
                     <span class="kv-key">Weight</span>
@@ -550,6 +770,38 @@ def generate_dashboard(athlete_id: str) -> Path:
                 <div class="kv-row">
                     <span class="kv-key">Resting HR</span>
                     <span class="kv-value">{format_value(fitness.get('resting_hr'))} BPM</span>
+                </div>
+                <div class="kv-row">
+                    <span class="kv-key">Max HR</span>
+                    <span class="kv-value">{format_value(fitness.get('max_hr'))} BPM</span>
+                </div>
+                {f'<div style="margin-top: 8px; padding: 8px; border: 2px solid var(--warning); background: #fff5f5; font-size: 11px; text-transform: uppercase;"><strong>⚠️ FTP STALE:</strong> Retest needed (>8 weeks old)</div>' if ftp_stale else ''}
+            </div>
+        </div>
+
+        <!-- RECOVERY CAPACITY -->
+        <div class="card">
+            <div class="card-header">RECOVERY CAPACITY</div>
+            <div class="card-content">
+                <div class="kv-row">
+                    <span class="kv-key">Sleep Quality</span>
+                    <span class="kv-value">{format_value(health.get('sleep_quality')).upper()}</span>
+                </div>
+                <div class="kv-row">
+                    <span class="kv-key">Sleep Hours</span>
+                    <span class="kv-value">{format_value(health.get('sleep_hours_avg'))} H/NIGHT</span>
+                </div>
+                <div class="kv-row">
+                    <span class="kv-key">Recovery Pattern</span>
+                    <span class="kv-value">{format_value(health.get('recovery_capacity')).upper()}</span>
+                </div>
+                <div class="kv-row">
+                    <span class="kv-key">Stress Level</span>
+                    <span class="kv-value">{format_value(health.get('stress_level')).upper()}</span>
+                </div>
+                <div class="kv-row">
+                    <span class="kv-key">Autoregulation</span>
+                    <span class="kv-value">{'REQUIRED' if health.get('age', 0) >= 40 else 'RECOMMENDED'}</span>
                 </div>
             </div>
         </div>
@@ -623,6 +875,14 @@ def generate_dashboard(athlete_id: str) -> Path:
             <div class="card-header">WEEKLY SCHEDULE</div>
             <div class="card-content">
                 {format_weekly_schedule(weekly_structure.get('days', {}))}
+            </div>
+        </div>
+
+        <!-- COACHING PRIORITIES -->
+        <div class="card card-full">
+            <div class="card-header">COACHING PRIORITIES (WEEKS 1-4)</div>
+            <div class="card-content">
+                {format_coaching_priorities(coaching_priorities)}
             </div>
         </div>
     </div>
@@ -727,19 +987,43 @@ def format_risk_factors(current_injuries: List, health: Dict, limitations: Dict,
     if schedule.get('family_commitments'):
         factors.append(f'<div style="margin-top: 8px; font-size: 11px; color: var(--muted);">FAMILY: {schedule.get("family_commitments")}</div>')
     
-    # LIFE FACTORS
-    if lifestyle.get('alcohol_drinks_per_week', 0) > 7:
-        factors.append(f'<div style="margin-top: 8px;"><span class="badge">HIGH ALCOHOL ({lifestyle.get("alcohol_drinks_per_week")}/WEEK)</span></div>')
+    # LIFE FACTORS (with actions)
+    alcohol = lifestyle.get('alcohol_drinks_per_week', 0)
+    if alcohol > 7:
+        target = max(0, alcohol - 3)
+        factors.append(f'''
+            <div style="margin-top: 8px; padding: 8px; border: 2px solid var(--border); background: var(--soft);">
+                <div><span class="badge badge-warning">HIGH ALCOHOL ({alcohol}/WEEK)</span></div>
+                <div style="font-size: 11px; margin-top: 4px; color: var(--muted);">
+                    <strong>Action:</strong> Reduce to &lt;{target}/week during training blocks. Avoid alcohol 3h before sleep.
+                </div>
+            </div>
+        ''')
     
-    if lifestyle.get('caffeine_mg_per_day', 0) > 400:
-        factors.append(f'<div style="margin-top: 8px;"><span class="badge">HIGH CAFFEINE ({lifestyle.get("caffeine_mg_per_day")}MG/DAY)</span></div>')
+    caffeine = lifestyle.get('caffeine_mg_per_day', 0)
+    if caffeine > 400:
+        factors.append(f'''
+            <div style="margin-top: 8px; padding: 8px; border: 2px solid var(--border); background: var(--soft);">
+                <div><span class="badge">HIGH CAFFEINE ({caffeine}MG/DAY)</span></div>
+                <div style="font-size: 11px; margin-top: 4px; color: var(--muted);">
+                    <strong>Action:</strong> Cycle off periodically. Use strategically on race/key days only.
+                </div>
+            </div>
+        ''')
     
     if lifestyle.get('family_support') == 'challenging':
         factors.append(f'<div style="margin-top: 8px;"><span class="badge badge-warning">FAMILY SUPPORT: CHALLENGING</span></div>')
     
-    # NUTRITION CONCERNS
+    # NUTRITION CONCERNS (with actions)
     if nutrition.get('fuels_during_rides') == 'rarely':
-        factors.append(f'<div style="margin-top: 8px;"><span class="badge badge-warning">INCONSISTENT FUELING</span></div>')
+        factors.append(f'''
+            <div style="margin-top: 8px; padding: 8px; border: 2px solid var(--warning); background: #fff5f5;">
+                <div><span class="badge badge-warning">INCONSISTENT FUELING</span></div>
+                <div style="font-size: 11px; margin-top: 4px; color: var(--muted);">
+                    <strong>Action:</strong> Establish fueling protocol: 60-90g carbs/hour on rides &gt;90min. Practice in training.
+                </div>
+            </div>
+        ''')
     
     # EQUIPMENT CONSTRAINTS
     if equipment_tier and equipment_tier != 'high':
@@ -851,6 +1135,18 @@ def format_day_list(days: List[str]) -> str:
     
     badges = [f'<span class="badge badge-key">{day.upper()}</span>' for day in days]
     return '<div>' + ' '.join(badges) + '</div>'
+
+
+def format_coaching_priorities(priorities: List[str]) -> str:
+    """Format coaching priorities list."""
+    if not priorities:
+        return '<div style="color: var(--muted);">No immediate priorities identified</div>'
+    
+    items = []
+    for i, priority in enumerate(priorities, 1):
+        items.append(f'<div style="margin: 8px 0; padding: 8px; border-left: 3px solid var(--border);">{i}. {priority}</div>')
+    
+    return '\n'.join(items)
 
 
 def main():
