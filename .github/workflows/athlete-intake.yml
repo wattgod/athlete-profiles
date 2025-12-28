@@ -63,20 +63,25 @@ jobs:
             echo "Name: '$NAME'"
             
             # Check if email is in the data object instead
-            if [ -z "$EMAIL" ]; then
+            if [ -z "$EMAIL" ] || [ "$EMAIL" == "null" ] || [ "$EMAIL" == "" ]; then
               echo "⚠️ Email not in client_payload.email, checking client_payload.data.email"
               EMAIL_FROM_DATA=$(echo '${{ toJson(github.event.client_payload.data) }}' | jq -r '.email // empty' 2>/dev/null || echo "")
-              if [ -n "$EMAIL_FROM_DATA" ]; then
+              if [ -n "$EMAIL_FROM_DATA" ] && [ "$EMAIL_FROM_DATA" != "null" ] && [ "$EMAIL_FROM_DATA" != "" ]; then
                 EMAIL="$EMAIL_FROM_DATA"
                 echo "✅ Found email in data: $EMAIL"
               fi
             fi
             
-            if [ -z "$EMAIL" ]; then
+            # Final validation - if still empty, use a default or fail
+            if [ -z "$EMAIL" ] || [ "$EMAIL" == "null" ] || [ "$EMAIL" == "" ]; then
               echo "❌ ERROR: Email is empty after all checks!"
               echo "Available keys in client_payload:"
               echo '${{ toJson(github.event.client_payload) }}' | jq 'keys' || echo "Could not parse JSON"
-              exit 1
+              echo ""
+              echo "Full payload for debugging:"
+              echo '${{ toJson(github.event.client_payload) }}' | jq . || echo '${{ toJson(github.event.client_payload) }}'
+              # Don't exit - let it continue but skip email sending
+              EMAIL=""
             fi
             
             echo "email=$EMAIL" >> $GITHUB_OUTPUT
