@@ -47,10 +47,26 @@ jobs:
         id: payload
         run: |
           if [ "${{ github.event_name }}" == "repository_dispatch" ]; then
-            echo "email=${{ github.event.client_payload.email }}" >> $GITHUB_OUTPUT
-            echo "athlete_id=${{ github.event.client_payload.athlete_id }}" >> $GITHUB_OUTPUT
-            echo "coaching_tier=${{ github.event.client_payload.coaching_tier }}" >> $GITHUB_OUTPUT
-            echo "name=${{ github.event.client_payload.name }}" >> $GITHUB_OUTPUT
+            EMAIL="${{ github.event.client_payload.email }}"
+            ATHLETE_ID="${{ github.event.client_payload.athlete_id }}"
+            TIER="${{ github.event.client_payload.coaching_tier }}"
+            NAME="${{ github.event.client_payload.name }}"
+            
+            echo "=== Extracted Payload ==="
+            echo "Email: $EMAIL"
+            echo "Athlete ID: $ATHLETE_ID"
+            echo "Tier: $TIER"
+            echo "Name: $NAME"
+            
+            if [ -z "$EMAIL" ]; then
+              echo "❌ ERROR: Email is empty!"
+              exit 1
+            fi
+            
+            echo "email=$EMAIL" >> $GITHUB_OUTPUT
+            echo "athlete_id=$ATHLETE_ID" >> $GITHUB_OUTPUT
+            echo "coaching_tier=$TIER" >> $GITHUB_OUTPUT
+            echo "name=$NAME" >> $GITHUB_OUTPUT
             
             # Save full payload to file (use jq for proper JSON handling)
             echo '${{ toJson(github.event.client_payload.data) }}' | jq . > /tmp/form_data.json || {
@@ -200,7 +216,7 @@ jobs:
           git push || echo "Nothing to push"
       
       - name: Send success email to athlete
-        if: success()
+        if: success() && steps.payload.outputs.email != ''
         continue-on-error: true
         uses: dawidd6/action-send-mail@v3
         with:
@@ -246,7 +262,7 @@ jobs:
             Gravel God Cycling
       
       - name: Notify admin of new intake
-        if: success()
+        if: success() && steps.payload.outputs.email != ''
         continue-on-error: true
         uses: dawidd6/action-send-mail@v3
         with:
@@ -256,7 +272,7 @@ jobs:
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
           subject: "🎯 New Athlete Intake: ${{ steps.payload.outputs.name }}"
-          to: gravelgodcoaching@gmail.com
+          to: ${{ secrets.ADMIN_EMAIL || 'gravelgodcoaching@gmail.com' }}
           from: Gravel God System <${{ secrets.EMAIL_USERNAME }}>
           body: |
             NEW ATHLETE INTAKE RECEIVED
