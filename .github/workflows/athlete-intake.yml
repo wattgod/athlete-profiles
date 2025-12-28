@@ -99,7 +99,13 @@ jobs:
             }
           else
             # Manual trigger - use test data
-            echo "email=${{ github.event.inputs.email }}" >> $GITHUB_OUTPUT
+            MANUAL_EMAIL="${{ github.event.inputs.email }}"
+            if [ -z "$MANUAL_EMAIL" ] || [ "$MANUAL_EMAIL" == "" ]; then
+              echo "has_email=false" >> $GITHUB_OUTPUT
+            else
+              echo "has_email=true" >> $GITHUB_OUTPUT
+            fi
+            echo "email=$MANUAL_EMAIL" >> $GITHUB_OUTPUT
             echo "athlete_id=${{ github.event.inputs.athlete_id }}" >> $GITHUB_OUTPUT
             echo "coaching_tier=mid" >> $GITHUB_OUTPUT
             echo "name=Manual Test" >> $GITHUB_OUTPUT
