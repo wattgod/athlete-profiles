@@ -113,23 +113,26 @@ def get_tier_reasoning(profile: Dict, derived: Dict) -> str:
     return reasoning
 
 
-def recommend_training_system(profile: Dict, derived: Dict) -> str:
-    """Recommend training system based on tier, experience, preferences."""
+def recommend_training_system(profile: Dict, derived: Dict, plan_weeks: int) -> tuple:
+    """Recommend training system based on tier, experience, preferences.
+    Returns (system_name, transition_week) tuple."""
     tier = derived.get("tier", "compete")
     years_structured = profile.get("training_history", {}).get("years_structured", 0)
     preferred = profile.get("methodology_preferences", {}).get("preferred_approach", "")
     
     # System recommendation logic
     if tier == "podium" and years_structured >= 5:
-        return "BLOCK PERIODIZATION"
+        return ("BLOCK PERIODIZATION", None)
     elif tier in ["compete", "podium"] and years_structured >= 3:
         if "polarized" in preferred.lower():
-            return "POLARIZED → BLOCK (transition)"
-        return "POLARIZED"
+            # Transition typically happens around 1/3 through plan
+            transition_week = max(8, plan_weeks // 3)
+            return (f"POLARIZED → BLOCK (transition at Week {transition_week})", transition_week)
+        return ("POLARIZED", None)
     elif tier == "finisher":
-        return "POLARIZED"
+        return ("POLARIZED", None)
     else:
-        return "POLARIZED (foundation)"
+        return ("POLARIZED (foundation)", None)
 
 
 def identify_limiter(profile: Dict, fitness: Dict, nutrition: Dict, recent_training: Dict) -> str:
@@ -306,7 +309,7 @@ def generate_dashboard(athlete_id: str) -> Path:
     # AGF Decision outputs
     rider_ability = classify_rider_ability(profile, fitness)
     tier_reasoning = get_tier_reasoning(profile, derived)
-    training_system = recommend_training_system(profile, derived)
+    training_system, transition_week = recommend_training_system(profile, derived, plan_weeks)
     limiter = identify_limiter(profile, fitness, nutrition, recent_training)
     starting_phase = derived.get('starting_phase', 'base_1')
     
@@ -776,7 +779,7 @@ def generate_dashboard(athlete_id: str) -> Path:
                     <span class="kv-value">{format_value(fitness.get('max_hr'))} BPM</span>
                 </div>
                 {f'<div style="margin-top: 8px; padding: 8px; border: 2px solid var(--warning); background: #fff5f5; font-size: 11px; text-transform: uppercase;"><strong>⚠️ FTP STALE:</strong> Retest needed (>8 weeks old)</div>' if ftp_stale else ''}
-                {format_power_profile(fitness)}
+                {format_power_profile(fitness, ftp_stale, ftp_age_weeks)}
             </div>
         </div>
 
@@ -1164,7 +1167,7 @@ def format_coaching_priorities(priorities: List[str]) -> str:
     return '\n'.join(items)
 
 
-def format_power_profile(fitness: Dict) -> str:
+def format_power_profile(fitness: Dict, ftp_stale: bool, ftp_age_weeks: Optional[int]) -> str:
     """Format power profile if available (estimated from FTP if needed)."""
     ftp = fitness.get('ftp_watts', 0)
     w_kg = fitness.get('w_kg', 0)
@@ -1184,6 +1187,10 @@ def format_power_profile(fitness: Dict) -> str:
     wkg_1min = power_1min / weight if weight > 0 else 0
     wkg_5min = power_5min / weight if weight > 0 else 0
     wkg_20min = power_20min / weight if weight > 0 else 0
+    
+    stale_note = ''
+    if ftp_stale and ftp_age_weeks:
+        stale_note = f'<div style="font-size: 10px; color: var(--warning); margin-top: 4px; font-style: italic;">(based on stale FTP - verify after retest)</div>'
     
     return f'''
         <div style="margin-top: 16px; padding-top: 16px; border-top: 2px solid var(--border);">
@@ -1210,6 +1217,7 @@ def format_power_profile(fitness: Dict) -> str:
                     <span>({wkg_20min:.1f} W/kg) — THRESHOLD</span>
                 </div>
             </div>
+            {stale_note}
         </div>
     '''
 
