@@ -1,0 +1,4307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unbound Gravel 200 - Matti - Training Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sometype+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gg-bg: #ffffff;
+            --gg-fg: #111111;
+            --gg-border: #000000;
+            --gg-muted: #666666;
+            --gg-soft: #f5f5f5;
+            --gg-accent: #000000;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 32px 20px 64px 20px;
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--gg-bg);
+            color: var(--gg-fg);
+            font-family: "Sometype Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-size: 14px;
+            line-height: 1.7;
+            letter-spacing: 0.01em;
+        }
+
+        /* HEADER */
+        .guide-header {
+            border-bottom: 3px solid var(--gg-border);
+            padding-bottom: 16px;
+            margin-bottom: 32px;
+        }
+
+        .guide-header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin: 0 0 8px 0;
+        }
+
+        .guide-subtitle {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--gg-muted);
+            margin: 0 0 12px 0;
+        }
+
+        .guide-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .guide-meta span {
+            display: inline-block;
+            border: 1px solid var(--gg-border);
+            padding: 4px 10px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* TABLE OF CONTENTS */
+        .toc {
+            border: 2px solid var(--gg-border);
+            padding: 20px 24px;
+            margin-bottom: 40px;
+            background: var(--gg-soft);
+        }
+
+        .toc h2 {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin: 0 0 16px 0;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--gg-border);
+        }
+
+        .toc ol {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .toc li {
+            margin-bottom: 6px;
+        }
+
+        .toc a {
+            color: var(--gg-fg);
+            text-decoration: none;
+        }
+
+        .toc a:hover {
+            text-decoration: underline;
+        }
+
+        /* SECTIONS */
+        section {
+            margin-bottom: 48px;
+        }
+
+        h2 {
+            font-size: 18px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            margin: 0 0 20px 0;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--gg-border);
+        }
+
+        h3 {
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--gg-muted);
+            margin: 24px 0 12px 0;
+        }
+
+        h4 {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin: 20px 0 10px 0;
+        }
+
+        p {
+            margin: 0 0 16px 0;
+        }
+
+        strong {
+            font-weight: 600;
+        }
+
+        ul, ol {
+            margin: 0 0 16px 0;
+            padding-left: 24px;
+        }
+
+        li {
+            margin-bottom: 6px;
+        }
+
+        /* CALLOUT BOXES */
+        .callout {
+            border: 2px solid var(--gg-border);
+            border-left-width: 6px;
+            padding: 16px 20px;
+            margin: 20px 0;
+            background: var(--gg-soft);
+        }
+
+        .callout.alert {
+            border-left-color: #000;
+            background: #f0f0f0;
+        }
+
+        .callout.info {
+            border-left-color: #666;
+        }
+
+        .callout.tip {
+            border-style: dashed;
+        }
+
+        .callout h4 {
+            margin-top: 0;
+        }
+
+        /* TABLES */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0 24px 0;
+            font-size: 13px;
+        }
+
+        th, td {
+            border: 1px solid var(--gg-border);
+            padding: 8px 12px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background: #f0f0f0;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 0.08em;
+        }
+
+        tbody tr:nth-child(even) {
+            background: #fafafa;
+        }
+
+        /* KEY INDICATOR */
+        .key-day {
+            display: inline-block;
+            background: #000;
+            color: #fff;
+            padding: 2px 6px;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-left: 6px;
+        }
+
+        /* PHASE CARDS */
+        .phase-card {
+            border: 2px solid var(--gg-border);
+            margin: 16px 0;
+            background: #fff;
+        }
+
+        .phase-card-header {
+            background: #000;
+            color: #fff;
+            padding: 12px 16px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-size: 13px;
+        }
+
+        .phase-card-body {
+            padding: 16px;
+        }
+
+        .phase-card-body p {
+            margin: 0 0 8px 0;
+        }
+
+        .phase-card-body ul {
+            margin: 8px 0 0 0;
+        }
+
+        /* QUICK STATS */
+        .quick-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .stat-box {
+            border: 2px solid var(--gg-border);
+            padding: 16px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--gg-muted);
+        }
+
+        /* CHECKLIST */
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+
+        .checklist li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .checklist input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            margin-top: 2px;
+            cursor: pointer;
+        }
+
+        /* ZONE TABLE */
+        .zone-row-gspot {
+            background: #e8f5e9 !important;
+        }
+
+        /* TIMELINE */
+        .timeline {
+            border-left: 3px solid var(--gg-border);
+            margin: 20px 0 20px 12px;
+            padding-left: 24px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -30px;
+            top: 4px;
+            width: 12px;
+            height: 12px;
+            background: #000;
+            border-radius: 50%;
+        }
+
+        .timeline-time {
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* DECISION TREE */
+        .decision-tree {
+            border: 2px solid var(--gg-border);
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .decision-tree h4 {
+            margin-top: 0;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--gg-border);
+        }
+
+        .decision-tree ol {
+            margin-bottom: 0;
+        }
+
+        /* FOOTER */
+        .guide-footer {
+            border-top: 3px solid var(--gg-border);
+            padding-top: 24px;
+            margin-top: 48px;
+            text-align: center;
+        }
+
+        .guide-footer p {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        /* PRINT STYLES */
+        @media print {
+            body {
+                font-size: 12px;
+            }
+            .toc {
+                page-break-after: always;
+            }
+            section {
+                page-break-inside: avoid;
+            }
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 600px) {
+            .guide-header h1 {
+                font-size: 22px;
+            }
+            .quick-stats {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        /* RACE TIMELINE */
+        .race-timeline {
+            position: relative;
+            padding: 20px 0;
+            margin: 24px 0;
+        }
+
+        .timeline-track {
+            position: relative;
+            height: 60px;
+            background: linear-gradient(to right, #f0f0f0 0%, #e0e0e0 100%);
+            border: 2px solid var(--gg-border);
+            margin-bottom: 20px;
+        }
+
+        .timeline-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--gg-muted);
+            margin-bottom: 8px;
+        }
+
+        .timeline-event {
+            position: absolute;
+            top: -8px;
+            transform: translateX(-50%);
+            text-align: center;
+        }
+
+        .timeline-event .marker {
+            width: 24px;
+            height: 24px;
+            border: 3px solid #000;
+            border-radius: 50%;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+            margin: 0 auto 4px auto;
+        }
+
+        .timeline-event.a-event .marker {
+            background: #000;
+            color: #fff;
+            width: 32px;
+            height: 32px;
+            font-size: 14px;
+        }
+
+        .timeline-event.b-event .marker {
+            background: #666;
+            color: #fff;
+        }
+
+        .timeline-event.c-event .marker {
+            background: #fff;
+            color: #000;
+        }
+
+        .timeline-event .event-name {
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            max-width: 80px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .timeline-event .event-date {
+            font-size: 9px;
+            color: var(--gg-muted);
+        }
+
+        .event-legend {
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+            margin-top: 16px;
+            font-size: 11px;
+        }
+
+        .event-legend span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border: 2px solid #000;
+            border-radius: 50%;
+        }
+
+        .legend-dot.a { background: #000; }
+        .legend-dot.b { background: #666; }
+        .legend-dot.c { background: #fff; }
+
+        /* GOALS */
+        .goal-card {
+            border: 2px solid var(--gg-border);
+            padding: 16px 20px;
+            margin: 12px 0;
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+        }
+
+        .goal-icon {
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .goal-content h4 {
+            margin: 0 0 4px 0;
+        }
+
+        .goal-content p {
+            margin: 0;
+            color: var(--gg-muted);
+            font-size: 13px;
+        }
+
+        /* PHILOSOPHY */
+        .philosophy-framework {
+            border: 2px solid var(--gg-border);
+            padding: 24px;
+            margin: 20px 0;
+            background: var(--gg-soft);
+        }
+
+        .philosophy-diagram {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin: 20px 0;
+        }
+
+        .philosophy-bar {
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .bar-easy {
+            background: #e0e0e0;
+            border: 2px solid #000;
+        }
+
+        .bar-hard {
+            background: #000;
+            color: #fff;
+        }
+
+        /* BLINDSPOTS */
+        .blindspot {
+            border: 2px solid var(--gg-border);
+            border-left-width: 8px;
+            padding: 16px 20px;
+            margin: 16px 0;
+            background: #fff;
+        }
+
+        .blindspot.high {
+            border-left-color: #000;
+            background: #f5f5f5;
+        }
+
+        .blindspot.medium {
+            border-left-color: #666;
+        }
+
+        .blindspot.low {
+            border-left-color: #ccc;
+        }
+
+        .blindspot-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .blindspot-header h4 {
+            margin: 0;
+        }
+
+        .blindspot-severity {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 2px 8px;
+            border: 1px solid currentColor;
+        }
+
+        /* ATP TABLE - IMPROVED READABILITY */
+        .atp-container {
+            margin: 24px 0;
+        }
+
+        .atp-week {
+            border: 2px solid var(--gg-border);
+            margin-bottom: -2px;
+        }
+
+        .atp-week-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            background: var(--gg-soft);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .atp-week-header:hover {
+            background: #e8e8e8;
+        }
+
+        .atp-week-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .atp-week-num {
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .atp-week-phase {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 2px 8px;
+            background: #000;
+            color: #fff;
+        }
+
+        .atp-week-phase.base { background: #888; }
+        .atp-week-phase.build { background: #444; }
+        .atp-week-phase.peak { background: #000; }
+        .atp-week-phase.taper { background: #aaa; color: #000; }
+
+        .atp-week-meta {
+            display: flex;
+            gap: 16px;
+            font-size: 11px;
+            color: var(--gg-muted);
+        }
+
+        .atp-week-toggle {
+            font-size: 18px;
+            font-weight: 700;
+            transition: transform 0.2s;
+        }
+
+        .atp-week.open .atp-week-toggle {
+            transform: rotate(45deg);
+        }
+
+        .atp-week-content {
+            display: none;
+            padding: 16px 20px;
+            border-top: 1px solid var(--gg-border);
+        }
+
+        .atp-week.open .atp-week-content {
+            display: block;
+        }
+
+        .atp-workouts {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+            margin: 16px 0;
+        }
+
+        .atp-day {
+            border: 2px solid var(--gg-border);
+            padding: 10px;
+            font-size: 12px;
+            min-height: 90px;
+            background: #fff;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .atp-day:hover {
+            background: #f5f5f5;
+            transform: translateY(-2px);
+            box-shadow: 2px 2px 0 #000;
+        }
+
+        .atp-day-name {
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 0.08em;
+            margin-bottom: 8px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid #ddd;
+            color: #333;
+        }
+
+        .atp-day.key-day {
+            background: #000;
+            color: #fff;
+        }
+
+        .atp-day.key-day .atp-day-name {
+            color: #fff;
+            border-bottom-color: #444;
+        }
+
+        .atp-day.key-day .atp-workout-item {
+            color: #fff;
+        }
+
+        .atp-day.strength-day {
+            background: #f0f0f0;
+            border-style: dashed;
+        }
+
+        .atp-day.strength-day .atp-day-name {
+            color: #666;
+        }
+
+        .atp-workout-item {
+            margin: 6px 0;
+            font-size: 11px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .atp-workout-item.strength {
+            color: #666;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .atp-workout-item.strength::before {
+            content: '💪';
+            font-size: 12px;
+        }
+
+        .atp-focus {
+            margin-top: 16px;
+            padding-top: 12px;
+            border-top: 1px dashed var(--gg-border);
+            font-size: 13px;
+        }
+
+        .atp-focus strong {
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 0.05em;
+        }
+
+        /* WORKOUT MODAL */
+        .workout-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .workout-modal.open {
+            display: flex;
+        }
+
+        .workout-modal-content {
+            background: #fff;
+            border: 3px solid #000;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            padding: 24px;
+        }
+
+        .workout-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #000;
+        }
+
+        .workout-modal-header h3 {
+            margin: 0;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .workout-modal-close {
+            background: #000;
+            color: #fff;
+            border: none;
+            width: 32px;
+            height: 32px;
+            font-size: 18px;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .workout-modal-close:hover {
+            background: #333;
+        }
+
+        .workout-detail {
+            margin: 12px 0;
+        }
+
+        .workout-detail-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #666;
+            margin-bottom: 4px;
+        }
+
+        /* RACE ACCORDION */
+        .race-accordion {
+            margin: 20px 0;
+        }
+
+        .race-accordion-item {
+            border: 2px solid var(--gg-border);
+            margin-bottom: -2px;
+        }
+
+        .race-accordion-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+            cursor: pointer;
+            background: #fff;
+            transition: background 0.15s;
+        }
+
+        .race-accordion-header:hover {
+            background: #f5f5f5;
+        }
+
+        .race-accordion-title {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .race-priority {
+            width: 32px;
+            height: 32px;
+            border: 3px solid #000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .race-priority.a { background: #000; color: #fff; }
+        .race-priority.b { background: #666; color: #fff; }
+        .race-priority.c { background: #fff; color: #000; }
+
+        .race-name {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .race-date {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .race-accordion-toggle {
+            font-size: 20px;
+            font-weight: 700;
+            transition: transform 0.2s;
+        }
+
+        .race-accordion-item.open .race-accordion-toggle {
+            transform: rotate(45deg);
+        }
+
+        .race-accordion-content {
+            display: none;
+            padding: 20px;
+            border-top: 1px solid var(--gg-border);
+            background: #f9f9f9;
+        }
+
+        .race-accordion-item.open .race-accordion-content {
+            display: block;
+        }
+
+        .race-details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 16px;
+        }
+
+        .race-detail {
+            background: #fff;
+            border: 1px solid #ddd;
+            padding: 12px;
+        }
+
+        .race-detail-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #666;
+            margin-bottom: 4px;
+        }
+
+        .race-detail-value {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        /* NUTRITION SECTION */
+        .nutrition-calc {
+            border: 2px solid var(--gg-border);
+            padding: 20px;
+            margin: 20px 0;
+            background: var(--gg-soft);
+        }
+
+        .nutrition-macros {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin: 16px 0;
+        }
+
+        .macro-box {
+            border: 2px solid var(--gg-border);
+            padding: 16px;
+            text-align: center;
+            background: #fff;
+        }
+
+        .macro-value {
+            font-size: 28px;
+            font-weight: 700;
+            display: block;
+        }
+
+        .macro-unit {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .macro-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #666;
+            margin-top: 4px;
+        }
+
+        /* INTERACTIVE SLIDER */
+        .slider-container {
+            margin: 20px 0;
+            padding: 20px;
+            border: 2px solid var(--gg-border);
+            background: #fff;
+        }
+
+        .slider-group {
+            margin: 16px 0;
+        }
+
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .slider-value {
+            font-weight: 700;
+            color: #000;
+        }
+
+        .slider {
+            width: 100%;
+            height: 8px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: #ddd;
+            outline: none;
+            border: 2px solid #000;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #000;
+            cursor: pointer;
+        }
+
+        .slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background: #000;
+            cursor: pointer;
+            border: none;
+        }
+
+        /* ZWO PARSER */
+        .zwo-upload {
+            border: 2px dashed var(--gg-border);
+            padding: 24px;
+            margin: 20px 0;
+            text-align: center;
+            background: #f9f9f9;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .zwo-upload:hover {
+            background: #f0f0f0;
+            border-color: #000;
+        }
+
+        .zwo-upload.dragover {
+            background: #e8e8e8;
+            border-color: #000;
+            border-style: solid;
+        }
+
+        .zwo-file-input {
+            display: none;
+        }
+
+        .zwo-results {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            border: 2px solid var(--gg-border);
+            background: #fff;
+        }
+
+        .zwo-results.show {
+            display: block;
+        }
+
+        .zwo-workout-info {
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .zwo-workout-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .zwo-macros {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin: 16px 0;
+        }
+
+        @media (max-width: 768px) {
+            .atp-workouts {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .nutrition-macros {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .atp-workouts {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header class="guide-header">
+    <h1>Unbound Gravel 200</h1>
+    <p class="guide-subtitle">COMPETE · 24-Week Training Plan · Matti</p>
+    <div class="guide-meta">
+        <span>12-18 hours/week</span>
+        <span>24 weeks</span>
+        <span>Strength 2x/week</span>
+        <span>Race: 2026-06-07</span>
+    </div>
+</header>
+
+
+
+<nav class="toc">
+    <h2>Contents</h2>
+    <ol>
+<li><a href="#quick-reference">Quick Reference</a></li>
+<li><a href="#race-timeline">Your Race Calendar</a></li>
+<li><a href="#your-goals">Your Goals</a></li>
+<li><a href="#training-philosophy">Your Training Philosophy</a></li>
+<li><a href="#blindspots">Your Blindspots</a></li>
+<li><a href="#atp">24-Week Training Plan</a></li>
+<li><a href="#your-schedule">Your Weekly Schedule</a></li>
+<li><a href="#phase-progression">Phase Progression</a></li>
+<li><a href="#training-fundamentals">Training Fundamentals</a></li>
+<li><a href="#training-zones">Training Zones</a></li>
+<li><a href="#workout-execution">Workout Execution</a></li>
+<li><a href="#strength-program">Your Strength Program</a></li>
+<li><a href="#nutrition">Nutrition & Fueling</a></li>
+<li><a href="#mental-training">Mental Training</a></li>
+<li><a href="#race-tactics">Race Tactics for Unbound Gravel 200</a></li>
+<li><a href="#race-week">Race Week Protocol</a></li>
+<li><a href="#faq">FAQ</a></li>
+    </ol>
+</nav>
+
+
+
+<section id="quick-reference">
+    <h2>1 · Quick Reference</h2>
+    
+    <div class="quick-stats">
+        <div class="stat-box">
+            <span class="stat-value">Unbound Gravel 200</span>
+            <span class="stat-label">Target Race</span>
+        </div>
+        <div class="stat-box">
+            <span class="stat-value">2026-06-07</span>
+            <span class="stat-label">Race Date</span>
+        </div>
+        <div class="stat-box">
+            <span class="stat-value">Compete</span>
+            <span class="stat-label">Goal</span>
+        </div>
+        <div class="stat-box">
+            <span class="stat-value">24</span>
+            <span class="stat-label">Weeks</span>
+        </div>
+        <div class="stat-box">
+            <span class="stat-value">COMPETE</span>
+            <span class="stat-label">Tier</span>
+        </div>
+        <div class="stat-box">
+            <span class="stat-value">12-18</span>
+            <span class="stat-label">Hours/Week</span>
+        </div>
+        <div class="stat-box">
+            <span class="stat-value">2x</span>
+            <span class="stat-label">Strength/Week</span>
+        </div>
+    </div>
+    
+    <div class="callout info">
+        <h4>What This Plan Does</h4>
+        <p>This plan coordinates your cycling and strength training into a unified system. Phases are aligned so you're not peaking in both simultaneously. Strength sessions are scheduled to avoid interfering with key cycling sessions.</p>
+        <p><strong>Your job:</strong> Execute the workouts. Recover properly. Trust the process.</p>
+    </div>
+</section>
+
+
+
+<section id="race-timeline">
+    <h2>2 · Your Race Calendar</h2>
+    
+    <p>Click any race to expand details. A events are your primary targets — everything else serves these races.</p>
+    
+    <div class="race-accordion">
+
+            <div class="race-accordion-item open">
+                <div class="race-accordion-header" onclick="this.parentElement.classList.toggle('open')">
+                    <div class="race-accordion-title">
+                        <div class="race-priority a">A</div>
+                        <div>
+                            <div class="race-name">Unbound Gravel 200</div>
+                            <div class="race-date">June 07, 2026 · 23 weeks out</div>
+                        </div>
+                    </div>
+                    <span class="race-accordion-toggle">+</span>
+                </div>
+                <div class="race-accordion-content">
+                    <div class="race-details-grid">
+                        <div class="race-detail">
+                            <div class="race-detail-label">Distance</div>
+                            <div class="race-detail-value">200 miles</div>
+                        </div>
+                        <div class="race-detail">
+                            <div class="race-detail-label">Goal</div>
+                            <div class="race-detail-value">Race competitively (top 50%)</div>
+                        </div>
+                        <div class="race-detail">
+                            <div class="race-detail-label">Priority</div>
+                            <div class="race-detail-value">A Event — Peak form</div>
+                        </div>
+                        <div class="race-detail">
+                            <div class="race-detail-label">Taper</div>
+                            <div class="race-detail-value">Full 2-week taper</div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            
+    </div>
+    
+    <div class="callout info">
+        <h4>The Universal Race Framework</h4>
+        <p><strong>A Events (1-2/year):</strong> You peak for these. Full taper. Best form. Everything else serves these races.</p>
+        <p><strong>B Events (3-5/year):</strong> Important, but you don't compromise A event prep. Shorter taper, maybe not fully peaked.</p>
+        <p><strong>C Events (unlimited):</strong> Training opportunities. Show up undertrained on purpose. Use them to practice race execution, test equipment, build experience.</p>
+    </div>
+</section>
+
+
+
+<section id="your-goals">
+    <h2>3 · Your Goals</h2>
+    
+    <p>Based on your intake, here's what you're training for:</p>
+    
+
+            <div class="goal-card">
+                <div class="goal-icon">🎯</div>
+                <div class="goal-content">
+                    <h4>Race Competitively</h4>
+                    <p>Finish in the top half of your age group. Proper racing.</p>
+                </div>
+            </div>
+            
+
+            <div class="goal-card">
+                <div class="goal-icon">⚡</div>
+                <div class="goal-content">
+                    <h4>Improve W/kg from 3.7 → 4.1</h4>
+                    <p>Realistic fitness progression over the plan</p>
+                </div>
+            </div>
+            
+
+            <div class="goal-card">
+                <div class="goal-icon">💪</div>
+                <div class="goal-content">
+                    <h4>Develop Cycling-Specific Power</h4>
+                    <p>Convert gym strength into on-bike performance</p>
+                </div>
+            </div>
+            
+    
+    <div class="callout tip">
+        <h4>Goal Hierarchy</h4>
+        <p>When goals conflict, prioritize in this order:</p>
+        <ol>
+            <li><strong>Health</strong> — No goal is worth injury</li>
+            <li><strong>Consistency</strong> — Showing up beats heroics</li>
+            <li><strong>A Event Performance</strong> — The main target</li>
+            <li><strong>Secondary Goals</strong> — Nice to have</li>
+        </ol>
+    </div>
+</section>
+
+
+
+<section id="training-philosophy">
+    <h2>4 · Your Training Philosophy</h2>
+    
+    <p>Your plan follows <strong>Polarized Performance</strong> — the approach best suited to your tier (COMPETE) and goals.</p>
+    
+    <div class="philosophy-framework">
+        <h3 style="margin-top: 0;">Intensity Distribution</h3>
+        
+        <div class="philosophy-diagram">
+            <div class="philosophy-bar bar-easy" style="width: 240px;">EASY 80%</div>
+            <div class="philosophy-bar bar-hard" style="width: 60px;">HARD 20%</div>
+        </div>
+        
+        <p style="text-align: center; font-size: 13px; color: var(--gg-muted);">Proven approach for competitive endurance athletes. Easy truly easy, hard truly hard.</p>
+    </div>
+    
+    <h3>Core Principles</h3>
+    <ol>
+        <li>Strict 80/20 polarized distribution</li><li>Three key sessions in peak weeks</li><li>Race-specific intervals in Build phase</li><li>Integrated strength for power and resilience</li>
+    </ol>
+    
+    <h3>Why This Works</h3>
+    
+    <p><strong>The science:</strong> Decades of research on elite endurance athletes consistently shows that ~80% easy / ~20% hard produces better results than "moderate" training (threshold grinding). The easy work builds aerobic capacity without accumulating fatigue. The hard work drives specific adaptations.</p>
+    
+    <p><strong>The mistake most people make:</strong> Going too hard on easy days (turning Z2 into Z3) and not hard enough on hard days (surviving intervals instead of executing them). This creates a "grey zone" that's too hard to recover from but not hard enough to adapt to.</p>
+    
+    <div class="callout alert">
+        <h4>The Hard Truth</h4>
+        <p>Easy days should feel embarrassingly easy. If you're proud of how hard you went on an "easy" day, you did it wrong. Save that energy for the sessions that matter.</p>
+    </div>
+</section>
+
+
+
+<section id="blindspots">
+    <h2>5 · Your Blindspots</h2>
+    
+    <p>Based on your intake, these are potential risks to be aware of. Forewarned is forearmed.</p>
+    
+
+            <div class="blindspot high">
+                <div class="blindspot-header">
+                    <h4>Injury Management Required</h4>
+                    <span class="blindspot-severity">high</span>
+                </div>
+                <p><strong>What we noticed:</strong> History of issues with: knee.</p>
+                <p><strong>The risk:</strong> Past injuries often become recurring injuries. The tissue is weaker and the movement pattern may be compromised.</p>
+                <p><strong>Your action:</strong> Modified exercises are provided in your plan. If pain returns, stop immediately and consult a professional. Prevention >>> treatment.</p>
+            </div>
+            
+            <div class="blindspot medium">
+                <div class="blindspot-header">
+                    <h4>Underfueling Risk</h4>
+                    <span class="blindspot-severity">medium</span>
+                </div>
+                <p><strong>What we noticed:</strong> Signals detected: rarely fueling during rides.</p>
+                <p><strong>The risk:</strong> Chronic underfueling leads to RED-S (Relative Energy Deficiency in Sport): hormonal disruption, bone loss, immune suppression, declining performance despite hard training. It's the silent killer of endurance careers.</p>
+                <p><strong>Your action:</strong> Fuel FOR the work, not against it. Minimum 3g carbs/kg daily, more on hard days. Eat before/during/after key sessions. Weight loss and peak performance don't happen simultaneously.</p>
+            </div>
+            
+            <div class="blindspot medium">
+                <div class="blindspot-header">
+                    <h4>Alcohol Affecting Recovery</h4>
+                    <span class="blindspot-severity">medium</span>
+                </div>
+                <p><strong>What we noticed:</strong> You reported ~10 drinks per week.</p>
+                <p><strong>The risk:</strong> Even moderate alcohol consumption impairs sleep quality and recovery. One drink after a hard workout can reduce protein synthesis by 24%.</p>
+                <p><strong>Your action:</strong> Front-load drinking to early week if social. Keep nights before hard sessions alcohol-free. Consider "dry training blocks" during Build and Peak phases.</p>
+            </div>
+            
+            <div class="blindspot medium">
+                <div class="blindspot-header">
+                    <h4>Caffeine Tolerance</h4>
+                    <span class="blindspot-severity">medium</span>
+                </div>
+                <p><strong>What we noticed:</strong> You're at ~450mg caffeine daily.</p>
+                <p><strong>The risk:</strong> You're near the ceiling where additional caffeine stops helping. Sleep quality may be subtly compromised even if you "fall asleep fine."</p>
+                <p><strong>Your action:</strong> Keep afternoon caffeine minimal. Consider reducing intake 4-6 weeks before A event to restore sensitivity for race-day boost.</p>
+            </div>
+            
+    
+    <div class="callout info">
+        <h4>Why This Section Exists</h4>
+        <p>Everyone has blindspots. The difference between successful athletes and injured/burned-out ones is often awareness of their vulnerabilities, not raw talent or work ethic.</p>
+        <p>Review this section monthly. Your blindspots can change as life circumstances shift.</p>
+    </div>
+</section>
+
+
+
+<section id="atp">
+    <h2>6 · 24-Week Training Plan</h2>
+    
+    <p>Click any week to expand and see the workout structure. This is your high-level roadmap.</p>
+    
+    <div class="atp-container">
+
+            <div class="atp-week" data-week="1">
+                <div class="atp-week-header" onclick="this.parentElement.classList.toggle('open')">
+                    <div class="atp-week-title">
+                        <span class="atp-week-num">Week 1</span>
+                        <span class="atp-week-phase base">Base</span>
+                    </div>
+                    <div class="atp-week-meta">
+                        <span>Medium</span>
+                    </div>
+                    <span class="atp-week-toggle">+</span>
+                </div>
+                <div class="atp-week-content">
+
+                    <div class="atp-workouts">
+
+                    <div class="atp-day key-day" data-week="1" data-day="monday" data-phase="Base" data-am="intervals" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">MON</div>
+                        <div class="atp-workout-item ">Intervals</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="1" data-day="tuesday" data-phase="Base" data-am="" data-pm="intervals" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">TUE</div>
+                        <div class="atp-workout-item ">Intervals (PM)</div>
+                    </div>
+                
+                    <div class="atp-day " data-week="1" data-day="wednesday" data-phase="Base" data-am="easy_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">WED</div>
+                        <div class="atp-workout-item ">Easy Ride</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="1" data-day="thursday" data-phase="Base" data-am="" data-pm="intervals" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">THU</div>
+                        <div class="atp-workout-item ">Intervals (PM)</div>
+                    </div>
+                
+                    <div class="atp-day " data-week="1" data-day="friday" data-phase="Base" data-am="easy_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">FRI</div>
+                        <div class="atp-workout-item ">Easy Ride</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="1" data-day="saturday" data-phase="Base" data-am="long_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">SAT</div>
+                        <div class="atp-workout-item ">Long Ride</div>
+                    </div>
+                
+                    <div class="atp-day strength-day" data-week="1" data-day="sunday" data-phase="Base" data-am="strength" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">SUN</div>
+                        <div class="atp-workout-item strength">Strength</div>
+                    </div>
+                
+                    </div>
+            
+                    <div class="atp-focus">
+                        <strong>Focus:</strong> Building aerobic foundation. Long Z2 rides establish mitochondrial density.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="atp-week" data-week="2">
+                <div class="atp-week-header" onclick="this.parentElement.classList.toggle('open')">
+                    <div class="atp-week-title">
+                        <span class="atp-week-num">Week 2</span>
+                        <span class="atp-week-phase base">Base</span>
+                    </div>
+                    <div class="atp-week-meta">
+                        <span>High</span>
+                    </div>
+                    <span class="atp-week-toggle">+</span>
+                </div>
+                <div class="atp-week-content">
+
+                    <div class="atp-workouts">
+
+                    <div class="atp-day key-day" data-week="2" data-day="monday" data-phase="Base" data-am="intervals" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">MON</div>
+                        <div class="atp-workout-item ">Intervals</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="2" data-day="tuesday" data-phase="Base" data-am="" data-pm="intervals" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">TUE</div>
+                        <div class="atp-workout-item ">Intervals (PM)</div>
+                    </div>
+                
+                    <div class="atp-day " data-week="2" data-day="wednesday" data-phase="Base" data-am="easy_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">WED</div>
+                        <div class="atp-workout-item ">Easy Ride</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="2" data-day="thursday" data-phase="Base" data-am="" data-pm="intervals" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">THU</div>
+                        <div class="atp-workout-item ">Intervals (PM)</div>
+                    </div>
+                
+                    <div class="atp-day " data-week="2" data-day="friday" data-phase="Base" data-am="easy_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">FRI</div>
+                        <div class="atp-workout-item ">Easy Ride</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="2" data-day="saturday" data-phase="Base" data-am="long_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">SAT</div>
+                        <div class="atp-workout-item ">Long Ride</div>
+                    </div>
+                
+                    <div class="atp-day strength-day" data-week="2" data-day="sunday" data-phase="Base" data-am="strength" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">SUN</div>
+                        <div class="atp-workout-item strength">Strength</div>
+                    </div>
+                
+                    </div>
+            
+                    <div class="atp-focus">
+                        <strong>Focus:</strong> Movement quality in strength. Learn the patterns before adding load.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="atp-week" data-week="3">
+                <div class="atp-week-header" onclick="this.parentElement.classList.toggle('open')">
+                    <div class="atp-week-title">
+                        <span class="atp-week-num">Week 3</span>
+                        <span class="atp-week-phase base">Base</span>
+                    </div>
+                    <div class="atp-week-meta">
+                        <span>Peak</span>
+                    </div>
+                    <span class="atp-week-toggle">+</span>
+                </div>
+                <div class="atp-week-content">
+
+                    <div class="atp-workouts">
+
+                    <div class="atp-day key-day" data-week="3" data-day="monday" data-phase="Base" data-am="intervals" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">MON</div>
+                        <div class="atp-workout-item ">Intervals</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="3" data-day="tuesday" data-phase="Base" data-am="" data-pm="intervals" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">TUE</div>
+                        <div class="atp-workout-item ">Intervals (PM)</div>
+                    </div>
+                
+                    <div class="atp-day " data-week="3" data-day="wednesday" data-phase="Base" data-am="easy_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">WED</div>
+                        <div class="atp-workout-item ">Easy Ride</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="3" data-day="thursday" data-phase="Base" data-am="" data-pm="intervals" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">THU</div>
+                        <div class="atp-workout-item ">Intervals (PM)</div>
+                    </div>
+                
+                    <div class="atp-day " data-week="3" data-day="friday" data-phase="Base" data-am="easy_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">FRI</div>
+                        <div class="atp-workout-item ">Easy Ride</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="3" data-day="saturday" data-phase="Base" data-am="long_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">SAT</div>
+                        <div class="atp-workout-item ">Long Ride</div>
+                    </div>
+                
+                    <div class="atp-day strength-day" data-week="3" data-day="sunday" data-phase="Base" data-am="strength" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">SUN</div>
+                        <div class="atp-workout-item strength">Strength</div>
+                    </div>
+                
+                    </div>
+            
+                    <div class="atp-focus">
+                        <strong>Focus:</strong> Establishing rhythm and consistency. Show up, do the work.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="atp-week" data-week="4">
+                <div class="atp-week-header" onclick="this.parentElement.classList.toggle('open')">
+                    <div class="atp-week-title">
+                        <span class="atp-week-num">Week 4</span>
+                        <span class="atp-week-phase base">Base</span>
+                    </div>
+                    <div class="atp-week-meta">
+                        <span>Recovery</span>
+                    </div>
+                    <span class="atp-week-toggle">+</span>
+                </div>
+                <div class="atp-week-content">
+
+                    <div class="atp-workouts">
+
+                    <div class="atp-day key-day" data-week="4" data-day="monday" data-phase="Base" data-am="intervals" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">MON</div>
+                        <div class="atp-workout-item ">Intervals</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="4" data-day="tuesday" data-phase="Base" data-am="" data-pm="intervals" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">TUE</div>
+                        <div class="atp-workout-item ">Intervals (PM)</div>
+                    </div>
+                
+                    <div class="atp-day " data-week="4" data-day="wednesday" data-phase="Base" data-am="easy_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">WED</div>
+                        <div class="atp-workout-item ">Easy Ride</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="4" data-day="thursday" data-phase="Base" data-am="" data-pm="intervals" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">THU</div>
+                        <div class="atp-workout-item ">Intervals (PM)</div>
+                    </div>
+                
+                    <div class="atp-day " data-week="4" data-day="friday" data-phase="Base" data-am="easy_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">FRI</div>
+                        <div class="atp-workout-item ">Easy Ride</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="4" data-day="saturday" data-phase="Base" data-am="long_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">SAT</div>
+                        <div class="atp-workout-item ">Long Ride</div>
+                    </div>
+                
+                    <div class="atp-day strength-day" data-week="4" data-day="sunday" data-phase="Base" data-am="strength" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">SUN</div>
+                        <div class="atp-workout-item strength">Strength</div>
+                    </div>
+                
+                    </div>
+            
+                    <div class="atp-focus">
+                        <strong>Focus:</strong> Progressive volume increase. Each week slightly more than the last.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="atp-week" data-week="5">
+                <div class="atp-week-header" onclick="this.parentElement.classList.toggle('open')">
+                    <div class="atp-week-title">
+                        <span class="atp-week-num">Week 5</span>
+                        <span class="atp-week-phase build">Build</span>
+                    </div>
+                    <div class="atp-week-meta">
+                        <span>Medium</span>
+                    </div>
+                    <span class="atp-week-toggle">+</span>
+                </div>
+                <div class="atp-week-content">
+
+                    <div class="atp-workouts">
+
+                    <div class="atp-day key-day" data-week="5" data-day="monday" data-phase="Build" data-am="intervals" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">MON</div>
+                        <div class="atp-workout-item ">Intervals</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="5" data-day="tuesday" data-phase="Build" data-am="" data-pm="intervals" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">TUE</div>
+                        <div class="atp-workout-item ">Intervals (PM)</div>
+                    </div>
+                
+                    <div class="atp-day " data-week="5" data-day="wednesday" data-phase="Build" data-am="easy_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">WED</div>
+                        <div class="atp-workout-item ">Easy Ride</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="5" data-day="thursday" data-phase="Build" data-am="" data-pm="intervals" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">THU</div>
+                        <div class="atp-workout-item ">Intervals (PM)</div>
+                    </div>
+                
+                    <div class="atp-day " data-week="5" data-day="friday" data-phase="Build" data-am="easy_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">FRI</div>
+                        <div class="atp-workout-item ">Easy Ride</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="5" data-day="saturday" data-phase="Build" data-am="long_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">SAT</div>
+                        <div class="atp-workout-item ">Long Ride</div>
+                    </div>
+                
+                    <div class="atp-day strength-day" data-week="5" data-day="sunday" data-phase="Build" data-am="strength" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">SUN</div>
+                        <div class="atp-workout-item strength">Strength</div>
+                    </div>
+                
+                    </div>
+            
+                    <div class="atp-focus">
+                        <strong>Focus:</strong> Adding race-specific intensity. G-Spot intervals introduce discomfort.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="atp-week" data-week="6">
+                <div class="atp-week-header" onclick="this.parentElement.classList.toggle('open')">
+                    <div class="atp-week-title">
+                        <span class="atp-week-num">Week 6</span>
+                        <span class="atp-week-phase build">Build</span>
+                    </div>
+                    <div class="atp-week-meta">
+                        <span>High</span>
+                    </div>
+                    <span class="atp-week-toggle">+</span>
+                </div>
+                <div class="atp-week-content">
+
+                    <div class="atp-workouts">
+
+                    <div class="atp-day key-day" data-week="6" data-day="monday" data-phase="Build" data-am="intervals" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">MON</div>
+                        <div class="atp-workout-item ">Intervals</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="6" data-day="tuesday" data-phase="Build" data-am="" data-pm="intervals" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">TUE</div>
+                        <div class="atp-workout-item ">Intervals (PM)</div>
+                    </div>
+                
+                    <div class="atp-day " data-week="6" data-day="wednesday" data-phase="Build" data-am="easy_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">WED</div>
+                        <div class="atp-workout-item ">Easy Ride</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="6" data-day="thursday" data-phase="Build" data-am="" data-pm="intervals" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">THU</div>
+                        <div class="atp-workout-item ">Intervals (PM)</div>
+                    </div>
+                
+                    <div class="atp-day " data-week="6" data-day="friday" data-phase="Build" data-am="easy_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">FRI</div>
+                        <div class="atp-workout-item ">Easy Ride</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="6" data-day="saturday" data-phase="Build" data-am="long_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">SAT</div>
+                        <div class="atp-workout-item ">Long Ride</div>
+                    </div>
+                
+                    <div class="atp-day strength-day" data-week="6" data-day="sunday" data-phase="Build" data-am="strength" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">SUN</div>
+                        <div class="atp-workout-item strength">Strength</div>
+                    </div>
+                
+                    </div>
+            
+                    <div class="atp-focus">
+                        <strong>Focus:</strong> Strength shifts to heavier loads. Building max strength.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="atp-week" data-week="7">
+                <div class="atp-week-header" onclick="this.parentElement.classList.toggle('open')">
+                    <div class="atp-week-title">
+                        <span class="atp-week-num">Week 7</span>
+                        <span class="atp-week-phase build">Build</span>
+                    </div>
+                    <div class="atp-week-meta">
+                        <span>Peak</span>
+                    </div>
+                    <span class="atp-week-toggle">+</span>
+                </div>
+                <div class="atp-week-content">
+
+                    <div class="atp-workouts">
+
+                    <div class="atp-day key-day" data-week="7" data-day="monday" data-phase="Build" data-am="intervals" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">MON</div>
+                        <div class="atp-workout-item ">Intervals</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="7" data-day="tuesday" data-phase="Build" data-am="" data-pm="intervals" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">TUE</div>
+                        <div class="atp-workout-item ">Intervals (PM)</div>
+                    </div>
+                
+                    <div class="atp-day " data-week="7" data-day="wednesday" data-phase="Build" data-am="easy_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">WED</div>
+                        <div class="atp-workout-item ">Easy Ride</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="7" data-day="thursday" data-phase="Build" data-am="" data-pm="intervals" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">THU</div>
+                        <div class="atp-workout-item ">Intervals (PM)</div>
+                    </div>
+                
+                    <div class="atp-day " data-week="7" data-day="friday" data-phase="Build" data-am="easy_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">FRI</div>
+                        <div class="atp-workout-item ">Easy Ride</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="7" data-day="saturday" data-phase="Build" data-am="long_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">SAT</div>
+                        <div class="atp-workout-item ">Long Ride</div>
+                    </div>
+                
+                    <div class="atp-day strength-day" data-week="7" data-day="sunday" data-phase="Build" data-am="strength" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">SUN</div>
+                        <div class="atp-workout-item strength">Strength</div>
+                    </div>
+                
+                    </div>
+            
+                    <div class="atp-focus">
+                        <strong>Focus:</strong> Volume peaks. This is the hardest training block.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="atp-week" data-week="8">
+                <div class="atp-week-header" onclick="this.parentElement.classList.toggle('open')">
+                    <div class="atp-week-title">
+                        <span class="atp-week-num">Week 8</span>
+                        <span class="atp-week-phase build">Build</span>
+                    </div>
+                    <div class="atp-week-meta">
+                        <span>Recovery</span>
+                    </div>
+                    <span class="atp-week-toggle">+</span>
+                </div>
+                <div class="atp-week-content">
+
+                    <div class="atp-workouts">
+
+                    <div class="atp-day key-day" data-week="8" data-day="monday" data-phase="Build" data-am="intervals" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">MON</div>
+                        <div class="atp-workout-item ">Intervals</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="8" data-day="tuesday" data-phase="Build" data-am="" data-pm="intervals" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">TUE</div>
+                        <div class="atp-workout-item ">Intervals (PM)</div>
+                    </div>
+                
+                    <div class="atp-day " data-week="8" data-day="wednesday" data-phase="Build" data-am="easy_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">WED</div>
+                        <div class="atp-workout-item ">Easy Ride</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="8" data-day="thursday" data-phase="Build" data-am="" data-pm="intervals" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">THU</div>
+                        <div class="atp-workout-item ">Intervals (PM)</div>
+                    </div>
+                
+                    <div class="atp-day " data-week="8" data-day="friday" data-phase="Build" data-am="easy_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">FRI</div>
+                        <div class="atp-workout-item ">Easy Ride</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="8" data-day="saturday" data-phase="Build" data-am="long_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">SAT</div>
+                        <div class="atp-workout-item ">Long Ride</div>
+                    </div>
+                
+                    <div class="atp-day strength-day" data-week="8" data-day="sunday" data-phase="Build" data-am="strength" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">SUN</div>
+                        <div class="atp-workout-item strength">Strength</div>
+                    </div>
+                
+                    </div>
+            
+                    <div class="atp-focus">
+                        <strong>Focus:</strong> Recovery week every 3-4 weeks. Absorb the training.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="atp-week" data-week="9">
+                <div class="atp-week-header" onclick="this.parentElement.classList.toggle('open')">
+                    <div class="atp-week-title">
+                        <span class="atp-week-num">Week 9</span>
+                        <span class="atp-week-phase build">Build</span>
+                    </div>
+                    <div class="atp-week-meta">
+                        <span>Medium</span>
+                    </div>
+                    <span class="atp-week-toggle">+</span>
+                </div>
+                <div class="atp-week-content">
+
+                    <div class="atp-workouts">
+
+                    <div class="atp-day key-day" data-week="9" data-day="monday" data-phase="Build" data-am="intervals" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">MON</div>
+                        <div class="atp-workout-item ">Intervals</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="9" data-day="tuesday" data-phase="Build" data-am="" data-pm="intervals" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">TUE</div>
+                        <div class="atp-workout-item ">Intervals (PM)</div>
+                    </div>
+                
+                    <div class="atp-day " data-week="9" data-day="wednesday" data-phase="Build" data-am="easy_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">WED</div>
+                        <div class="atp-workout-item ">Easy Ride</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="9" data-day="thursday" data-phase="Build" data-am="" data-pm="intervals" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">THU</div>
+                        <div class="atp-workout-item ">Intervals (PM)</div>
+                    </div>
+                
+                    <div class="atp-day " data-week="9" data-day="friday" data-phase="Build" data-am="easy_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">FRI</div>
+                        <div class="atp-workout-item ">Easy Ride</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="9" data-day="saturday" data-phase="Build" data-am="long_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">SAT</div>
+                        <div class="atp-workout-item ">Long Ride</div>
+                    </div>
+                
+                    <div class="atp-day strength-day" data-week="9" data-day="sunday" data-phase="Build" data-am="strength" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">SUN</div>
+                        <div class="atp-workout-item strength">Strength</div>
+                    </div>
+                
+                    </div>
+            
+                    <div class="atp-focus">
+                        <strong>Focus:</strong> Race simulation workouts. Practice execution under fatigue.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="atp-week" data-week="10">
+                <div class="atp-week-header" onclick="this.parentElement.classList.toggle('open')">
+                    <div class="atp-week-title">
+                        <span class="atp-week-num">Week 10</span>
+                        <span class="atp-week-phase build">Build</span>
+                    </div>
+                    <div class="atp-week-meta">
+                        <span>High</span>
+                    </div>
+                    <span class="atp-week-toggle">+</span>
+                </div>
+                <div class="atp-week-content">
+
+                    <div class="atp-workouts">
+
+                    <div class="atp-day key-day" data-week="10" data-day="monday" data-phase="Build" data-am="intervals" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">MON</div>
+                        <div class="atp-workout-item ">Intervals</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="10" data-day="tuesday" data-phase="Build" data-am="" data-pm="intervals" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">TUE</div>
+                        <div class="atp-workout-item ">Intervals (PM)</div>
+                    </div>
+                
+                    <div class="atp-day " data-week="10" data-day="wednesday" data-phase="Build" data-am="easy_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">WED</div>
+                        <div class="atp-workout-item ">Easy Ride</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="10" data-day="thursday" data-phase="Build" data-am="" data-pm="intervals" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">THU</div>
+                        <div class="atp-workout-item ">Intervals (PM)</div>
+                    </div>
+                
+                    <div class="atp-day " data-week="10" data-day="friday" data-phase="Build" data-am="easy_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">FRI</div>
+                        <div class="atp-workout-item ">Easy Ride</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="10" data-day="saturday" data-phase="Build" data-am="long_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">SAT</div>
+                        <div class="atp-workout-item ">Long Ride</div>
+                    </div>
+                
+                    <div class="atp-day strength-day" data-week="10" data-day="sunday" data-phase="Build" data-am="strength" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">SUN</div>
+                        <div class="atp-workout-item strength">Strength</div>
+                    </div>
+                
+                    </div>
+            
+                    <div class="atp-focus">
+                        <strong>Focus:</strong> Final volume push before taper begins.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="atp-week" data-week="11">
+                <div class="atp-week-header" onclick="this.parentElement.classList.toggle('open')">
+                    <div class="atp-week-title">
+                        <span class="atp-week-num">Week 11</span>
+                        <span class="atp-week-phase build">Build</span>
+                    </div>
+                    <div class="atp-week-meta">
+                        <span>Peak</span>
+                    </div>
+                    <span class="atp-week-toggle">+</span>
+                </div>
+                <div class="atp-week-content">
+
+                    <div class="atp-workouts">
+
+                    <div class="atp-day key-day" data-week="11" data-day="monday" data-phase="Build" data-am="intervals" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">MON</div>
+                        <div class="atp-workout-item ">Intervals</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="11" data-day="tuesday" data-phase="Build" data-am="" data-pm="intervals" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">TUE</div>
+                        <div class="atp-workout-item ">Intervals (PM)</div>
+                    </div>
+                
+                    <div class="atp-day " data-week="11" data-day="wednesday" data-phase="Build" data-am="easy_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">WED</div>
+                        <div class="atp-workout-item ">Easy Ride</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="11" data-day="thursday" data-phase="Build" data-am="" data-pm="intervals" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">THU</div>
+                        <div class="atp-workout-item ">Intervals (PM)</div>
+                    </div>
+                
+                    <div class="atp-day " data-week="11" data-day="friday" data-phase="Build" data-am="easy_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">FRI</div>
+                        <div class="atp-workout-item ">Easy Ride</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="11" data-day="saturday" data-phase="Build" data-am="long_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">SAT</div>
+                        <div class="atp-workout-item ">Long Ride</div>
+                    </div>
+                
+                    <div class="atp-day strength-day" data-week="11" data-day="sunday" data-phase="Build" data-am="strength" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">SUN</div>
+                        <div class="atp-workout-item strength">Strength</div>
+                    </div>
+                
+                    </div>
+            
+                    <div class="atp-focus">
+                        <strong>Focus:</strong> Adding race-specific intensity. G-Spot intervals introduce discomfort.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="atp-week" data-week="12">
+                <div class="atp-week-header" onclick="this.parentElement.classList.toggle('open')">
+                    <div class="atp-week-title">
+                        <span class="atp-week-num">Week 12</span>
+                        <span class="atp-week-phase build">Build</span>
+                    </div>
+                    <div class="atp-week-meta">
+                        <span>Recovery</span>
+                    </div>
+                    <span class="atp-week-toggle">+</span>
+                </div>
+                <div class="atp-week-content">
+
+                    <div class="atp-workouts">
+
+                    <div class="atp-day key-day" data-week="12" data-day="monday" data-phase="Build" data-am="intervals" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">MON</div>
+                        <div class="atp-workout-item ">Intervals</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="12" data-day="tuesday" data-phase="Build" data-am="" data-pm="intervals" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">TUE</div>
+                        <div class="atp-workout-item ">Intervals (PM)</div>
+                    </div>
+                
+                    <div class="atp-day " data-week="12" data-day="wednesday" data-phase="Build" data-am="easy_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">WED</div>
+                        <div class="atp-workout-item ">Easy Ride</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="12" data-day="thursday" data-phase="Build" data-am="" data-pm="intervals" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">THU</div>
+                        <div class="atp-workout-item ">Intervals (PM)</div>
+                    </div>
+                
+                    <div class="atp-day " data-week="12" data-day="friday" data-phase="Build" data-am="easy_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">FRI</div>
+                        <div class="atp-workout-item ">Easy Ride</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="12" data-day="saturday" data-phase="Build" data-am="long_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">SAT</div>
+                        <div class="atp-workout-item ">Long Ride</div>
+                    </div>
+                
+                    <div class="atp-day strength-day" data-week="12" data-day="sunday" data-phase="Build" data-am="strength" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">SUN</div>
+                        <div class="atp-workout-item strength">Strength</div>
+                    </div>
+                
+                    </div>
+            
+                    <div class="atp-focus">
+                        <strong>Focus:</strong> Strength shifts to heavier loads. Building max strength.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="atp-week" data-week="13">
+                <div class="atp-week-header" onclick="this.parentElement.classList.toggle('open')">
+                    <div class="atp-week-title">
+                        <span class="atp-week-num">Week 13</span>
+                        <span class="atp-week-phase peak">Peak</span>
+                    </div>
+                    <div class="atp-week-meta">
+                        <span>Medium</span>
+                    </div>
+                    <span class="atp-week-toggle">+</span>
+                </div>
+                <div class="atp-week-content">
+
+                    <div class="atp-workouts">
+
+                    <div class="atp-day key-day" data-week="13" data-day="monday" data-phase="Peak" data-am="intervals" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">MON</div>
+                        <div class="atp-workout-item ">Intervals</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="13" data-day="tuesday" data-phase="Peak" data-am="" data-pm="intervals" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">TUE</div>
+                        <div class="atp-workout-item ">Intervals (PM)</div>
+                    </div>
+                
+                    <div class="atp-day " data-week="13" data-day="wednesday" data-phase="Peak" data-am="easy_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">WED</div>
+                        <div class="atp-workout-item ">Easy Ride</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="13" data-day="thursday" data-phase="Peak" data-am="" data-pm="intervals" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">THU</div>
+                        <div class="atp-workout-item ">Intervals (PM)</div>
+                    </div>
+                
+                    <div class="atp-day " data-week="13" data-day="friday" data-phase="Peak" data-am="easy_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">FRI</div>
+                        <div class="atp-workout-item ">Easy Ride</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="13" data-day="saturday" data-phase="Peak" data-am="long_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">SAT</div>
+                        <div class="atp-workout-item ">Long Ride</div>
+                    </div>
+                
+                    <div class="atp-day strength-day" data-week="13" data-day="sunday" data-phase="Peak" data-am="strength" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">SUN</div>
+                        <div class="atp-workout-item strength">Strength</div>
+                    </div>
+                
+                    </div>
+            
+                    <div class="atp-focus">
+                        <strong>Focus:</strong> Highest intensity, slightly reduced volume.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="atp-week" data-week="14">
+                <div class="atp-week-header" onclick="this.parentElement.classList.toggle('open')">
+                    <div class="atp-week-title">
+                        <span class="atp-week-num">Week 14</span>
+                        <span class="atp-week-phase peak">Peak</span>
+                    </div>
+                    <div class="atp-week-meta">
+                        <span>High</span>
+                    </div>
+                    <span class="atp-week-toggle">+</span>
+                </div>
+                <div class="atp-week-content">
+
+                    <div class="atp-workouts">
+
+                    <div class="atp-day key-day" data-week="14" data-day="monday" data-phase="Peak" data-am="intervals" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">MON</div>
+                        <div class="atp-workout-item ">Intervals</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="14" data-day="tuesday" data-phase="Peak" data-am="" data-pm="intervals" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">TUE</div>
+                        <div class="atp-workout-item ">Intervals (PM)</div>
+                    </div>
+                
+                    <div class="atp-day " data-week="14" data-day="wednesday" data-phase="Peak" data-am="easy_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">WED</div>
+                        <div class="atp-workout-item ">Easy Ride</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="14" data-day="thursday" data-phase="Peak" data-am="" data-pm="intervals" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">THU</div>
+                        <div class="atp-workout-item ">Intervals (PM)</div>
+                    </div>
+                
+                    <div class="atp-day " data-week="14" data-day="friday" data-phase="Peak" data-am="easy_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">FRI</div>
+                        <div class="atp-workout-item ">Easy Ride</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="14" data-day="saturday" data-phase="Peak" data-am="long_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">SAT</div>
+                        <div class="atp-workout-item ">Long Ride</div>
+                    </div>
+                
+                    <div class="atp-day strength-day" data-week="14" data-day="sunday" data-phase="Peak" data-am="strength" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">SUN</div>
+                        <div class="atp-workout-item strength">Strength</div>
+                    </div>
+                
+                    </div>
+            
+                    <div class="atp-focus">
+                        <strong>Focus:</strong> Race pace work. Dialing in the exact effort you'll use.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="atp-week" data-week="15">
+                <div class="atp-week-header" onclick="this.parentElement.classList.toggle('open')">
+                    <div class="atp-week-title">
+                        <span class="atp-week-num">Week 15</span>
+                        <span class="atp-week-phase peak">Peak</span>
+                    </div>
+                    <div class="atp-week-meta">
+                        <span>Peak</span>
+                    </div>
+                    <span class="atp-week-toggle">+</span>
+                </div>
+                <div class="atp-week-content">
+
+                    <div class="atp-workouts">
+
+                    <div class="atp-day key-day" data-week="15" data-day="monday" data-phase="Peak" data-am="intervals" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">MON</div>
+                        <div class="atp-workout-item ">Intervals</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="15" data-day="tuesday" data-phase="Peak" data-am="" data-pm="intervals" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">TUE</div>
+                        <div class="atp-workout-item ">Intervals (PM)</div>
+                    </div>
+                
+                    <div class="atp-day " data-week="15" data-day="wednesday" data-phase="Peak" data-am="easy_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">WED</div>
+                        <div class="atp-workout-item ">Easy Ride</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="15" data-day="thursday" data-phase="Peak" data-am="" data-pm="intervals" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">THU</div>
+                        <div class="atp-workout-item ">Intervals (PM)</div>
+                    </div>
+                
+                    <div class="atp-day " data-week="15" data-day="friday" data-phase="Peak" data-am="easy_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">FRI</div>
+                        <div class="atp-workout-item ">Easy Ride</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="15" data-day="saturday" data-phase="Peak" data-am="long_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">SAT</div>
+                        <div class="atp-workout-item ">Long Ride</div>
+                    </div>
+                
+                    <div class="atp-day strength-day" data-week="15" data-day="sunday" data-phase="Peak" data-am="strength" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">SUN</div>
+                        <div class="atp-workout-item strength">Strength</div>
+                    </div>
+                
+                    </div>
+            
+                    <div class="atp-focus">
+                        <strong>Focus:</strong> Strength shifts to power. Fast, explosive movements.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="atp-week" data-week="16">
+                <div class="atp-week-header" onclick="this.parentElement.classList.toggle('open')">
+                    <div class="atp-week-title">
+                        <span class="atp-week-num">Week 16</span>
+                        <span class="atp-week-phase peak">Peak</span>
+                    </div>
+                    <div class="atp-week-meta">
+                        <span>Recovery</span>
+                    </div>
+                    <span class="atp-week-toggle">+</span>
+                </div>
+                <div class="atp-week-content">
+
+                    <div class="atp-workouts">
+
+                    <div class="atp-day key-day" data-week="16" data-day="monday" data-phase="Peak" data-am="intervals" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">MON</div>
+                        <div class="atp-workout-item ">Intervals</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="16" data-day="tuesday" data-phase="Peak" data-am="" data-pm="intervals" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">TUE</div>
+                        <div class="atp-workout-item ">Intervals (PM)</div>
+                    </div>
+                
+                    <div class="atp-day " data-week="16" data-day="wednesday" data-phase="Peak" data-am="easy_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">WED</div>
+                        <div class="atp-workout-item ">Easy Ride</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="16" data-day="thursday" data-phase="Peak" data-am="" data-pm="intervals" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">THU</div>
+                        <div class="atp-workout-item ">Intervals (PM)</div>
+                    </div>
+                
+                    <div class="atp-day " data-week="16" data-day="friday" data-phase="Peak" data-am="easy_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">FRI</div>
+                        <div class="atp-workout-item ">Easy Ride</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="16" data-day="saturday" data-phase="Peak" data-am="long_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">SAT</div>
+                        <div class="atp-workout-item ">Long Ride</div>
+                    </div>
+                
+                    <div class="atp-day strength-day" data-week="16" data-day="sunday" data-phase="Peak" data-am="strength" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">SUN</div>
+                        <div class="atp-workout-item strength">Strength</div>
+                    </div>
+                
+                    </div>
+            
+                    <div class="atp-focus">
+                        <strong>Focus:</strong> Last hard weeks. Trust the fitness you've built.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="atp-week" data-week="17">
+                <div class="atp-week-header" onclick="this.parentElement.classList.toggle('open')">
+                    <div class="atp-week-title">
+                        <span class="atp-week-num">Week 17</span>
+                        <span class="atp-week-phase peak">Peak</span>
+                    </div>
+                    <div class="atp-week-meta">
+                        <span>Medium</span>
+                    </div>
+                    <span class="atp-week-toggle">+</span>
+                </div>
+                <div class="atp-week-content">
+
+                    <div class="atp-workouts">
+
+                    <div class="atp-day key-day" data-week="17" data-day="monday" data-phase="Peak" data-am="intervals" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">MON</div>
+                        <div class="atp-workout-item ">Intervals</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="17" data-day="tuesday" data-phase="Peak" data-am="" data-pm="intervals" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">TUE</div>
+                        <div class="atp-workout-item ">Intervals (PM)</div>
+                    </div>
+                
+                    <div class="atp-day " data-week="17" data-day="wednesday" data-phase="Peak" data-am="easy_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">WED</div>
+                        <div class="atp-workout-item ">Easy Ride</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="17" data-day="thursday" data-phase="Peak" data-am="" data-pm="intervals" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">THU</div>
+                        <div class="atp-workout-item ">Intervals (PM)</div>
+                    </div>
+                
+                    <div class="atp-day " data-week="17" data-day="friday" data-phase="Peak" data-am="easy_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">FRI</div>
+                        <div class="atp-workout-item ">Easy Ride</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="17" data-day="saturday" data-phase="Peak" data-am="long_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">SAT</div>
+                        <div class="atp-workout-item ">Long Ride</div>
+                    </div>
+                
+                    <div class="atp-day strength-day" data-week="17" data-day="sunday" data-phase="Peak" data-am="strength" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">SUN</div>
+                        <div class="atp-workout-item strength">Strength</div>
+                    </div>
+                
+                    </div>
+            
+                    <div class="atp-focus">
+                        <strong>Focus:</strong> Highest intensity, slightly reduced volume.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="atp-week" data-week="18">
+                <div class="atp-week-header" onclick="this.parentElement.classList.toggle('open')">
+                    <div class="atp-week-title">
+                        <span class="atp-week-num">Week 18</span>
+                        <span class="atp-week-phase peak">Peak</span>
+                    </div>
+                    <div class="atp-week-meta">
+                        <span>High</span>
+                    </div>
+                    <span class="atp-week-toggle">+</span>
+                </div>
+                <div class="atp-week-content">
+
+                    <div class="atp-workouts">
+
+                    <div class="atp-day key-day" data-week="18" data-day="monday" data-phase="Peak" data-am="intervals" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">MON</div>
+                        <div class="atp-workout-item ">Intervals</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="18" data-day="tuesday" data-phase="Peak" data-am="" data-pm="intervals" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">TUE</div>
+                        <div class="atp-workout-item ">Intervals (PM)</div>
+                    </div>
+                
+                    <div class="atp-day " data-week="18" data-day="wednesday" data-phase="Peak" data-am="easy_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">WED</div>
+                        <div class="atp-workout-item ">Easy Ride</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="18" data-day="thursday" data-phase="Peak" data-am="" data-pm="intervals" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">THU</div>
+                        <div class="atp-workout-item ">Intervals (PM)</div>
+                    </div>
+                
+                    <div class="atp-day " data-week="18" data-day="friday" data-phase="Peak" data-am="easy_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">FRI</div>
+                        <div class="atp-workout-item ">Easy Ride</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="18" data-day="saturday" data-phase="Peak" data-am="long_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">SAT</div>
+                        <div class="atp-workout-item ">Long Ride</div>
+                    </div>
+                
+                    <div class="atp-day strength-day" data-week="18" data-day="sunday" data-phase="Peak" data-am="strength" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">SUN</div>
+                        <div class="atp-workout-item strength">Strength</div>
+                    </div>
+                
+                    </div>
+            
+                    <div class="atp-focus">
+                        <strong>Focus:</strong> Race pace work. Dialing in the exact effort you'll use.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="atp-week" data-week="19">
+                <div class="atp-week-header" onclick="this.parentElement.classList.toggle('open')">
+                    <div class="atp-week-title">
+                        <span class="atp-week-num">Week 19</span>
+                        <span class="atp-week-phase taper">Taper</span>
+                    </div>
+                    <div class="atp-week-meta">
+                        <span>Peak</span>
+                    </div>
+                    <span class="atp-week-toggle">+</span>
+                </div>
+                <div class="atp-week-content">
+
+                    <div class="atp-workouts">
+
+                    <div class="atp-day key-day" data-week="19" data-day="monday" data-phase="Taper" data-am="intervals" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">MON</div>
+                        <div class="atp-workout-item ">Intervals</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="19" data-day="tuesday" data-phase="Taper" data-am="" data-pm="intervals" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">TUE</div>
+                        <div class="atp-workout-item ">Intervals (PM)</div>
+                    </div>
+                
+                    <div class="atp-day " data-week="19" data-day="wednesday" data-phase="Taper" data-am="easy_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">WED</div>
+                        <div class="atp-workout-item ">Easy Ride</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="19" data-day="thursday" data-phase="Taper" data-am="" data-pm="intervals" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">THU</div>
+                        <div class="atp-workout-item ">Intervals (PM)</div>
+                    </div>
+                
+                    <div class="atp-day " data-week="19" data-day="friday" data-phase="Taper" data-am="easy_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">FRI</div>
+                        <div class="atp-workout-item ">Easy Ride</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="19" data-day="saturday" data-phase="Taper" data-am="long_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">SAT</div>
+                        <div class="atp-workout-item ">Long Ride</div>
+                    </div>
+                
+                    <div class="atp-day strength-day" data-week="19" data-day="sunday" data-phase="Taper" data-am="strength" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">SUN</div>
+                        <div class="atp-workout-item strength">Strength</div>
+                    </div>
+                
+                    </div>
+            
+                    <div class="atp-focus">
+                        <strong>Focus:</strong> Volume drops significantly. Intensity stays sharp.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="atp-week" data-week="20">
+                <div class="atp-week-header" onclick="this.parentElement.classList.toggle('open')">
+                    <div class="atp-week-title">
+                        <span class="atp-week-num">Week 20</span>
+                        <span class="atp-week-phase taper">Taper</span>
+                    </div>
+                    <div class="atp-week-meta">
+                        <span>Low</span>
+                    </div>
+                    <span class="atp-week-toggle">+</span>
+                </div>
+                <div class="atp-week-content">
+
+                    <div class="atp-workouts">
+
+                    <div class="atp-day key-day" data-week="20" data-day="monday" data-phase="Taper" data-am="intervals" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">MON</div>
+                        <div class="atp-workout-item ">Intervals</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="20" data-day="tuesday" data-phase="Taper" data-am="" data-pm="intervals" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">TUE</div>
+                        <div class="atp-workout-item ">Intervals (PM)</div>
+                    </div>
+                
+                    <div class="atp-day " data-week="20" data-day="wednesday" data-phase="Taper" data-am="easy_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">WED</div>
+                        <div class="atp-workout-item ">Easy Ride</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="20" data-day="thursday" data-phase="Taper" data-am="" data-pm="intervals" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">THU</div>
+                        <div class="atp-workout-item ">Intervals (PM)</div>
+                    </div>
+                
+                    <div class="atp-day " data-week="20" data-day="friday" data-phase="Taper" data-am="easy_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">FRI</div>
+                        <div class="atp-workout-item ">Easy Ride</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="20" data-day="saturday" data-phase="Taper" data-am="long_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">SAT</div>
+                        <div class="atp-workout-item ">Long Ride</div>
+                    </div>
+                
+                    <div class="atp-day strength-day" data-week="20" data-day="sunday" data-phase="Taper" data-am="strength" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">SUN</div>
+                        <div class="atp-workout-item strength">Strength</div>
+                    </div>
+                
+                    </div>
+            
+                    <div class="atp-focus">
+                        <strong>Focus:</strong> Strength maintains, doesn't build. Don't lose adaptations.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="atp-week" data-week="21">
+                <div class="atp-week-header" onclick="this.parentElement.classList.toggle('open')">
+                    <div class="atp-week-title">
+                        <span class="atp-week-num">Week 21</span>
+                        <span class="atp-week-phase taper">Taper</span>
+                    </div>
+                    <div class="atp-week-meta">
+                        <span>Medium</span>
+                    </div>
+                    <span class="atp-week-toggle">+</span>
+                </div>
+                <div class="atp-week-content">
+
+                    <div class="atp-workouts">
+
+                    <div class="atp-day key-day" data-week="21" data-day="monday" data-phase="Taper" data-am="intervals" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">MON</div>
+                        <div class="atp-workout-item ">Intervals</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="21" data-day="tuesday" data-phase="Taper" data-am="" data-pm="intervals" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">TUE</div>
+                        <div class="atp-workout-item ">Intervals (PM)</div>
+                    </div>
+                
+                    <div class="atp-day " data-week="21" data-day="wednesday" data-phase="Taper" data-am="easy_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">WED</div>
+                        <div class="atp-workout-item ">Easy Ride</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="21" data-day="thursday" data-phase="Taper" data-am="" data-pm="intervals" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">THU</div>
+                        <div class="atp-workout-item ">Intervals (PM)</div>
+                    </div>
+                
+                    <div class="atp-day " data-week="21" data-day="friday" data-phase="Taper" data-am="easy_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">FRI</div>
+                        <div class="atp-workout-item ">Easy Ride</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="21" data-day="saturday" data-phase="Taper" data-am="long_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">SAT</div>
+                        <div class="atp-workout-item ">Long Ride</div>
+                    </div>
+                
+                    <div class="atp-day strength-day" data-week="21" data-day="sunday" data-phase="Taper" data-am="strength" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">SUN</div>
+                        <div class="atp-workout-item strength">Strength</div>
+                    </div>
+                
+                    </div>
+            
+                    <div class="atp-focus">
+                        <strong>Focus:</strong> Freshening up. The hay is in the barn.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="atp-week" data-week="22">
+                <div class="atp-week-header" onclick="this.parentElement.classList.toggle('open')">
+                    <div class="atp-week-title">
+                        <span class="atp-week-num">Week 22</span>
+                        <span class="atp-week-phase taper">Taper</span>
+                    </div>
+                    <div class="atp-week-meta">
+                        <span>High</span>
+                    </div>
+                    <span class="atp-week-toggle">+</span>
+                </div>
+                <div class="atp-week-content">
+
+                    <div class="atp-workouts">
+
+                    <div class="atp-day key-day" data-week="22" data-day="monday" data-phase="Taper" data-am="intervals" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">MON</div>
+                        <div class="atp-workout-item ">Intervals</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="22" data-day="tuesday" data-phase="Taper" data-am="" data-pm="intervals" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">TUE</div>
+                        <div class="atp-workout-item ">Intervals (PM)</div>
+                    </div>
+                
+                    <div class="atp-day " data-week="22" data-day="wednesday" data-phase="Taper" data-am="easy_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">WED</div>
+                        <div class="atp-workout-item ">Easy Ride</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="22" data-day="thursday" data-phase="Taper" data-am="" data-pm="intervals" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">THU</div>
+                        <div class="atp-workout-item ">Intervals (PM)</div>
+                    </div>
+                
+                    <div class="atp-day " data-week="22" data-day="friday" data-phase="Taper" data-am="easy_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">FRI</div>
+                        <div class="atp-workout-item ">Easy Ride</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="22" data-day="saturday" data-phase="Taper" data-am="long_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">SAT</div>
+                        <div class="atp-workout-item ">Long Ride</div>
+                    </div>
+                
+                    <div class="atp-day strength-day" data-week="22" data-day="sunday" data-phase="Taper" data-am="strength" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">SUN</div>
+                        <div class="atp-workout-item strength">Strength</div>
+                    </div>
+                
+                    </div>
+            
+                    <div class="atp-focus">
+                        <strong>Focus:</strong> Race week. Execute the plan.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="atp-week" data-week="23">
+                <div class="atp-week-header" onclick="this.parentElement.classList.toggle('open')">
+                    <div class="atp-week-title">
+                        <span class="atp-week-num">Week 23</span>
+                        <span class="atp-week-phase taper">Taper</span>
+                    </div>
+                    <div class="atp-week-meta">
+                        <span>Peak</span>
+                    </div>
+                    <span class="atp-week-toggle">+</span>
+                </div>
+                <div class="atp-week-content">
+
+                    <div class="atp-workouts">
+
+                    <div class="atp-day key-day" data-week="23" data-day="monday" data-phase="Taper" data-am="intervals" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">MON</div>
+                        <div class="atp-workout-item ">Intervals</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="23" data-day="tuesday" data-phase="Taper" data-am="" data-pm="intervals" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">TUE</div>
+                        <div class="atp-workout-item ">Intervals (PM)</div>
+                    </div>
+                
+                    <div class="atp-day " data-week="23" data-day="wednesday" data-phase="Taper" data-am="easy_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">WED</div>
+                        <div class="atp-workout-item ">Easy Ride</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="23" data-day="thursday" data-phase="Taper" data-am="" data-pm="intervals" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">THU</div>
+                        <div class="atp-workout-item ">Intervals (PM)</div>
+                    </div>
+                
+                    <div class="atp-day " data-week="23" data-day="friday" data-phase="Taper" data-am="easy_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">FRI</div>
+                        <div class="atp-workout-item ">Easy Ride</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="23" data-day="saturday" data-phase="Taper" data-am="long_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">SAT</div>
+                        <div class="atp-workout-item ">Long Ride</div>
+                    </div>
+                
+                    <div class="atp-day strength-day" data-week="23" data-day="sunday" data-phase="Taper" data-am="strength" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">SUN</div>
+                        <div class="atp-workout-item strength">Strength</div>
+                    </div>
+                
+                    </div>
+            
+                    <div class="atp-focus">
+                        <strong>Focus:</strong> Volume drops significantly. Intensity stays sharp.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="atp-week" data-week="24">
+                <div class="atp-week-header" onclick="this.parentElement.classList.toggle('open')">
+                    <div class="atp-week-title">
+                        <span class="atp-week-num">Week 24</span>
+                        <span class="atp-week-phase taper">Taper</span>
+                    </div>
+                    <div class="atp-week-meta">
+                        <span>Low</span>
+                    </div>
+                    <span class="atp-week-toggle">+</span>
+                </div>
+                <div class="atp-week-content">
+
+                    <div class="atp-workouts">
+
+                    <div class="atp-day key-day" data-week="24" data-day="monday" data-phase="Taper" data-am="intervals" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">MON</div>
+                        <div class="atp-workout-item ">Intervals</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="24" data-day="tuesday" data-phase="Taper" data-am="" data-pm="intervals" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">TUE</div>
+                        <div class="atp-workout-item ">Intervals (PM)</div>
+                    </div>
+                
+                    <div class="atp-day " data-week="24" data-day="wednesday" data-phase="Taper" data-am="easy_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">WED</div>
+                        <div class="atp-workout-item ">Easy Ride</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="24" data-day="thursday" data-phase="Taper" data-am="" data-pm="intervals" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">THU</div>
+                        <div class="atp-workout-item ">Intervals (PM)</div>
+                    </div>
+                
+                    <div class="atp-day " data-week="24" data-day="friday" data-phase="Taper" data-am="easy_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">FRI</div>
+                        <div class="atp-workout-item ">Easy Ride</div>
+                    </div>
+                
+                    <div class="atp-day key-day" data-week="24" data-day="saturday" data-phase="Taper" data-am="long_ride" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">SAT</div>
+                        <div class="atp-workout-item ">Long Ride</div>
+                    </div>
+                
+                    <div class="atp-day strength-day" data-week="24" data-day="sunday" data-phase="Taper" data-am="strength" data-pm="" onclick="showWorkoutModal(this)">
+                        <div class="atp-day-name">SUN</div>
+                        <div class="atp-workout-item strength">Strength</div>
+                    </div>
+                
+                    </div>
+            
+                    <div class="atp-focus">
+                        <strong>Focus:</strong> Strength maintains, doesn't build. Don't lose adaptations.
+                    </div>
+                </div>
+            </div>
+            
+    </div>
+    
+    <div class="callout tip">
+        <h4>How to Read This</h4>
+        <ul>
+            <li><strong>Phase badges</strong> show where you are in periodization</li>
+            <li><strong>Volume labels</strong> indicate training load (Recovery weeks every ~4 weeks)</li>
+            <li><strong>KEY days</strong> are your priority sessions — never skip these</li>
+            <li>Actual workouts are in your ZWO files and calendar</li>
+        </ul>
+    </div>
+</section>
+
+<script>
+// Auto-open current week based on plan start date
+document.addEventListener('DOMContentLoaded', function() {
+    // Could calculate current week and auto-open it
+    // For now, leave all collapsed
+});
+</script>
+
+
+
+<section id="your-schedule">
+    <h2>2 · Your Weekly Schedule</h2>
+    
+    <p>This is <strong>YOUR</strong> schedule based on your availability and preferences:</p>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Day</th>
+                <th>AM</th>
+                <th>PM</th>
+                <th>Notes</th>
+            </tr>
+        </thead>
+        <tbody>
+
+                <tr>
+                    <td><strong>Monday</strong><span class="key-day">KEY</span></td>
+                    <td>intervals</td>
+                    <td>—</td>
+                    <td>Key session - intervals or threshold</td>
+                </tr>
+            
+
+                <tr>
+                    <td><strong>Tuesday</strong><span class="key-day">KEY</span></td>
+                    <td>—</td>
+                    <td>intervals</td>
+                    <td>Key session - intervals PM</td>
+                </tr>
+            
+
+                <tr>
+                    <td><strong>Wednesday</strong></td>
+                    <td>easy_ride</td>
+                    <td>—</td>
+                    <td>Easy ride or recovery</td>
+                </tr>
+            
+
+                <tr>
+                    <td><strong>Thursday</strong><span class="key-day">KEY</span></td>
+                    <td>—</td>
+                    <td>intervals</td>
+                    <td>Key session - intervals PM</td>
+                </tr>
+            
+
+                <tr>
+                    <td><strong>Friday</strong></td>
+                    <td>easy_ride</td>
+                    <td>—</td>
+                    <td>Easy ride or recovery</td>
+                </tr>
+            
+
+                <tr>
+                    <td><strong>Saturday</strong><span class="key-day">KEY</span></td>
+                    <td>long_ride</td>
+                    <td>—</td>
+                    <td>Key session - long ride</td>
+                </tr>
+            
+
+                <tr>
+                    <td><strong>Sunday</strong></td>
+                    <td>strength</td>
+                    <td>—</td>
+                    <td>Strength session</td>
+                </tr>
+            
+        </tbody>
+    </table>
+    
+    <h3>Priority Order</h3>
+    <p>When life gets in the way, prioritize in this order:</p>
+    <ol>
+        <li><strong>Key cycling sessions</strong> — These drive fitness gains</li>
+        <li><strong>Long ride</strong> — Builds endurance foundation</li>
+        <li><strong>Strength sessions</strong> — Injury prevention + power</li>
+        <li><strong>Easy rides</strong> — Recovery, can be shortened or skipped</li>
+    </ol>
+    
+    <div class="callout tip">
+        <h4>Your Key Days</h4>
+        <p><strong>Key cycling:</strong> Monday, Tuesday, Thursday, Saturday</p>
+        <p><strong>Strength days:</strong> Sunday, Saturday</p>
+    </div>
+</section>
+
+
+
+<section id="phase-progression">
+    <h2>3 · Your 24-Week Phase Progression</h2>
+    
+    <p>Your training progresses through four coordinated phases. Cycling and strength are aligned so you're not double-peaking.</p>
+    
+    
+<div class="phase-card">
+    <div class="phase-card-header">Base Phase — Weeks 1-4</div>
+    <div class="phase-card-body">
+        <p><strong>Cycling:</strong> Building aerobic foundation. Long Z2 rides. Establishing rhythm.</p>
+        <p><strong>Strength:</strong> Learn to Lift</p>
+    </div>
+</div>
+
+<div class="phase-card">
+    <div class="phase-card-header">Build Phase — Weeks 5-12</div>
+    <div class="phase-card-body">
+        <p><strong>Cycling:</strong> Adding intensity. Race-specific fitness. G-Spot work.</p>
+        <p><strong>Strength:</strong> Lift Heavy Sh*t</p>
+    </div>
+</div>
+
+<div class="phase-card">
+    <div class="phase-card-header">Peak Phase — Weeks 13-18</div>
+    <div class="phase-card-body">
+        <p><strong>Cycling:</strong> Maximum training load. Race simulation. Proving readiness.</p>
+        <p><strong>Strength:</strong> Lift Fast</p>
+    </div>
+</div>
+
+<div class="phase-card">
+    <div class="phase-card-header">Taper Phase — Weeks 19-20</div>
+    <div class="phase-card-body">
+        <p><strong>Cycling:</strong> Reducing volume, maintaining intensity. Arriving fresh.</p>
+        <p><strong>Strength:</strong> Don't Lose It</p>
+    </div>
+</div>
+
+    
+    <div class="callout alert">
+        <h4>Why Phase Alignment Matters</h4>
+        <p>Most training plans treat cycling and strength separately. You end up building max strength while also doing your highest cycling volume—a recipe for overtraining.</p>
+        <p>This plan coordinates them: when cycling load is highest (Build/Peak), strength shifts to power and maintenance. When cycling is easier (Base), strength builds foundation.</p>
+    </div>
+</section>
+
+
+
+<section id="training-fundamentals">
+    <h2>4 · Training Fundamentals</h2>
+    
+    <p>Before executing workouts, understand how training works at a mechanical level.</p>
+    
+    <h3>The Adaptation Cycle</h3>
+    
+    <div class="timeline">
+        <div class="timeline-item">
+            <div class="timeline-time">Step 1: Stress</div>
+            <p>You apply training stress—a workout that exceeds your current capacity. Muscle fibers develop microtears. Glycogen depletes. Your body registers this as a problem to solve.</p>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-time">Step 2: Fatigue</div>
+            <p>Immediately after, you're weaker than before. This is normal. Fatigue is the signal that triggers adaptation.</p>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-time">Step 3: Recovery</div>
+            <p>Given adequate rest, nutrition, and time, your body repairs: muscle fibers rebuild, mitochondria multiply, capillary density increases.</p>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-time">Step 4: Supercompensation</div>
+            <p>Your body doesn't just return to baseline—it overshoots. You're now stronger than before.</p>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-time">Step 5: Repeat</div>
+            <p>Apply slightly larger stress. The cycle repeats. Over weeks, these small adaptations compound into meaningful fitness gains.</p>
+        </div>
+    </div>
+    
+    <h3>The Practical Rules</h3>
+    <ol>
+        <li><strong>Training stress must be adequate but not excessive</strong> — Hard enough to trigger adaptation. Not so hard you can't recover.</li>
+        <li><strong>Recovery is training</strong> — Sleep, nutrition, stress management. This is where adaptation happens.</li>
+        <li><strong>Consistency compounds</strong> — Ten weeks of steady training beats four weeks of heroics followed by burnout.</li>
+        <li><strong>Patience is required</strong> — Meaningful adaptation takes weeks and months, not days.</li>
+    </ol>
+</section>
+
+
+
+<section id="training-zones">
+    <h2>5 · Training Zones</h2>
+    
+    <p>Zones quantify intensity. But the end goal of measuring intensity is to help you <strong>develop a feeling for intensity</strong>.</p>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Zone</th>
+                <th>Name</th>
+                <th>% FTP</th>
+                <th>Feel</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Z1</strong></td>
+                <td>Active Recovery</td>
+                <td>&lt;55%</td>
+                <td>Very easy. Full conversation possible. Doesn't feel like training.</td>
+            </tr>
+            <tr>
+                <td><strong>Z2</strong></td>
+                <td>Endurance</td>
+                <td>56-75%</td>
+                <td>All-day pace. Can chat freely. <strong>Most of your training lives here.</strong></td>
+            </tr>
+            <tr>
+                <td><strong>Z3</strong></td>
+                <td>Tempo</td>
+                <td>76-87%</td>
+                <td>Comfortably hard. Talking in short sentences.</td>
+            </tr>
+            <tr class="zone-row-gspot">
+                <td><strong>G-Spot</strong></td>
+                <td>Gravel Race Pace</td>
+                <td>88-92%</td>
+                <td>Uncomfortably sustainable. Hard enough to hurt, easy enough to repeat.</td>
+            </tr>
+            <tr>
+                <td><strong>Z4</strong></td>
+                <td>Threshold</td>
+                <td>93-105%</td>
+                <td>Hard, controlled. Can only say a few words.</td>
+            </tr>
+            <tr>
+                <td><strong>Z5</strong></td>
+                <td>VO2max</td>
+                <td>106-120%</td>
+                <td>Very hard. Near maximum. Speech impossible.</td>
+            </tr>
+            <tr>
+                <td><strong>Z6</strong></td>
+                <td>Anaerobic</td>
+                <td>121-150%</td>
+                <td>All-out. 30 seconds to 3 minutes max.</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <div class="callout alert">
+        <h4>The Most Common Mistake</h4>
+        <p><strong>Easy means easy.</strong> Most people train too hard on easy days. Z2 should feel genuinely conversational. If you're breathing hard, you're in Z3.</p>
+        <p>Fix this. It's the most common training mistake.</p>
+    </div>
+    
+    <h3>When Devices and Body Conflict</h3>
+    <p>Power meters can lie (bad calibration, stale FTP). Heart rate can be misleading (heat, dehydration, caffeine, illness).</p>
+    <p><strong>Your body doesn't lie.</strong> If 90% FTP feels like 9/10 today when it should feel like 7/10, something's wrong. Trust your body.</p>
+</section>
+
+
+
+<section id="workout-execution">
+    <h2>6 · Workout Execution</h2>
+    
+    <p>There's a massive gap between what's written on the plan and what actually happens. This section teaches you how to close that gap.</p>
+    
+    <h3>Universal Rules</h3>
+    
+    <h4>1. Warm Up Properly</h4>
+    <p>For intensity sessions: 15-20 minutes Z1→Z2→Z3. Include 3×1 min at Z3-Z4 to "open the legs." 2-3 minutes easy spin before first work interval.</p>
+    
+    <h4>2. Do the Actual Workout</h4>
+    <p>Execute what's prescribed. Not more. Not less. Adding volume or intensity might feel productive, but it accumulates fatigue and ruins tomorrow's workout.</p>
+    
+    <h4>3. Chase Time-in-Zone, Not Hero Intervals</h4>
+    <p>The goal is highest average power across the entire set, not crushing the first interval then dying.</p>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Bad Execution</th>
+                <th>Good Execution</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    Interval 1: 320W (way too hard)<br>
+                    Interval 2: 290W (struggling)<br>
+                    Interval 3: 270W (barely hanging on)<br>
+                    Interval 4: Failed<br>
+                    <strong>Total: 3 intervals, 293W avg</strong>
+                </td>
+                <td>
+                    Interval 1: 300W (controlled)<br>
+                    Interval 2: 300W (harder but doable)<br>
+                    Interval 3: 295W (hardest one)<br>
+                    Interval 4: 295W (finished strong)<br>
+                    <strong>Total: 4 intervals, 297.5W avg</strong>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h4>4. Stop If Power Drops >10%</h4>
+    <p>Quality beats quantity. Four quality intervals at 300W beats six degraded intervals averaging 270W.</p>
+    
+    <h3>Indoor vs Outdoor</h3>
+    <p><strong>Ride indoors:</strong> Interval sessions, short workouts (&lt;90 min), bad weather, time-crunched days.</p>
+    <p><strong>Ride outdoors:</strong> Long endurance rides (2+ hours), skills practice, mental freshness, race-specific terrain.</p>
+</section>
+
+
+
+<section id="strength-program">
+    <h2>7 · Your Strength Program</h2>
+    
+    <p>Your plan includes <strong>2x/week</strong> strength sessions coordinated with your cycling.</p>
+    
+    <h3>Phase-by-Phase Guide</h3>
+    
+    <div class="phase-card">
+        <div class="phase-card-header">Learn to Lift — Foundation Phase</div>
+        <div class="phase-card-body">
+            <p><strong>Focus:</strong> Movement quality and neuromuscular adaptation</p>
+            <p><strong>Effort:</strong> 5-6/10 &nbsp;|&nbsp; <strong>Rest:</strong> 60-90 seconds &nbsp;|&nbsp; <strong>Reps:</strong> 10-15</p>
+            <ul>
+                <li>Focus on perfect form over weight</li>
+                <li>Watch video demos before each exercise</li>
+                <li>You should feel challenged but not crushed</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="phase-card">
+        <div class="phase-card-header">Lift Heavy Sh*t — Max Strength Phase</div>
+        <div class="phase-card-body">
+            <p><strong>Focus:</strong> Maximum strength development</p>
+            <p><strong>Effort:</strong> 7-8/10 &nbsp;|&nbsp; <strong>Rest:</strong> 2-3 minutes &nbsp;|&nbsp; <strong>Reps:</strong> 4-8</p>
+            <ul>
+                <li>Progressive overload: add weight when you complete all reps with good form</li>
+                <li>If form breaks down, reduce weight</li>
+                <li>Expect some DOMS (delayed onset muscle soreness)</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="phase-card">
+        <div class="phase-card-header">Lift Fast — Power Conversion Phase</div>
+        <div class="phase-card-body">
+            <p><strong>Focus:</strong> Moving weight quickly</p>
+            <p><strong>Effort:</strong> 7-8/10 &nbsp;|&nbsp; <strong>Rest:</strong> 2-3 minutes &nbsp;|&nbsp; <strong>Reps:</strong> 3-6</p>
+            <ul>
+                <li>Move the weight as fast as possible with control</li>
+                <li>If you can't move it fast, reduce the weight</li>
+                <li>This converts your strength into cycling power</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="phase-card">
+        <div class="phase-card-header">Don't Lose It — Maintenance Phase</div>
+        <div class="phase-card-body">
+            <p><strong>Focus:</strong> Maintain adaptations with minimal fatigue</p>
+            <p><strong>Effort:</strong> 5-6/10 &nbsp;|&nbsp; <strong>Rest:</strong> As needed &nbsp;|&nbsp; <strong>Reps:</strong> 6-10</p>
+            <ul>
+                <li>Just enough stimulus to maintain, not build</li>
+                <li>You should feel refreshed after these sessions</li>
+                <li>Never feel crushed going into race week</li>
+            </ul>
+        </div>
+    </div>
+    
+
+    <h3>Your Exercise Modifications</h3>
+    <p>Based on your profile, these exercises have been excluded:</p>
+    <ul>
+        <li><s>Box Jump</s></li><li><s>Jump Squat</s></li>
+    </ul>
+    <p>Substitute exercises are provided in your workouts.</p>
+
+
+    <h3>Your Equipment</h3>
+    <p>Workouts are designed for:</p>
+    <ul>
+        <li>Bodyweight</li><li>Dumbbells</li><li>Kettlebells</li><li>Resistance Bands</li><li>Pull Up Bar</li>
+    </ul>
+
+    
+    <h3>How to Execute Strength Sessions</h3>
+    <ol>
+        <li><strong>Watch the video demos</strong> — Each exercise has a link. Watch it first.</li>
+        <li><strong>Warm up</strong> — 5 minutes easy cardio + activation exercises in the workout</li>
+        <li><strong>Follow the prescribed order</strong> — Exercises are sequenced intentionally</li>
+        <li><strong>Use the rest periods</strong> — Strength needs recovery between sets</li>
+        <li><strong>Log your weights</strong> — Track what you lift so you can progress</li>
+        <li><strong>Stop before failure</strong> — Leave 1-2 reps in the tank</li>
+    </ol>
+    
+    <h3>Weight Selection</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>If you can do...</th>
+                <th>Weight is...</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>3+ more reps than prescribed</td><td>Too light — increase next set</td></tr>
+            <tr><td>Exactly prescribed reps</td><td>Perfect — maintain or increase slightly</td></tr>
+            <tr><td>Fewer than prescribed</td><td>Too heavy — reduce weight</td></tr>
+            <tr><td>Form breaks down</td><td>Way too heavy — ego check, reduce significantly</td></tr>
+        </tbody>
+    </table>
+</section>
+
+
+
+<section id="nutrition">
+    <h2>Your Nutrition Targets</h2>
+    
+    <p>Calculated from your questionnaire data:</p>
+    
+    <div class="nutrition-calc" style="margin-bottom: 20px;">
+        <h3 style="margin-top: 0; font-size: 12px; color: #666;">Your Stats</h3>
+        <table style="margin: 0; font-size: 13px;">
+            <tbody>
+                <tr><td style="border: none; padding: 4px 16px 4px 0;"><strong>Weight:</strong></td><td style="border: none;">75 kg</td></tr>
+                <tr><td style="border: none; padding: 4px 16px 4px 0;"><strong>Height:</strong></td><td style="border: none;">180 cm</td></tr>
+                <tr><td style="border: none; padding: 4px 16px 4px 0;"><strong>Age:</strong></td><td style="border: none;">39 years</td></tr>
+                <tr><td style="border: none; padding: 4px 16px 4px 0;"><strong>Sex:</strong></td><td style="border: none;">Male</td></tr>
+                <tr><td style="border: none; padding: 4px 16px 4px 0;"><strong>FTP:</strong></td><td style="border: none;">280W (3.73 W/kg)</td></tr>
+                <tr><td style="border: none; padding: 4px 16px 4px 0;"><strong>Training Volume:</strong></td><td style="border: none;">~12 hrs/week</td></tr>
+                <tr><td style="border: none; padding: 4px 16px 4px 0;"><strong>Daily Activity:</strong></td><td style="border: none;">Sedentary</td></tr>
+                <tr><td style="border: none; padding: 4px 16px 4px 0;"><strong>Weight Goal:</strong></td><td style="border: none;">Maintain</td></tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="nutrition-calc">
+        <h3 style="margin-top: 0;">Daily Targets — Average Training Day</h3>
+        
+        <div class="nutrition-macros">
+            <div class="macro-box">
+                <span class="macro-value">3361</span>
+                <span class="macro-unit">kcal</span>
+                <div class="macro-label">Total Calories</div>
+            </div>
+            <div class="macro-box">
+                <span class="macro-value">487</span>
+                <span class="macro-unit">g (57%)</span>
+                <div class="macro-label">Carbs</div>
+            </div>
+            <div class="macro-box">
+                <span class="macro-value">135</span>
+                <span class="macro-unit">g (16%)</span>
+                <div class="macro-label">Protein</div>
+            </div>
+            <div class="macro-box">
+                <span class="macro-value">97</span>
+                <span class="macro-unit">g (25%)</span>
+                <div class="macro-label">Fat</div>
+            </div>
+        </div>
+        <p style="font-size: 11px; color: #999; margin-top: 12px; text-align: center;">
+            BMR: 1685 kcal | Base TDEE: 2022 kcal | Training: +1344 kcal/day avg
+        </p>
+    </div>
+    
+    <h3>Nutrient Timing</h3>
+    
+    <p><strong>When you eat matters as much as what you eat.</strong> Aligned with Chapter 8: Fueling & Hydration from your training plan guide.</p>
+    
+    <div class="callout info">
+        <h4>Pre-Workout Nutrition</h4>
+        <p><strong>For Hard Sessions (threshold, VO2max, intervals):</strong></p>
+        <table style="margin: 12px 0;">
+            <thead>
+                <tr>
+                    <th>Timing</th>
+                    <th>What to Eat</th>
+                    <th>Amount</th>
+                    <th>Examples</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>2-3 Hours Before</strong></td>
+                    <td>Moderate carbs + light protein</td>
+                    <td>1-2g carbs/kg<br>(75-150g)</td>
+                    <td>Oatmeal + banana + honey<br>Toast + peanut butter</td>
+                </tr>
+                <tr>
+                    <td><strong>15-30 Min Before</strong><br><span style="font-size: 10px; color: #666;">Optional</span></td>
+                    <td>Fast-digesting carbs</td>
+                    <td>20-30g total</td>
+                    <td>Banana, sports drink, energy gel</td>
+                </tr>
+            </tbody>
+        </table>
+        <p><strong>For Easy Sessions (Z2 endurance):</strong></p>
+        <ul style="margin: 8px 0;">
+            <li>Eat normally, don't stress timing</li>
+            <li>Can even train fasted if under 90 minutes</li>
+            <li>Flexible approach — no strict rules</li>
+        </ul>
+        <p style="font-size: 11px; margin-top: 8px; color: #666;"><strong>Rule:</strong> Hard sessions need fuel. Easy sessions are flexible.</p>
+    </div>
+    
+    <div class="callout tip">
+        <h4>During Training — The 60-80g Per Hour Rule</h4>
+        <p>For any ride <strong>over 90 minutes at moderate-to-high intensity (Z3+)</strong>, you need <strong>60-80g of carbohydrates per hour.</strong></p>
+        <p style="font-size: 12px; color: #666;">Your gut can absorb ~60g glucose/hour. Add fructose (different transporters) to reach 90g. Sweet spot: 70-75g/hour.</p>
+        
+        <table style="margin: 12px 0;">
+            <thead>
+                <tr>
+                    <th>Session Type</th>
+                    <th>Duration</th>
+                    <th>Carbs/Hour</th>
+                    <th>When to Start</th>
+                    <th>What to Use</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Z2 Endurance</td>
+                    <td>2-4 hours</td>
+                    <td>40-60g</td>
+                    <td>After 60 min</td>
+                    <td>Real food: PB&J, bananas, bars</td>
+                </tr>
+                <tr>
+                    <td>Tempo/G-Spot</td>
+                    <td>2-3 hours</td>
+                    <td>60-80g</td>
+                    <td>Start at 30-45 min</td>
+                    <td>Mix: liquids + solids</td>
+                </tr>
+                <tr>
+                    <td>Threshold/VO2max</td>
+                    <td>60-90 min</td>
+                    <td>Pre-workout sufficient<br>+ 1 gel mid-session</td>
+                    <td>Between efforts</td>
+                    <td>Gel or sports drink</td>
+                </tr>
+                <tr>
+                    <td>Race/Long hard</td>
+                    <td>&gt;90 min</td>
+                    <td>60-90g</td>
+                    <td>Start at 30 min</td>
+                    <td>Mix: drinks + gels/chews<br>(2:1 glucose:fructose if &gt;60g)</td>
+                </tr>
+            </tbody>
+        </table>
+        <p style="font-size: 11px; margin-top: 8px; color: #666;"><strong>Critical:</strong> Start fueling at 30 minutes, not 60. By the time you feel hungry, you're already behind. Set a timer.</p>
+    </div>
+    
+    <div class="callout alert">
+        <h4>Post-Workout Recovery</h4>
+        <p><strong>Only needed if:</strong> Workout was long (2.5+ hours) AND hard, AND you have another hard session within 24-36 hours.</p>
+        
+        <table style="margin: 12px 0;">
+            <thead>
+                <tr>
+                    <th>Timing</th>
+                    <th>Protein</th>
+                    <th>Carbs</th>
+                    <th>Examples</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Within 30 minutes</strong><br><span style="font-size: 10px; color: #666;">Critical window</span></td>
+                    <td>20-30g</td>
+                    <td>1-1.5g/kg<br>(75-112g)</td>
+                    <td>Recovery shake, chocolate milk</td>
+                </tr>
+                <tr>
+                    <td><strong>Within 1-2 hours</strong></td>
+                    <td>Full meal</td>
+                    <td>Full meal</td>
+                    <td>Protein + carbs + vegetables</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <p><strong>If workout was easy, short, or next hard session is 48+ hours away:</strong></p>
+        <ul style="margin: 8px 0;">
+            <li>Just eat your next meal normally</li>
+            <li>Recovery nutrition is optional</li>
+            <li>Don't overthink it</li>
+        </ul>
+        
+        <p style="font-size: 11px; margin-top: 8px; color: #666;"><strong>Rule:</strong> The more frequently you train hard, the more critical recovery nutrition becomes. If training once per day with easy sessions, skip the fancy protocols and just eat dinner.</p>
+    </div>
+    
+    <h4>Sample Timing Schedule (Hard Session)</h4>
+    
+    <div class="timeline">
+        <div class="timeline-item">
+            <div class="timeline-time">2-3 Hours Before</div>
+            <p><strong>Pre-workout meal:</strong> 75-150g carbs + light protein. Low fiber, low fat. Oatmeal + banana + honey, or toast + peanut butter.</p>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-time">15-30 Minutes Before</div>
+            <p><strong>Quick snack (optional):</strong> 20-30g fast carbs. Banana or gel. Skip if you ate well 2-3 hours prior.</p>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-time">During Session (if &gt;90 min)</div>
+            <p><strong>Start at 30 minutes:</strong> 60-80g carbs/hour. Set a timer. Mix liquids + solids. Use 2:1 glucose:fructose if exceeding 60g/hour.</p>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-time">Within 30 Minutes After</div>
+            <p><strong>Recovery (if long/hard + training again within 24-36hrs):</strong> 20-30g protein + 75-112g carbs. Recovery shake or chocolate milk. Window is smaller than you think.</p>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-time">Within 1-2 Hours After</div>
+            <p><strong>Full meal:</strong> Balanced meal with protein, carbs, vegetables. Continue normal eating pattern throughout the day.</p>
+        </div>
+    </div>
+    
+    <p style="font-size: 12px; color: #666; margin-top: 16px;"><strong>Note:</strong> For easy sessions (&lt;90 min Z2), timing is flexible. Eat normally, or even train fasted. Recovery nutrition is optional unless you're training twice per day.</p>
+    
+    <div class="callout tip">
+        <h4>Common Timing Mistakes</h4>
+        <ul style="margin: 8px 0;">
+            <li><strong>Waiting until hungry to fuel</strong> — By then it's too late. Set a timer.</li>
+            <li><strong>Skipping pre-workout meal</strong> — You'll bonk mid-session. Eat 2-3 hours before.</li>
+            <li><strong>Not eating post-workout</strong> — Recovery window closes fast. Eat within 60 minutes.</li>
+            <li><strong>Trying new foods on race day</strong> — Test everything in training first.</li>
+            <li><strong>Overthinking it</strong> — Simple carbs before/during, protein+carbs after. That's 90% of it.</li>
+        </ul>
+    </div>
+    
+    <h3>Day-Type Adjustments</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Day Type</th>
+                <th>Calories</th>
+                <th>Carbs</th>
+                <th>Notes</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Hard / Key Session</strong></td>
+                <td>3865 kcal</td>
+                <td>584g</td>
+                <td>Front-load carbs before and during session</td>
+            </tr>
+            <tr>
+                <td><strong>Average Training</strong></td>
+                <td>3361 kcal</td>
+                <td>487g</td>
+                <td>Steady intake throughout day</td>
+            </tr>
+            <tr>
+                <td><strong>Easy / Recovery</strong></td>
+                <td>3024 kcal</td>
+                <td>389g</td>
+                <td>Slight reduction, maintain protein</td>
+            </tr>
+            <tr>
+                <td><strong>Rest Day</strong></td>
+                <td>2688 kcal</td>
+                <td>292g</td>
+                <td>Reduce carbs, maintain protein for recovery</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h3>During Training</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Session Type</th>
+                <th>Carbs/Hour</th>
+                <th>Timing</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>&lt;90 min easy</td>
+                <td>Optional (0-30g)</td>
+                <td>Water is fine</td>
+            </tr>
+            <tr>
+                <td>90 min - 2 hrs</td>
+                <td>30-60g</td>
+                <td>Start at 30 min</td>
+            </tr>
+            <tr>
+                <td>2-4 hrs</td>
+                <td>60-75g</td>
+                <td>Every 20 min</td>
+            </tr>
+            <tr>
+                <td>Race / 4+ hrs</td>
+                <td>80-100g</td>
+                <td>Every 15-20 min</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <div class="callout tip">
+        <h4>Fuel the Work</h4>
+        <p><strong>Common mistake:</strong> Eating less to lose weight during hard training blocks.</p>
+        <p><strong>Reality:</strong> Underfueling impairs adaptation, increases injury risk, and tanks performance. Eat for the work you're doing. Weight management happens in easy phases, not build phases.</p>
+    </div>
+    
+    <h3>Interactive Nutrition Calculator</h3>
+    <p>Adjust these sliders to see how your daily targets change based on different scenarios:</p>
+    
+    <div class="slider-container">
+        <div class="slider-group">
+            <div class="slider-label">
+                <span>Training Hours/Week</span>
+                <span class="slider-value" id="sliderHours">12</span>
+            </div>
+            <input type="range" class="slider" id="hoursSlider" min="4" max="25" value="12" step="1" oninput="updateNutritionCalc()">
+        </div>
+        
+        <div class="slider-group">
+            <div class="slider-label">
+                <span>FTP (Watts)</span>
+                <span class="slider-value" id="sliderFTP">280</span>
+            </div>
+            <input type="range" class="slider" id="ftpSlider" min="150" max="450" value="280" step="5" oninput="updateNutritionCalc()">
+        </div>
+        
+        <div class="slider-group">
+            <div class="slider-label">
+                <span>Weight (kg)</span>
+                <span class="slider-value" id="sliderWeight">75</span>
+            </div>
+            <input type="range" class="slider" id="weightSlider" min="50" max="100" value="75" step="1" oninput="updateNutritionCalc()">
+        </div>
+        
+        <div class="slider-group">
+            <div class="slider-label">
+                <span>Weight Goal</span>
+                <span class="slider-value" id="sliderGoal">Maintain</span>
+            </div>
+            <select id="goalSelect" style="width: 100%; padding: 8px; border: 2px solid #000; font-family: inherit;" onchange="updateNutritionCalc()">
+                <option value="maintain" selected>Maintain</option>
+                <option value="lose_slow" >Lose Weight (Slow)</option>
+                <option value="lose_fast" >Lose Weight (Fast)</option>
+                <option value="gain" >Gain Weight</option>
+            </select>
+        </div>
+        
+        <div class="nutrition-macros" id="calcResults" style="margin-top: 24px;">
+            <!-- Populated by JavaScript -->
+        </div>
+    </div>
+    
+    <h3>Hydration Guidelines</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Scenario</th>
+                <th>Carbs/Hour</th>
+                <th>Fluid/Hour</th>
+                <th>Notes</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>Training &lt;2 hours</td><td>30-45g</td><td>500-750ml</td><td>Water + electrolytes. Start fueling after 60 min if needed.</td></tr>
+            <tr><td>Training 2-4 hours</td><td>45-60g</td><td>500-750ml</td><td>Mix of gels, bars, and real food. Practice your race nutrition.</td></tr>
+            <tr><td>Long ride 4-6 hours</td><td>60-75g</td><td>500-750ml</td><td>Aggressive gut training. Test race-day nutrition strategy.</td></tr>
+            <tr><td>Race day</td><td>60-90g</td><td>500-750ml</td><td>Start fueling in first 30 min. Mix multiple carb sources (glucose + fructose).</td></tr>
+            <tr><td>Hot conditions (&gt;80°F)</td><td>60-90g</td><td>750-1000ml</td><td>Increase sodium to 500-700mg/hour. Pre-cool if possible.</td></tr>
+            <tr><td>Cold conditions (&lt;50°F)</td><td>60-90g</td><td>400-600ml</td><td>Lower fluid needs, but still fuel aggressively. Warm fluids help.</td></tr>
+        </tbody>
+    </table>
+    
+    <div class="callout alert">
+        <h4>When Your Stomach Rebels</h4>
+        <ol>
+            <li>Back off intensity for 5-10 minutes</li>
+            <li>Switch to liquid calories temporarily</li>
+            <li>Small sips, not big gulps</li>
+            <li>Don't panic and stop eating entirely—you'll bonk</li>
+        </ol>
+    </div>
+    
+    <p><strong>Train Your Gut:</strong> Your gut is trainable. If you never eat during training rides, your gut won't tolerate eating during races. Practice fueling on every long ride.</p>
+    
+    <h3>ZWO Workout Nutrition Calculator</h3>
+    <p>Drop a ZWO file here to calculate your daily nutrition needs and timing for that specific workout:</p>
+    
+    <div class="zwo-upload" id="zwoUpload" onclick="document.getElementById('zwoFileInput').click()">
+        <input type="file" id="zwoFileInput" class="zwo-file-input" accept=".zwo" onchange="parseZWOFile(event)">
+        <p style="font-size: 16px; font-weight: 600; margin: 8px 0;">📄 Drop ZWO file here or click to browse</p>
+        <p style="font-size: 12px; color: #666;">Supports .zwo files from TrainingPeaks or Zwift</p>
+    </div>
+    
+    <div class="zwo-results" id="zwoResults">
+        <!-- Populated by JavaScript -->
+    </div>
+</section>
+
+<script>
+// Nutrition Calculator
+function updateNutritionCalc() {
+    const hours = parseInt(document.getElementById('hoursSlider').value);
+    const ftp = parseInt(document.getElementById('ftpSlider').value);
+    const weight = parseInt(document.getElementById('weightSlider').value);
+    const goal = document.getElementById('goalSelect').value;
+    const age = 39;
+    const sex = 'male';
+    const height = 180;
+    
+    // Update display values
+    document.getElementById('sliderHours').textContent = hours;
+    document.getElementById('sliderFTP').textContent = ftp;
+    document.getElementById('sliderWeight').textContent = weight;
+    document.getElementById('sliderGoal').textContent = goal.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase());
+    
+    // Calculate BMR
+    let bmr;
+    if (sex === 'male') {
+        bmr = (10 * weight) + (6.25 * height) - (5 * age) + 5;
+    } else {
+        bmr = (10 * weight) + (6.25 * height) - (5 * age) - 161;
+    }
+    
+    // Base TDEE (sedentary)
+    const base_tdee = bmr * 1.2;
+    
+    // Training expenditure
+    const avg_daily_hours = hours / 7;
+    const intensity_factor = 0.7;
+    const avg_power = ftp * intensity_factor;
+    const cycling_kcal = (avg_power / 75) * 5 * avg_daily_hours * 60;
+    
+    // Total calories
+    let daily_kcal = base_tdee + cycling_kcal;
+    
+    // Adjust for goal
+    if (goal === 'lose_slow') daily_kcal -= 300;
+    else if (goal === 'lose_fast') daily_kcal -= 500;
+    else if (goal === 'gain') daily_kcal += 300;
+    
+    // Macros
+    let cho_per_kg;
+    if (hours <= 6) cho_per_kg = 4.5;
+    else if (hours <= 10) cho_per_kg = 5.5;
+    else if (hours <= 15) cho_per_kg = 6.5;
+    else cho_per_kg = 7.5;
+    
+    const cho_grams = Math.round(weight * cho_per_kg);
+    const pro_grams = Math.round(weight * 1.8);
+    const min_fat = Math.round(weight * 0.8);
+    const remaining_kcal = daily_kcal - (cho_grams * 4) - (pro_grams * 4);
+    const fat_grams = Math.max(min_fat, Math.round(remaining_kcal / 9));
+    const total_kcal = (cho_grams * 4) + (pro_grams * 4) + (fat_grams * 9);
+    
+    const cho_pct = Math.round(cho_grams * 4 / total_kcal * 100);
+    const pro_pct = Math.round(pro_grams * 4 / total_kcal * 100);
+    const fat_pct = Math.round(fat_grams * 9 / total_kcal * 100);
+    
+    // Update display
+    document.getElementById('calcResults').innerHTML = `
+        <div class="macro-box">
+            <span class="macro-value">${Math.round(total_kcal)}</span>
+            <span class="macro-unit">kcal</span>
+            <div class="macro-label">Total Calories</div>
+        </div>
+        <div class="macro-box">
+            <span class="macro-value">${cho_grams}</span>
+            <span class="macro-unit">g (${cho_pct}%)</span>
+            <div class="macro-label">Carbs</div>
+        </div>
+        <div class="macro-box">
+            <span class="macro-value">${pro_grams}</span>
+            <span class="macro-unit">g (${pro_pct}%)</span>
+            <div class="macro-label">Protein</div>
+        </div>
+        <div class="macro-box">
+            <span class="macro-value">${fat_grams}</span>
+            <span class="macro-unit">g (${fat_pct}%)</span>
+            <div class="macro-label">Fat</div>
+        </div>
+    `;
+}
+
+// ZWO File Parser
+function parseZWOFile(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const text = e.target.result;
+        const parser = new DOMParser();
+        const xml = parser.parseFromString(text, 'text/xml');
+        
+        // Extract workout data (name and description are siblings of workout, not children)
+        const root = xml.querySelector('workout_file');
+        const name = root?.querySelector('name')?.textContent || 'Unknown Workout';
+        const description = root?.querySelector('description')?.textContent || '';
+        const workout = root?.querySelector('workout');
+        
+        // Parse duration from workout segments (Duration is in SECONDS)
+        let totalDurationSeconds = 0;
+        let weightedPowerSum = 0;
+        let totalPowerTime = 0;
+        
+        // Get all segments including Warmup and Cooldown
+        const allSegments = workout?.querySelectorAll('Warmup, SteadyState, IntervalT, Ramp, FreeRide, Cooldown');
+        
+        allSegments?.forEach(seg => {
+            const duration = parseFloat(seg.getAttribute('Duration')) || 0;
+            totalDurationSeconds += duration;
+            
+            // Calculate weighted average power for this segment
+            let segmentPower = 0;
+            const power = seg.getAttribute('Power');
+            const powerLow = seg.getAttribute('PowerLow');
+            const powerHigh = seg.getAttribute('PowerHigh');
+            
+            if (power) {
+                segmentPower = parseFloat(power);
+            } else if (powerLow && powerHigh) {
+                // Average of low and high for ramps
+                segmentPower = (parseFloat(powerLow) + parseFloat(powerHigh)) / 2;
+            } else if (powerLow) {
+                segmentPower = parseFloat(powerLow);
+            } else if (powerHigh) {
+                segmentPower = parseFloat(powerHigh);
+            }
+            
+            if (segmentPower > 0) {
+                weightedPowerSum += segmentPower * duration;
+                totalPowerTime += duration;
+            }
+        });
+        
+        // Convert to minutes and hours
+        const durationMin = Math.round(totalDurationSeconds / 60);
+        const durationHours = totalDurationSeconds / 3600;
+        
+        // Calculate average power (as fraction of FTP)
+        const avgPowerFraction = totalPowerTime > 0 ? weightedPowerSum / totalPowerTime : 0.7;
+        
+        // Determine intensity from calculated average power
+        const ftp = parseInt(document.getElementById('ftpSlider')?.value || 280);
+        const avgPower = ftp * avgPowerFraction;
+        
+        let intensity = 'moderate';
+        let carbsPerHour = 60;
+        
+        if (avgPowerFraction >= 1.05) {
+            intensity = 'high';
+            carbsPerHour = 80;
+        } else if (avgPowerFraction >= 0.85) {
+            intensity = 'moderate-high';
+            carbsPerHour = 70;
+        } else if (avgPowerFraction <= 0.70) {
+            intensity = 'low';
+            carbsPerHour = 40;
+        }
+        
+        // Also check workout name for clues
+        if (name.toLowerCase().includes('vo2') || name.toLowerCase().includes('sprint')) {
+            intensity = 'high';
+            carbsPerHour = 80;
+        } else if (name.toLowerCase().includes('endurance') || name.toLowerCase().includes('z2') || name.toLowerCase().includes('easy')) {
+            intensity = 'low';
+            carbsPerHour = 40;
+        }
+        
+        // Calculate energy expenditure (power in watts, duration in hours)
+        const weight = parseInt(document.getElementById('weightSlider')?.value || 75);
+        const cycling_kcal = (avgPower / 75) * 5 * durationHours * 60;
+        
+        // Calculate daily needs
+        const age = 39;
+        const height = 180;
+        const sex = 'male';
+        let bmr;
+        if (sex === 'male') {
+            bmr = (10 * weight) + (6.25 * height) - (5 * age) + 5;
+        } else {
+            bmr = (10 * weight) + (6.25 * height) - (5 * age) - 161;
+        }
+        const base_tdee = bmr * 1.2;
+        const daily_kcal = base_tdee + cycling_kcal;
+        
+        // Macros for this day
+        const cho_grams = Math.round(weight * 6); // Hard day
+        const pro_grams = Math.round(weight * 1.8);
+        const fat_grams = Math.round((daily_kcal - (cho_grams * 4) - (pro_grams * 4)) / 9);
+        
+        // During workout fueling
+        let duringCarbs = 0;
+        let duringTiming = 'Not needed';
+        if (durationMin > 90 && intensity !== 'low') {
+            // For workouts >90 min at moderate-high intensity
+            duringCarbs = Math.round(carbsPerHour * durationHours);
+            duringTiming = `Start at 30 min, then every 15-20 min`;
+        } else if (durationMin > 90 && intensity === 'low') {
+            // For long easy rides
+            duringCarbs = Math.round(50 * durationHours);
+            duringTiming = `Start at 60 min, then every 20-30 min`;
+        } else if (durationMin > 60 && intensity === 'high') {
+            // For hard sessions 60-90 min
+            duringCarbs = 30;
+            duringTiming = `One gel mid-session`;
+        } else if (durationMin <= 60) {
+            // Short sessions don't need during-workout fueling
+            duringCarbs = 0;
+            duringTiming = `Pre-workout meal sufficient`;
+        }
+        
+        // Pre-workout
+        const preCarbs = intensity === 'high' ? Math.round(weight * 1.5) : Math.round(weight * 1);
+        const preTiming = intensity === 'high' ? '2-3 hours before' : 'Optional';
+        
+        // Post-workout recovery (only if long AND hard)
+        const needsRecovery = durationMin >= 90 && (intensity === 'high' || intensity === 'moderate-high');
+        const postCarbs = needsRecovery ? Math.round(weight * 1.2) : 0;
+        const postProtein = needsRecovery ? 25 : 0;
+        
+        // Format duration nicely
+        const hours = Math.floor(durationMin / 60);
+        const minutes = durationMin % 60;
+        let durationDisplay = `${durationMin} minutes`;
+        if (hours > 0) {
+            durationDisplay = `${hours}h ${minutes}m (${durationMin} min)`;
+        }
+        
+        // Display results
+        document.getElementById('zwoResults').innerHTML = `
+            <div class="zwo-workout-info">
+                <div class="zwo-workout-title">${name}</div>
+                <p><strong>Duration:</strong> ${durationDisplay}</p>
+                <p><strong>Estimated Intensity:</strong> ${intensity} (avg power: ${(avgPowerFraction * 100).toFixed(0)}% FTP)</p>
+                <p><strong>Estimated Avg Power:</strong> ${Math.round(avgPower)}W (${(avgPower/weight).toFixed(2)} W/kg)</p>
+            </div>
+            
+            <h4 style="margin-top: 20px;">Daily Nutrition Targets for This Day</h4>
+            <div class="zwo-macros">
+                <div class="macro-box">
+                    <span class="macro-value">${Math.round(daily_kcal)}</span>
+                    <span class="macro-unit">kcal</span>
+                    <div class="macro-label">Total Calories</div>
+                </div>
+                <div class="macro-box">
+                    <span class="macro-value">${cho_grams}</span>
+                    <span class="macro-unit">g</span>
+                    <div class="macro-label">Carbs</div>
+                </div>
+                <div class="macro-box">
+                    <span class="macro-value">${pro_grams}</span>
+                    <span class="macro-unit">g</span>
+                    <div class="macro-label">Protein</div>
+                </div>
+                <div class="macro-box">
+                    <span class="macro-value">${fat_grams}</span>
+                    <span class="macro-unit">g</span>
+                    <div class="macro-label">Fat</div>
+                </div>
+            </div>
+            
+            <h4 style="margin-top: 20px;">Fueling Timeline</h4>
+            <table style="margin: 12px 0;">
+                <thead>
+                    <tr>
+                        <th>Timing</th>
+                        <th>Carbs</th>
+                        <th>Protein</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Pre-Workout</strong></td>
+                        <td>${preCarbs}g</td>
+                        <td>—</td>
+                        <td>${preTiming}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>During Workout</strong></td>
+                        <td>${duringCarbs}g</td>
+                        <td>—</td>
+                        <td>${duringTiming}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Post-Workout</strong></td>
+                        <td>${postCarbs}g</td>
+                        <td>${postProtein}g</td>
+                        <td>${needsRecovery ? 'Within 30 min (if training again within 24-36hrs)' : 'Optional — just eat next meal'}</td>
+                    </tr>
+                </tbody>
+            </table>
+        `;
+        document.getElementById('zwoResults').classList.add('show');
+    };
+    
+    reader.readAsText(file);
+}
+
+// Drag and drop
+const uploadArea = document.getElementById('zwoUpload');
+['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+    uploadArea.addEventListener(eventName, preventDefaults, false);
+});
+
+function preventDefaults(e) {
+    e.preventDefault();
+    e.stopPropagation();
+}
+
+['dragenter', 'dragover'].forEach(eventName => {
+    uploadArea.addEventListener(eventName, () => uploadArea.classList.add('dragover'), false);
+});
+
+['dragleave', 'drop'].forEach(eventName => {
+    uploadArea.addEventListener(eventName, () => uploadArea.classList.remove('dragover'), false);
+});
+
+uploadArea.addEventListener('drop', (e) => {
+    const dt = e.dataTransfer;
+    const files = dt.files;
+    if (files.length > 0 && files[0].name.endsWith('.zwo')) {
+        document.getElementById('zwoFileInput').files = files;
+        parseZWOFile({target: {files: files}});
+    }
+}, false);
+
+// Initialize calculator on load
+document.addEventListener('DOMContentLoaded', function() {
+    updateNutritionCalc();
+});
+</script>
+
+
+
+<section id="mental-training">
+    <h2>9 · Mental Training</h2>
+    
+    <p>Physical training builds the engine. Mental training determines whether you use that engine when things get hard.</p>
+    
+    <h3>6-2-7 Breathing Technique</h3>
+    <p><strong>The pattern:</strong> Inhale 6 seconds, hold 2 seconds, exhale 7 seconds.</p>
+    <p>The key is the exhale is longer than inhale—this triggers the calming response.</p>
+    <p><strong>Use it for:</strong> Pre-race anxiety, mid-race panic, after a bad section.</p>
+    
+    <h3>Performance Statements</h3>
+    <p>Pre-planned phrases that replace negative self-talk:</p>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Examples</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Technical cues</strong></td>
+                <td>"Smooth pedal stroke" • "Relax your shoulders" • "Light hands"</td>
+            </tr>
+            <tr>
+                <td><strong>Pain responses</strong></td>
+                <td>"This is supposed to be hard" • "Pain is temporary, quitting is permanent"</td>
+            </tr>
+            <tr>
+                <td><strong>Process statements</strong></td>
+                <td>"Just get to the next aid station" • "One more climb" • "Next mile marker"</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h3>Personal Highlight Reel</h3>
+    <p>Build a mental movie you can play to access confidence:</p>
+    <ol>
+        <li><strong>Scene 1:</strong> A past moment when you overcame something difficult</li>
+        <li><strong>Scene 2:</strong> A future crucial moment in this race—see yourself executing perfectly</li>
+        <li><strong>Scene 3:</strong> Crossing the finish line—in full sensory detail</li>
+    </ol>
+    <p>Practice until you can trigger the confident feeling on demand.</p>
+</section>
+
+
+
+<section id="race-tactics">
+    <h2>10 · Race Tactics for Unbound Gravel 200</h2>
+    
+    <p>Every long gravel race follows a predictable three-act structure.</p>
+    
+    <h3>The Three Acts</h3>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Phase</th>
+                <th>When</th>
+                <th>What Happens</th>
+                <th>Your Job</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Act 1: The Madness</strong></td>
+                <td>0-2 hours</td>
+                <td>Chaos. Fresh legs + nervous energy. Attacks fly. Groups form/shatter.</td>
+                <td>Survive. Don't chase. Find sustainable group. Eat. Drink.</td>
+            </tr>
+            <tr>
+                <td><strong>Act 2: False Dawn</strong></td>
+                <td>2-6 hours</td>
+                <td>Order returns. Groups stabilize. Can feel deceptively easy.</td>
+                <td>Stay disciplined on nutrition. Contribute to paceline but no hero pulls.</td>
+            </tr>
+            <tr>
+                <td><strong>Act 3: The Piper</strong></td>
+                <td>Final 2-4 hours</td>
+                <td>The bill comes due. Under-fueled riders bonk. Under-prepared cramp.</td>
+                <td>Maintain YOUR pace while others lose theirs. This is where you move up.</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h3>Decision Trees</h3>
+    
+    <div class="decision-tree">
+        <h4>Flat Tire Protocol</h4>
+        <ol>
+            <li>Stay calm—this is expected, not a crisis</li>
+            <li>Check if sealant is working (spin wheel, look for bubbles)</li>
+            <li>If hole visible, insert plug immediately</li>
+            <li>If plug fails or sidewall cut, replace tube</li>
+            <li>Resume at Z2 for 2-3 minutes to settle back in</li>
+        </ol>
+    </div>
+    
+    <div class="decision-tree">
+        <h4>Dropped from Group</h4>
+        <ol>
+            <li>Don't panic—emotional response costs more energy</li>
+            <li>Assess: were you overextended or did they surge?</li>
+            <li>Find YOUR sustainable pace</li>
+            <li>Look for riders at similar pace within 30-60 seconds</li>
+            <li>If solo, accept it—focus on YOUR race</li>
+        </ol>
+    </div>
+    
+    <div class="decision-tree">
+        <h4>Bonking Protocol</h4>
+        <ol>
+            <li><strong>STOP IMMEDIATELY</strong>—don't try to push through</li>
+            <li>Consume 2-3 gels or 200-300 calories FAST</li>
+            <li>Wait 15-20 minutes MINIMUM</li>
+            <li>Resume at Z1-Z2 pace ONLY</li>
+            <li>Fuel aggressively for next hour</li>
+        </ol>
+    </div>
+</section>
+
+
+
+<section id="race-week">
+    <h2>11 · Race Week Protocol</h2>
+    
+    <p>By race week, the training is done. You can't add fitness—you can only preserve what you've built or add dumb fatigue through poor decisions.</p>
+    
+    <h3>Race Morning Timeline</h3>
+    
+    <div class="timeline">
+        <div class="timeline-item">
+            <div class="timeline-time">3-4 Hours Before</div>
+            <p>Wake up. Eat familiar, high-carb, low-fiber breakfast. Target 1-2g carbs per kg.</p>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-time">2 Hours Before</div>
+            <p>Arrive at venue. Set up bike and gear. Use bathroom. Begin sipping fluids.</p>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-time">1 Hour Before</div>
+            <p>Final bike check: tire pressure, brakes, shifting. Short warm-up spin. Start pre-race nutrition (100-200 cal carbs).</p>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-time">30 Minutes Before</div>
+            <p>Run through highlight reel visualization. Review performance statements. Begin settling mind.</p>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-time">10 Minutes Before</div>
+            <p>6-2-7 breathing. Find your spot. Check nutrition is accessible.</p>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-time">Start</div>
+            <p>Controlled effort. Find sustainable rhythm. First gel at 20 minutes, not 60.</p>
+        </div>
+    </div>
+    
+    <div class="callout tip">
+        <h4>Race Week Rule</h4>
+        <p>Less is more. You've done the work. Now let your body absorb it. Show up fresh, not fatigued from last-minute training.</p>
+    </div>
+</section>
+
+
+
+<section id="faq">
+    <h2>14 · Frequently Asked Questions</h2>
+    
+    <h4>What if I miss a week of training?</h4>
+    <p>One week won't kill you. Jump back in where the plan currently is—don't try to "make up" missed work. Forward progress only.</p>
+    
+    <h4>Can I do this plan entirely indoors?</h4>
+    <p>Technically yes, but you're missing critical skills development. Do at least 30-40% outside, especially long rides.</p>
+    
+    <h4>What if my FTP changes mid-plan?</h4>
+    <p>Test at Week 6-7 if curious. Only adjust zones if FTP changed by 5+ watts. Small fluctuations are noise.</p>
+    
+    <h4>How do I know if I'm overtraining?</h4>
+    <p>Elevated resting heart rate, persistent fatigue, declining performance, irritability, poor sleep. If 3+ symptoms, take 2-3 days completely off.</p>
+    
+    <h4>What if I can't hit the prescribed watts?</h4>
+    <p>Either FTP is set too high, or you're under-recovered. Take an extra rest day, retest FTP if needed.</p>
+    
+    <h4>Should I follow the plan exactly?</h4>
+    <p>Follow as written. The order isn't random—hard days are spaced for optimal recovery. If you have a non-standard schedule, shift the entire week, don't rearrange individual workouts.</p>
+    
+    <h4>What if I get sick?</h4>
+    <p>Above the neck (head cold): reduce intensity by one zone. Below the neck (chest, stomach): skip the workout entirely. Don't be a hero.</p>
+</section>
+
+
+
+
+<!-- Workout Detail Modal -->
+<div class="workout-modal" id="workoutModal" onclick="if(event.target === this) closeWorkoutModal()">
+    <div class="workout-modal-content">
+        <div class="workout-modal-header">
+            <h3 id="modalTitle">Workout Details</h3>
+            <button class="workout-modal-close" onclick="closeWorkoutModal()">×</button>
+        </div>
+        <div id="modalBody">
+            <!-- Populated by JavaScript -->
+        </div>
+    </div>
+</div>
+
+<script>
+// Workout descriptions by type
+const workoutDescriptions = {
+    'strength': {
+        title: 'Strength Session',
+        duration: '45-60 min',
+        description: 'Full-body strength workout targeting cycling-specific muscle groups.',
+        instructions: [
+            'Watch video demos before new exercises',
+            'Complete warm-up activation circuit first',
+            'Rest 60-120s between sets (longer for heavy sets)',
+            'Stop if form breaks down',
+            'Log weights for progressive overload tracking'
+        ],
+        file: 'Check your ZWO files for the specific workout'
+    },
+    'intervals': {
+        title: 'Interval Session',
+        duration: '60-90 min',
+        description: 'Structured intensity work targeting specific energy systems.',
+        instructions: [
+            '15-20 min warm-up before first interval',
+            'Hit target power, don\'t exceed it',
+            'If you can\'t complete reps, reduce target by 5%',
+            'Full recovery between sets',
+            'Easy spin cool-down'
+        ],
+        zones: 'Varies by phase — check specific workout'
+    },
+    'easy_ride': {
+        title: 'Easy / Recovery Ride',
+        duration: '45-90 min',
+        description: 'Truly easy spinning to promote recovery without adding fatigue.',
+        instructions: [
+            'Zone 1-2 only — this should feel embarrassingly easy',
+            'Conversation pace throughout',
+            'No Strava segments, no chasing groups',
+            'Purpose is recovery, not fitness',
+            'If HR drifts into Z3, slow down'
+        ],
+        zones: 'Z1-Z2 (<75% FTP)'
+    },
+    'long_ride': {
+        title: 'Long Endurance Ride',
+        duration: '2.5-5+ hours',
+        description: 'Building aerobic base and time-in-saddle.',
+        instructions: [
+            'Mostly Z2 with natural terrain variation',
+            'Practice race nutrition (target 60-80g carbs/hour)',
+            'Include some Z3 efforts if terrain demands',
+            'Build mental fortitude for long efforts',
+            'This is where endurance adaptations happen'
+        ],
+        zones: 'Z2 primary (65-75% FTP), Z3 ok on climbs'
+    },
+    'tempo': {
+        title: 'Tempo Ride',
+        duration: '60-90 min',
+        description: 'Sustained moderate effort building muscular endurance.',
+        instructions: [
+            'Main set at 76-87% FTP (Z3)',
+            'Should feel comfortably hard',
+            'Can talk in short sentences',
+            'Don\'t let it creep into threshold',
+            'Good for building fatigue resistance'
+        ],
+        zones: 'Z3 (76-87% FTP)'
+    },
+    'rest': {
+        title: 'Rest Day',
+        duration: '0 min',
+        description: 'Complete rest — no training.',
+        instructions: [
+            'No cycling (not even "easy")',
+            'Light walking/stretching is fine',
+            'Focus on sleep and nutrition',
+            'This is where adaptation happens',
+            'Don\'t feel guilty — rest IS training'
+        ]
+    }
+};
+
+function showWorkoutModal(element) {
+    const week = element.dataset.week;
+    const day = element.dataset.day;
+    const phase = element.dataset.phase;
+    const am = element.dataset.am;
+    const pm = element.dataset.pm;
+    
+    const modal = document.getElementById('workoutModal');
+    const title = document.getElementById('modalTitle');
+    const body = document.getElementById('modalBody');
+    
+    // Get workout info
+    const workoutType = (am || 'rest').toLowerCase().replace(/ /g, '_');
+    const workout = workoutDescriptions[workoutType] || workoutDescriptions['easy_ride'];
+    
+    title.textContent = `Week ${week} · ${day.charAt(0).toUpperCase() + day.slice(1)} · ${workout.title}`;
+    
+    let html = `
+        <div class="workout-detail">
+            <div class="workout-detail-label">Phase</div>
+            <div>${phase}</div>
+        </div>
+        <div class="workout-detail">
+            <div class="workout-detail-label">Duration</div>
+            <div>${workout.duration}</div>
+        </div>
+        <div class="workout-detail">
+            <div class="workout-detail-label">Description</div>
+            <div>${workout.description}</div>
+        </div>
+    `;
+    
+    if (workout.zones) {
+        html += `
+        <div class="workout-detail">
+            <div class="workout-detail-label">Target Zones</div>
+            <div>${workout.zones}</div>
+        </div>
+        `;
+    }
+    
+    html += `
+        <div class="workout-detail">
+            <div class="workout-detail-label">Execution Notes</div>
+            <ul style="margin: 8px 0 0 0; padding-left: 20px;">
+                ${workout.instructions.map(i => `<li>${i}</li>`).join('')}
+            </ul>
+        </div>
+    `;
+    
+    if (pm) {
+        html += `
+        <div class="workout-detail" style="margin-top: 16px; padding-top: 12px; border-top: 1px dashed #ddd;">
+            <div class="workout-detail-label">PM Session</div>
+            <div>${pm.replace(/_/g, ' ')}</div>
+        </div>
+        `;
+    }
+    
+    body.innerHTML = html;
+    modal.classList.add('open');
+}
+
+function closeWorkoutModal() {
+    document.getElementById('workoutModal').classList.remove('open');
+}
+
+// Close on Escape key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeWorkoutModal();
+});
+</script>
+
+
+<footer class="guide-footer">
+    <p>You have the plan.</p>
+    <p>You understand how training works, how to execute the workouts, how to fuel and hydrate, how to manage your mental game, and how to approach race day.</p>
+    <p><strong>Now do the work.</strong></p>
+    <p>Not perfectly. Not heroically. Consistently. Intelligently. Over 24 weeks.</p>
+    <p>Show up for the workouts. Do them correctly. Recover properly. Trust the process.</p>
+    <p style="font-size: 20px; margin-top: 32px;"><strong>Let's get after it, Matti.</strong></p>
+    <p style="font-size: 11px; color: #666; margin-top: 24px;">Generated December 27, 2025 • Gravel God Cycling</p>
+</footer>
+
+</body>
+</html>

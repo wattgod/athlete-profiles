@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matti Rowe - Coaching Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sometype+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --fg: #000000;
+            --border: #000000;
+            --muted: #666666;
+            --soft: #f5f5f5;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--fg);
+            font-family: "Sometype Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            padding: 24px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* HEADER */
+        .header {
+            border: 3px solid var(--border);
+            padding: 24px;
+            margin-bottom: 32px;
+            background: var(--soft);
+        }
+
+        .header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            margin-bottom: 8px;
+        }
+
+        .header-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-top: 16px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .header-meta span {
+            border: 2px solid var(--border);
+            padding: 6px 12px;
+            background: var(--bg);
+        }
+
+        /* GRID LAYOUT */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        /* CARD STYLES */
+        .card {
+            border: 3px solid var(--border);
+            padding: 24px;
+            background: var(--bg);
+        }
+
+        .card-header {
+            font-size: 18px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .card-content {
+            font-size: 14px;
+        }
+
+        /* KEY-VALUE PAIRS */
+        .kv-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .kv-row:last-child {
+            border-bottom: none;
+        }
+
+        .kv-key {
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--muted);
+        }
+
+        .kv-value {
+            font-weight: 500;
+            text-align: right;
+        }
+
+        /* TABLE STYLES */
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+        }
+
+        .table th {
+            border: 2px solid var(--border);
+            padding: 12px;
+            text-align: left;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-size: 12px;
+            background: var(--soft);
+        }
+
+        .table td {
+            border: 2px solid var(--border);
+            padding: 12px;
+            border-top: none;
+        }
+
+        .table tr:first-child td {
+            border-top: 2px solid var(--border);
+        }
+
+        /* BADGES */
+        .badge {
+            display: inline-block;
+            border: 2px solid var(--border);
+            padding: 4px 10px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-weight: 600;
+            margin: 2px;
+        }
+
+        .badge-key {
+            background: var(--fg);
+            color: var(--bg);
+        }
+
+        /* FULL WIDTH CARDS */
+        .card-full {
+            grid-column: 1 / -1;
+        }
+
+        /* WEEKLY SCHEDULE */
+        .schedule-day {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 16px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .schedule-day:last-child {
+            border-bottom: none;
+        }
+
+        .day-name {
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .day-content {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .workout-type {
+            font-weight: 600;
+        }
+
+        .workout-notes {
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            body {
+                padding: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>MATTI ROWE</h1>
+        <div class="header-meta">
+            <span>ID: matti-rowe</span>
+            <span>EMAIL: matti@gravelgod.com</span>
+            <span>TIER: COMPETE</span>
+            <span>PLAN: 24 WEEKS</span>
+        </div>
+    </div>
+
+    <div class="dashboard-grid">
+        <!-- TARGET RACE -->
+        <div class="card">
+            <div class="card-header">TARGET RACE</div>
+            <div class="card-content">
+                <div class="kv-row">
+                    <span class="kv-key">Race</span>
+                    <span class="kv-value">Unbound Gravel 200</span>
+                </div>
+                <div class="kv-row">
+                    <span class="kv-key">Date</span>
+                    <span class="kv-value">June 07, 2026</span>
+                </div>
+                <div class="kv-row">
+                    <span class="kv-key">Distance</span>
+                    <span class="kv-value">200 MILES</span>
+                </div>
+                <div class="kv-row">
+                    <span class="kv-key">Goal</span>
+                    <span class="kv-value">COMPETE</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- FITNESS MARKERS -->
+        <div class="card">
+            <div class="card-header">FITNESS MARKERS</div>
+            <div class="card-content">
+                <div class="kv-row">
+                    <span class="kv-key">FTP</span>
+                    <span class="kv-value">280 W</span>
+                </div>
+                <div class="kv-row">
+                    <span class="kv-key">FTP Date</span>
+                    <span class="kv-value">November 15, 2024</span>
+                </div>
+                <div class="kv-row">
+                    <span class="kv-key">Weight</span>
+                    <span class="kv-value">75 KG</span>
+                </div>
+                <div class="kv-row">
+                    <span class="kv-key">W/KG</span>
+                    <span class="kv-value">3.73</span>
+                </div>
+                <div class="kv-row">
+                    <span class="kv-key">Resting HR</span>
+                    <span class="kv-value">48 BPM</span>
+                </div>
+                <div class="kv-row">
+                    <span class="kv-key">Max HR</span>
+                    <span class="kv-value">185 BPM</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- TRAINING HISTORY -->
+        <div class="card">
+            <div class="card-header">TRAINING HISTORY</div>
+            <div class="card-content">
+                <div class="kv-row">
+                    <span class="kv-key">Years Cycling</span>
+                    <span class="kv-value">10+</span>
+                </div>
+                <div class="kv-row">
+                    <span class="kv-key">Years Structured</span>
+                    <span class="kv-value">8</span>
+                </div>
+                <div class="kv-row">
+                    <span class="kv-key">Strength Background</span>
+                    <span class="kv-value">INTERMEDIATE</span>
+                </div>
+                <div class="kv-row">
+                    <span class="kv-key">Peak Weekly Hours</span>
+                    <span class="kv-value">18 H</span>
+                </div>
+                <div class="kv-row">
+                    <span class="kv-key">Current Weekly Hours</span>
+                    <span class="kv-value">12 H</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- PLAN INFO -->
+        <div class="card">
+            <div class="card-header">CURRENT PLAN</div>
+            <div class="card-content">
+                <div class="kv-row">
+                    <span class="kv-key">Tier</span>
+                    <span class="kv-value">COMPETE</span>
+                </div>
+                <div class="kv-row">
+                    <span class="kv-key">Plan Weeks</span>
+                    <span class="kv-value">24</span>
+                </div>
+                <div class="kv-row">
+                    <span class="kv-key">Strength Frequency</span>
+                    <span class="kv-value">2X/WEEK</span>
+                </div>
+                <div class="kv-row">
+                    <span class="kv-key">Equipment Tier</span>
+                    <span class="kv-value">MODERATE</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- WEEKLY AVAILABILITY -->
+        <div class="card">
+            <div class="card-header">WEEKLY AVAILABILITY</div>
+            <div class="card-content">
+                <div class="kv-row">
+                    <span class="kv-key">Total Hours</span>
+                    <span class="kv-value">15 H</span>
+                </div>
+                <div class="kv-row">
+                    <span class="kv-key">Cycling Target</span>
+                    <span class="kv-value">12 H</span>
+                </div>
+                <div class="kv-row">
+                    <span class="kv-key">Strength Max</span>
+                    <span class="kv-value">2 SESSIONS</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- HEALTH FACTORS -->
+        <div class="card">
+            <div class="card-header">HEALTH FACTORS</div>
+            <div class="card-content">
+                <div class="kv-row">
+                    <span class="kv-key">Age</span>
+                    <span class="kv-value">38</span>
+                </div>
+                <div class="kv-row">
+                    <span class="kv-key">Sleep Quality</span>
+                    <span class="kv-value">GOOD</span>
+                </div>
+                <div class="kv-row">
+                    <span class="kv-key">Sleep Hours</span>
+                    <span class="kv-value">7 H</span>
+                </div>
+                <div class="kv-row">
+                    <span class="kv-key">Stress Level</span>
+                    <span class="kv-value">MODERATE</span>
+                </div>
+                <div class="kv-row">
+                    <span class="kv-key">Recovery Capacity</span>
+                    <span class="kv-value">NORMAL</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- EQUIPMENT -->
+        <div class="card">
+            <div class="card-header">STRENGTH EQUIPMENT</div>
+            <div class="card-content">
+                <div><span class="badge">BODYWEIGHT</span> <span class="badge">DUMBBELLS</span> <span class="badge">KETTLEBELLS</span> <span class="badge">RESISTANCE BANDS</span> <span class="badge">PULL UP BAR</span></div>
+            </div>
+        </div>
+
+        <!-- CYCLING EQUIPMENT -->
+        <div class="card">
+            <div class="card-header">CYCLING EQUIPMENT</div>
+            <div class="card-content">
+                <div class="kv-row">
+                    <span class="kv-key">Smart Trainer</span>
+                    <span class="kv-value">YES</span>
+                </div>
+                <div class="kv-row">
+                    <span class="kv-key">Power Meter</span>
+                    <span class="kv-value">YES</span>
+                </div>
+                <div class="kv-row">
+                    <span class="kv-key">HR Monitor</span>
+                    <span class="kv-value">YES</span>
+                </div>
+                <div class="kv-row">
+                    <span class="kv-key">Indoor Setup</span>
+                    <span class="kv-value">DEDICATED_PAIN_CAVE</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- WEEKLY SCHEDULE -->
+        <div class="card card-full">
+            <div class="card-header">WEEKLY SCHEDULE</div>
+            <div class="card-content">
+                
+            <div class="schedule-day">
+                <div class="day-name">MONDAY <span class="badge badge-key">KEY</span></div>
+                <div class="day-content">
+                    <div class="workout-type">INTERVALS</div>
+                    <div class="workout-notes">Key session - intervals or threshold</div>
+                    <div class="workout-notes">MAX: 90 MIN</div>
+                </div>
+            </div>
+        
+
+            <div class="schedule-day">
+                <div class="day-name">TUESDAY <span class="badge badge-key">KEY</span></div>
+                <div class="day-content">
+                    <div class="workout-type">INTERVALS (PM)</div>
+                    <div class="workout-notes">Key session - intervals PM</div>
+                    <div class="workout-notes">MAX: 90 MIN</div>
+                </div>
+            </div>
+        
+
+            <div class="schedule-day">
+                <div class="day-name">WEDNESDAY </div>
+                <div class="day-content">
+                    <div class="workout-type">EASY_RIDE</div>
+                    <div class="workout-notes">Easy ride or recovery</div>
+                    <div class="workout-notes">MAX: 60 MIN</div>
+                </div>
+            </div>
+        
+
+            <div class="schedule-day">
+                <div class="day-name">THURSDAY <span class="badge badge-key">KEY</span></div>
+                <div class="day-content">
+                    <div class="workout-type">INTERVALS (PM)</div>
+                    <div class="workout-notes">Key session - intervals PM</div>
+                    <div class="workout-notes">MAX: 90 MIN</div>
+                </div>
+            </div>
+        
+
+            <div class="schedule-day">
+                <div class="day-name">FRIDAY </div>
+                <div class="day-content">
+                    <div class="workout-type">EASY_RIDE</div>
+                    <div class="workout-notes">Easy ride or recovery</div>
+                    <div class="workout-notes">MAX: 45 MIN</div>
+                </div>
+            </div>
+        
+
+            <div class="schedule-day">
+                <div class="day-name">SATURDAY <span class="badge badge-key">KEY</span></div>
+                <div class="day-content">
+                    <div class="workout-type">LONG_RIDE</div>
+                    <div class="workout-notes">Key session - long ride</div>
+                    <div class="workout-notes">MAX: 300 MIN</div>
+                </div>
+            </div>
+        
+
+            <div class="schedule-day">
+                <div class="day-name">SUNDAY </div>
+                <div class="day-content">
+                    <div class="workout-type">STRENGTH</div>
+                    <div class="workout-notes">Strength session</div>
+                    <div class="workout-notes">MAX: 180 MIN</div>
+                </div>
+            </div>
+        
+            </div>
+        </div>
+
+        <!-- KEY DAYS & STRENGTH DAYS -->
+        <div class="card">
+            <div class="card-header">KEY DAYS</div>
+            <div class="card-content">
+                <div><span class="badge">MONDAY</span> <span class="badge">TUESDAY</span> <span class="badge">THURSDAY</span> <span class="badge">SATURDAY</span></div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">STRENGTH DAYS</div>
+            <div class="card-content">
+                <div><span class="badge">SUNDAY</span> <span class="badge">SATURDAY</span></div>
+            </div>
+        </div>
+
+        <!-- EXERCISE EXCLUSIONS -->
+        
+        <div class="card">
+            <div class="card-header">EXERCISE EXCLUSIONS</div>
+            <div class="card-content">
+                <div><span class="badge" style="text-decoration: line-through;">BOX JUMP</span> <span class="badge" style="text-decoration: line-through;">JUMP SQUAT</span></div>
+            </div>
+        </div>
+    
+    </div>
+
+    <div style="text-align: center; margin-top: 48px; padding-top: 24px; border-top: 3px solid var(--border); font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted);">
+        GENERATED DECEMBER 27, 2025 AT 22:59
+    </div>
+</body>
+</html>
