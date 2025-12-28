@@ -315,7 +315,7 @@ jobs:
             Review the intake and reach out within 24 hours.
       
       - name: Send failure notification
-        if: failure()
+        if: failure() && steps.payload.outputs.email != '' && steps.payload.outputs.email != 'null'
         continue-on-error: true
         uses: dawidd6/action-send-mail@v3
         with:
