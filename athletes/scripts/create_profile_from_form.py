@@ -354,7 +354,12 @@ def create_profile_from_form(athlete_id: str, form_data: Dict) -> Dict:
         'athlete_id': athlete_id,
         'birthday': form_data.get('birthday'),
         
-        'primary_goal': convert_primary_goal(form_data.get('primary_goal', '')),
+        # Infer primary_goal from has_race_goal if not explicitly provided
+        'primary_goal': (
+            convert_primary_goal(form_data.get('primary_goal', '')) 
+            if form_data.get('primary_goal') 
+            else ('specific_race' if form_data.get('has_race_goal') == 'yes' else 'general_fitness')
+        ),
         
         'target_race': {
             'name': primary_race.get('name', '') if primary_race else form_data.get('race_name', ''),
