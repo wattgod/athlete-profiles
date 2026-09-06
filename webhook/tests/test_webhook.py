@@ -12,6 +12,7 @@ import json
 import copy
 import hmac
 import hashlib
+import logging
 import tempfile
 import uuid
 from io import BytesIO
@@ -2664,6 +2665,88 @@ class TestConsultingCheckout:
         """CORS preflight returns 204."""
         response = client.options('/api/create-consulting-checkout')
         assert response.status_code == 204
+
+
+class TestConsultingCheckout400Logging:
+    """Verify 400 validation failures emit structured logs with origin + failure reason (no PII)."""
+
+    def test_invalid_json_logs_failure(self, client, caplog):
+        """Invalid JSON logs the failure reason and origin."""
+        with caplog.at_level(logging.WARNING):
+            response = client.post(
+                '/api/create-consulting-checkout',
+                data='not json',
+                content_type='application/json',
+                headers={'Origin': 'https://xcskilabs.com'}
+            )
+        assert response.status_code == 400
+        assert any('Consulting checkout invalid JSON' in rec.message and
+                   'origin=https://xcskilabs.com' in rec.message and
+                   'brand=xcskilabs' in rec.message
+                   for rec in caplog.records)
+
+    def test_missing_email_logs_failure(self, client, caplog):
+        """Missing email logs the failure reason without logging PII."""
+        with caplog.at_level(logging.WARNING):
+            response = client.post(
+                '/api/create-consulting-checkout',
+                json={'name': 'Test', 'hours': 1},
+                content_type='application/json',
+                headers={'Origin': 'https://gravelgodcycling.com'}
+            )
+        assert response.status_code == 400
+        assert any('Consulting checkout missing/invalid email' in rec.message and
+                   'origin=https://gravelgodcycling.com' in rec.message and
+                   'brand=gravelgod' in rec.message
+                   for rec in caplog.records)
+        # Verify no email/name in logs
+        log_output = '\n'.join(rec.message for rec in caplog.records)
+        assert 'Test' not in log_output
+
+    def test_missing_name_logs_failure(self, client, caplog):
+        """Missing name logs the failure reason without logging PII."""
+        with caplog.at_level(logging.WARNING):
+            response = client.post(
+                '/api/create-consulting-checkout',
+                json={'email': 'test@test.com', 'hours': 1},
+                content_type='application/json'
+            )
+        assert response.status_code == 400
+        assert any('Consulting checkout missing name' in rec.message and
+                   'origin=' in rec.message and
+                   'brand=gravelgod' in rec.message
+                   for rec in caplog.records)
+        # Verify no email in logs
+        log_output = '\n'.join(rec.message for rec in caplog.records)
+        assert 'test@test.com' not in log_output
+
+    def test_invalid_hours_range_logs_failure(self, client, caplog):
+        """Hours out of range logs the failure with the hours value."""
+        with caplog.at_level(logging.WARNING):
+            response = client.post(
+                '/api/create-consulting-checkout',
+                json={'name': 'Test', 'email': 'test@test.com', 'hours': 11},
+                content_type='application/json'
+            )
+        assert response.status_code == 400
+        assert any('Consulting checkout invalid hours range: 11' in rec.message and
+                   'origin=' in rec.message and
+                   'brand=gravelgod' in rec.message
+                   for rec in caplog.records)
+
+    def test_invalid_hours_type_logs_failure(self, client, caplog):
+        """Invalid hours type logs the failure with repr."""
+        with caplog.at_level(logging.WARNING):
+            response = client.post(
+                '/api/create-consulting-checkout',
+                json={'name': 'Test', 'email': 'test@test.com', 'hours': 'abc'},
+                content_type='application/json'
+            )
+        assert response.status_code == 400
+        assert any("Consulting checkout invalid hours type: 'abc'" in rec.message and
+                   'origin=' in rec.message and
+                   'brand=gravelgod' in rec.message
+                   for rec in caplog.records)
 
 
 class TestCoachingWebhook:

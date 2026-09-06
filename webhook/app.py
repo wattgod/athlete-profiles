@@ -6367,8 +6367,12 @@ def create_consulting_checkout():
     if request.method == 'OPTIONS':
         return '', 204
 
-    data = request.get_json()
+    origin = request.headers.get('Origin', '')
+    brand = _brand_from_origin(origin)
+
+    data = request.get_json(silent=True)
     if not data:
+        logger.warning(f"Consulting checkout invalid JSON (origin={origin}, brand={brand})")
         return jsonify({'error': 'Invalid JSON'}), 400
 
     ga4_client_id, ga4_session_id, analytics_consent = \
@@ -6376,24 +6380,27 @@ def create_consulting_checkout():
 
     email = (data.get('email') or '').strip().lower()
     if not email or '@' not in email or '.' not in email:
+        logger.warning(f"Consulting checkout missing/invalid email (origin={origin}, brand={brand})")
         return jsonify({'error': 'Valid email is required'}), 400
 
     name = (data.get('name') or '').strip()
     if not name:
+        logger.warning(f"Consulting checkout missing name (origin={origin}, brand={brand})")
         return jsonify({'error': 'Name is required'}), 400
 
     hours = data.get('hours', 1)
     try:
         hours = int(hours)
         if hours < 1 or hours > 10:
+            logger.warning(f"Consulting checkout invalid hours range: {hours} (origin={origin}, brand={brand})")
             return jsonify({'error': 'Hours must be between 1 and 10'}), 400
     except (ValueError, TypeError):
+        logger.warning(f"Consulting checkout invalid hours type: {hours!r} (origin={origin}, brand={brand})")
         return jsonify({'error': 'Invalid hours value'}), 400
 
     plan_addon = bool(data.get('plan_addon')) and bool(CONSULT_PLAN_ADDON_PRICE_ID)
 
     # Brand from the requesting site, same as /api/create-checkout.
-    brand = _brand_from_origin(request.headers.get('Origin', ''))
     brand_cfg = _brand_config(brand)
 
     try:
