@@ -5,6 +5,8 @@ from collections import Counter
 from datetime import datetime
 from pathlib import Path
 
+import pytest
+
 sys.path.insert(0, str(Path(__file__).parent))
 
 from block_chain import (build_plan_from_calendar,
@@ -295,6 +297,15 @@ def test_race_day_description_tss_uses_emitted_free_ride_duration():
 # =============================================================================
 
 class TestBRaceTestGapAndStrengthAdjacency:
+    @pytest.fixture(autouse=True)
+    def _freeze_generation_clock(self, monkeypatch):
+        # preferred_start is 2026-08-31. Without a frozen clock,
+        # clamp_past_start refits Week 1 to monday_on_or_after(today) once
+        # that Monday is in the past, so hardcoded Sep 3–5 assertions miss
+        # the plan. Pin to a Tuesday before Week 1, matching other date
+        # fixtures (test_tp_projection / test_plan_dates).
+        monkeypatch.setenv('GG_FIXED_NOW', '2026-08-18')
+
     def _generate(self, tmp_path):
         import calculate_plan_dates as cpd
         from generate_athlete_package import generate_zwo_files
@@ -357,6 +368,10 @@ class TestBRaceTestGapAndStrengthAdjacency:
         # Dirt Diggler (Sat 2026-09-05): -1 = Sep 4, -2 = Sep 3.
         # Fool's Gold (Sat 2026-09-12): -1 = Sep 11, -2 = Sep 10.
         reserved_dates = {'2026-09-04', '2026-09-03', '2026-09-11', '2026-09-10'}
+        manifest_dates = {rec.get('date') for rec in manifest.values()}
+        assert reserved_dates <= manifest_dates, (
+            "B-race reserved days missing from plan (clock clamp?): "
+            f"{sorted(reserved_dates - manifest_dates)}")
         offenders = [rec for rec in strength_recs if rec.get('date') in reserved_dates]
         assert not offenders, (
             "strength session(s) landed on a B-race -1/-2 reserved day: "
